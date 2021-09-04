@@ -1,0 +1,11 @@
+node_modules/
+dist/
+compiled/
+coverage/
+*.tsbuildinfo
+lerna-debug.log
+.npmrc
+# stryker temp files
+.stryker-tmp
+*stryker-tmp
+reports/

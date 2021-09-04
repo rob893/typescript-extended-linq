@@ -1,0 +1,62 @@
+{
+  "name": "typescript-extended-linq",
+  "version": "1.0.0",
+  "description": "Typescript Linq API",
+  "author": "Robert Herber",
+  "license": "MIT",
+  "main": "dist/index",
+  "types": "dist/index",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rob893/typescript-extended-linq.git"
+  },
+  "keywords": [
+    "cache",
+    "lru",
+    "typescript"
+  ],
+  "bugs": {
+    "url": "https://github.com/rob893/typescript-extended-linq/issues"
+  },
+  "homepage": "https://github.com/rob893/typescript-extended-linq#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "benchmark": "ts-node ./src/benchmark/index.ts",
+    "build": "rm -rf ./dist && tsc",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "prettier": "prettier --write **/*.{ts,js,css,html,json} !**/node_modules/** !**/dist/** !**/coverage/** !**/compiled/**",
+    "release": "np --no-cleanup --no-2fa",
+    "test": "jest --coverage",
+    "test-watch": "jest --watchAll --coverage",
+    "test-clean": "jest --clearCache",
+    "test-mutate": "npx stryker run",
+    "version": "npm run build"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@stryker-mutator/core": "^5.4.0",
+    "@stryker-mutator/jest-runner": "^5.4.0",
+    "@stryker-mutator/typescript-checker": "^5.4.0",
+    "@types/benchmark": "^2.1.1",
+    "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "benchmark": "^2.1.4",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^4.3.8",
+    "jest": "^27.1.0",
+    "np": "^7.5.0",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  }
+}

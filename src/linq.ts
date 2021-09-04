@@ -1,5 +1,5 @@
 export function linq<T>(src: Iterable<T>): Enumerable<T> {
-  function* generator() {
+  function* generator(): Generator<T> {
     for (const item of src) {
       yield item;
     }
@@ -27,7 +27,7 @@ export class Enumerable<T> implements Iterable<T> {
 
   public where(exp: (item: T) => boolean): Enumerable<T> {
     const items = this.src;
-    function* generator() {
+    function* generator(): Generator<T> {
       for (const item of items()) {
         if (exp(item)) {
           yield item;
@@ -43,6 +43,7 @@ export class Enumerable<T> implements Iterable<T> {
     seed: TAccumulate,
     aggregator: (prev: TAccumulate, curr: T) => TAccumulate
   ): TAccumulate;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public aggregate<TAccumulate extends object>(
     seedOrAggregator: TAccumulate | ((prev: T, curr: T) => T),
     aggregator?: (prev: TAccumulate, curr: T) => TAccumulate
@@ -215,7 +216,7 @@ export class Enumerable<T> implements Iterable<T> {
   public select<TDestination>(exp: (item: T) => TDestination): Enumerable<TDestination> {
     const src = this.src;
 
-    function* generator() {
+    function* generator(): Generator<TDestination> {
       for (const item of src()) {
         yield exp(item);
       }
@@ -227,7 +228,7 @@ export class Enumerable<T> implements Iterable<T> {
   public selectMany<TDestination extends []>(exp: (item: T) => TDestination[]): Enumerable<TDestination> {
     const src = this.src;
 
-    function* generator() {
+    function* generator(): Generator<TDestination> {
       for (const item of src()) {
         for (const i of exp(item)) {
           yield i;
@@ -281,7 +282,7 @@ export class Enumerable<T> implements Iterable<T> {
   public distinct<TKey>(selector?: (item: T) => TKey): Enumerable<T> {
     const src = this.src;
 
-    function* generator() {
+    function* generator(): Generator<T> {
       if (!selector) {
         const seenItems = new Set<T>();
 

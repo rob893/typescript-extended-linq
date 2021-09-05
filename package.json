@@ -11,8 +11,7 @@
     "url": "git+https://github.com/rob893/typescript-extended-linq.git"
   },
   "keywords": [
-    "cache",
-    "lru",
+    "linq",
     "typescript"
   ],
   "bugs": {

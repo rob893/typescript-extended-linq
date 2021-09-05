@@ -9,7 +9,7 @@ export class Enumerable<T> implements Iterable<T> {
     if (typeof srcOrGenerator === 'function') {
       this.srcGenerator = srcOrGenerator;
     } else {
-      if (Array.isArray(srcOrGenerator)) {
+      if (Array.isArray(srcOrGenerator) || typeof srcOrGenerator === 'string') {
         this.srcGenerator = function* (): Generator<T> {
           for (let i = 0; i < srcOrGenerator.length; i++) {
             yield srcOrGenerator[i];

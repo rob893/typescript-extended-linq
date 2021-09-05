@@ -9,11 +9,19 @@ export class Enumerable<T> implements Iterable<T> {
     if (typeof srcOrGenerator === 'function') {
       this.srcGenerator = srcOrGenerator;
     } else {
-      this.srcGenerator = function* (): Generator<T> {
-        for (const item of srcOrGenerator) {
-          yield item;
-        }
-      };
+      if (Array.isArray(srcOrGenerator)) {
+        this.srcGenerator = function* (): Generator<T> {
+          for (let i = 0; i < srcOrGenerator.length; i++) {
+            yield srcOrGenerator[i];
+          }
+        };
+      } else {
+        this.srcGenerator = function* (): Generator<T> {
+          for (const item of srcOrGenerator) {
+            yield item;
+          }
+        };
+      }
     }
   }
 
@@ -145,16 +153,20 @@ export class Enumerable<T> implements Iterable<T> {
   }
 
   public any(condition?: (item: T, index: number) => boolean): boolean {
-    let i = 0;
-
-    for (const item of this.srcGenerator()) {
-      if (!condition) {
-        return true;
-      } else if (condition(item, i)) {
+    if (!condition) {
+      for (const _ of this.srcGenerator()) {
         return true;
       }
+    } else if (condition) {
+      let i = 0;
 
-      i++;
+      for (const item of this.srcGenerator()) {
+        if (condition(item, i)) {
+          return true;
+        }
+
+        i++;
+      }
     }
 
     return false;

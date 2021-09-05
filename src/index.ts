@@ -57,16 +57,21 @@ export class Enumerable<T> implements Iterable<T> {
     aggregator: (prev: TAccumulate | T, curr: T, index: number) => TAccumulate | T,
     seed?: TAccumulate | T
   ): TAccumulate | T {
-    if (!seed) {
-      return this.aggregate(aggregator, this.first());
-    }
-
     let aggregate = seed;
     let i = 0;
 
     for (const item of this.srcGenerator()) {
-      aggregate = aggregator(aggregate, item, i);
+      if (aggregate === undefined) {
+        aggregate = item;
+      } else {
+        aggregate = aggregator(aggregate, item, i);
+      }
+
       i++;
+    }
+
+    if (aggregate === undefined) {
+      throw new Error('Sequence contains no elements');
     }
 
     return aggregate;
@@ -127,9 +132,9 @@ export class Enumerable<T> implements Iterable<T> {
     let i = 0;
 
     for (const item of this.srcGenerator()) {
-      if (condition && condition(item, i)) {
+      if (!condition) {
         count++;
-      } else if (!condition) {
+      } else if (condition(item, i)) {
         count++;
       }
 

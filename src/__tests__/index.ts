@@ -55,3 +55,30 @@ describe('groupBy', () => {
     expect(result).toBeInstanceOf(Enumerable);
   });
 });
+
+describe('sum', () => {
+  it('should sum the numbers', () => {
+    const nums = [0, 1, 2, 3];
+    const result = from(nums).sum();
+
+    expect(result).toBe(6);
+  });
+});
+
+describe('min', () => {
+  it('should find the min number', () => {
+    const nums = [0, 1, 2, 3];
+    const result = from(nums).min();
+
+    expect(result).toBe(0);
+  });
+});
+
+describe('max', () => {
+  it('should find the max number', () => {
+    const nums = [0, 1, 2, 3];
+    const result = from(nums).max();
+
+    expect(result).toBe(3);
+  });
+});

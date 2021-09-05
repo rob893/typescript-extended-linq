@@ -20,6 +20,39 @@
         "allowExpressions": true
       }
     ],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "String": {
+            "message": "Use string instead",
+            "fixWith": "string"
+          },
+          "Boolean": {
+            "message": "Use boolean instead",
+            "fixWith": "boolean"
+          },
+          "Number": {
+            "message": "Use number instead",
+            "fixWith": "number"
+          },
+          "Symbol": {
+            "message": "Use symbol instead",
+            "fixWith": "symbol"
+          },
+          "Function": {
+            "message": "The `Function` type accepts any function-like value."
+          },
+          // object typing
+          "Object": {
+            "message": "The `Object` type actually means \"any non-nullish value\", so it is marginally better than `unknown`."
+          },
+          "{}": {
+            "message": "`{}` actually means \"any non-nullish value\"."
+          }
+        }
+      }
+    ],
     "@typescript-eslint/member-ordering": "error",
     "@typescript-eslint/no-for-in-array": "error",
     "@typescript-eslint/no-this-alias": "error",

@@ -25,6 +25,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "benchmark": "ts-node ./src/benchmark/index.ts",
+    "benchmark-where": "ts-node ./src/benchmark/where.ts",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
@@ -53,6 +54,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^4.3.8",
     "jest": "^27.1.0",
+    "linq-to-typescript": "^8.1.0",
+    "linq-typescript": "^1.0.251",
     "np": "^7.5.0",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.5",

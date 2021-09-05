@@ -23,6 +23,7 @@ export class Enumerable<T> implements Iterable<T> {
 
   public forEach(callback: (item: T, index: number) => void): void {
     let i = 0;
+
     for (const item of this.srcGenerator()) {
       callback(item, i);
       i++;
@@ -31,13 +32,16 @@ export class Enumerable<T> implements Iterable<T> {
 
   public where(exp: (item: T, index: number) => boolean): Enumerable<T> {
     const items = this.srcGenerator;
+
     function* generator(): Generator<T> {
       let i = 0;
+
       for (const item of items()) {
         if (exp(item, i)) {
-          i++;
           yield item;
         }
+
+        i++;
       }
     }
 

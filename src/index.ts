@@ -11,6 +11,7 @@ export class Enumerable<T> implements Iterable<T> {
     } else {
       if (Array.isArray(srcOrGenerator) || typeof srcOrGenerator === 'string') {
         this.srcGenerator = function* (): Generator<T> {
+          // Traditional for loop is faster than for..of
           for (let i = 0; i < srcOrGenerator.length; i++) {
             yield srcOrGenerator[i];
           }
@@ -23,6 +24,37 @@ export class Enumerable<T> implements Iterable<T> {
         };
       }
     }
+  }
+
+  public static empty<T>(): Enumerable<T> {
+    return new Enumerable<T>([]);
+  }
+
+  public static range(start: number, count: number): Enumerable<number> {
+    function* generator(): Generator<number> {
+      for (let i = start; i < start + count; i++) {
+        yield i;
+      }
+    }
+
+    return new Enumerable(generator);
+  }
+
+  private static toKeyMap<TKey, T>(src: () => Generator<T>, keySelector: (item: T) => TKey): Map<TKey, T[]> {
+    const map = new Map<TKey, T[]>();
+
+    for (const item of src()) {
+      const key = keySelector(item);
+      const curr = map.get(key);
+
+      if (curr) {
+        curr.push(item);
+      } else {
+        map.set(key, [item]);
+      }
+    }
+
+    return map;
   }
 
   public [Symbol.iterator](): Generator<T> {
@@ -85,54 +117,66 @@ export class Enumerable<T> implements Iterable<T> {
     return aggregate;
   }
 
-  public orderBy(selector: (item: T) => string | number | boolean): Enumerable<T> {
+  public orderBy<TKey>(
+    selector: (item: T) => TKey,
+    comparer?: (itemA: TKey, itemB: TKey) => number
+  ): OrderedEnumerable<T> {
     const src = this.srcGenerator;
 
-    function* generator(): Generator<T> {
-      const sorted = [...src()].sort((a, b) => {
-        const aComp = selector(a);
-        const bComp = selector(b);
+    function* generator(): Generator<T[]> {
+      const map = Enumerable.toKeyMap(src, selector);
+      const sortedKeys = [...map.keys()].sort((a, b) => {
+        if (comparer) {
+          return comparer(a, b);
+        }
 
-        if (aComp > bComp) {
+        if (a > b) {
           return 1;
-        } else if (aComp < bComp) {
+        } else if (a < b) {
           return -1;
         } else {
           return 0;
         }
       });
 
-      for (const item of sorted) {
-        yield item;
+      for (let i = 0; i < sortedKeys.length; i++) {
+        const items = map.get(sortedKeys[i]);
+        yield items ?? [];
       }
     }
 
-    return new Enumerable(generator);
+    return new OrderedEnumerable(generator);
   }
 
-  public orderByDescending(selector: (item: T) => string | number | boolean): Enumerable<T> {
+  public orderByDescending<TKey>(
+    selector: (item: T) => TKey,
+    comparer?: (itemA: TKey, itemB: TKey) => number
+  ): OrderedEnumerable<T> {
     const src = this.srcGenerator;
 
-    function* generator(): Generator<T> {
-      const sorted = [...src()].sort((a, b) => {
-        const aComp = selector(a);
-        const bComp = selector(b);
+    function* generator(): Generator<T[]> {
+      const map = Enumerable.toKeyMap(src, selector);
+      const sortedKeys = [...map.keys()].sort((a, b) => {
+        if (comparer) {
+          return comparer(a, b);
+        }
 
-        if (aComp < bComp) {
+        if (a > b) {
           return 1;
-        } else if (aComp > bComp) {
+        } else if (a < b) {
           return -1;
         } else {
           return 0;
         }
       });
 
-      for (const item of sorted) {
-        yield item;
+      for (let i = 0; i < sortedKeys.length; i++) {
+        const items = map.get(sortedKeys[i]);
+        yield items ?? [];
       }
     }
 
-    return new Enumerable(generator);
+    return new OrderedEnumerable(generator);
   }
 
   public count(condition?: (item: T, index: number) => boolean): number {
@@ -197,16 +241,20 @@ export class Enumerable<T> implements Iterable<T> {
   }
 
   public firstOrDefault(condition?: (item: T, index: number) => boolean): T | null {
-    let i = 0;
-
-    for (const item of this.srcGenerator()) {
-      if (!condition) {
-        return item;
-      } else if (condition(item, i)) {
+    if (!condition) {
+      for (const item of this.srcGenerator()) {
         return item;
       }
+    } else {
+      let i = 0;
 
-      i++;
+      for (const item of this.srcGenerator()) {
+        if (condition(item, i)) {
+          return item;
+        }
+
+        i++;
+      }
     }
 
     return null;
@@ -355,20 +403,7 @@ export class Enumerable<T> implements Iterable<T> {
     const src = this.srcGenerator;
 
     function* generator(): Generator<Grouping<TKey, T>> {
-      const map = new Map<TKey, T[]>();
-
-      for (const item of src()) {
-        const key = keySelector(item);
-        const curr = map.get(key);
-
-        if (curr) {
-          curr.push(item);
-        } else {
-          map.set(key, [item]);
-        }
-      }
-
-      for (const [key, value] of map) {
+      for (const [key, value] of Enumerable.toKeyMap(src, keySelector)) {
         yield new Grouping(key, value);
       }
     }
@@ -410,6 +445,91 @@ export class Enumerable<T> implements Iterable<T> {
     }
 
     return new Enumerable(generator);
+  }
+}
+
+export class OrderedEnumerable<T> extends Enumerable<T> {
+  private readonly orderedPairs: () => Generator<T[]>;
+
+  public constructor(orderedPairs: () => Generator<T[]>) {
+    super(function* (): Generator<T, void, undefined> {
+      for (const pair of orderedPairs()) {
+        yield* pair;
+      }
+    });
+    this.orderedPairs = orderedPairs;
+  }
+
+  public thenBy<TKey>(
+    selector: (item: T) => TKey,
+    comparer?: (itemA: TKey, itemB: TKey) => number
+  ): OrderedEnumerable<T> {
+    const pairs = this.orderedPairs;
+
+    function* generator(): Generator<T[]> {
+      for (const pair of pairs()) {
+        const subGenerator = function* (): Generator<T[]> {
+          const sorted = [...pair].sort((a, b) => {
+            const aComp = selector(a);
+            const bComp = selector(b);
+
+            if (comparer) {
+              return comparer(aComp, bComp);
+            }
+
+            if (aComp > bComp) {
+              return 1;
+            } else if (aComp < bComp) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+
+          yield sorted;
+        };
+
+        yield* subGenerator();
+      }
+    }
+
+    return new OrderedEnumerable(generator);
+  }
+
+  public thenByDescending<TKey>(
+    selector: (item: T) => TKey,
+    comparer?: (itemA: TKey, itemB: TKey) => number
+  ): OrderedEnumerable<T> {
+    const pairs = this.orderedPairs;
+
+    function* generator(): Generator<T[]> {
+      for (const pair of pairs()) {
+        const subGenerator = function* (): Generator<T[]> {
+          const sorted = [...pair].sort((a, b) => {
+            const aComp = selector(a);
+            const bComp = selector(b);
+
+            if (comparer) {
+              return comparer(aComp, bComp);
+            }
+
+            if (aComp < bComp) {
+              return 1;
+            } else if (aComp > bComp) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+
+          yield sorted;
+        };
+
+        yield* subGenerator();
+      }
+    }
+
+    return new OrderedEnumerable(generator);
   }
 }
 

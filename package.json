@@ -24,9 +24,6 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "benchmark": "ts-node ./src/benchmark/index.ts",
-    "benchmark-where": "ts-node ./src/benchmark/where.ts",
-    "benchmark-any": "ts-node ./src/benchmark/any.ts",
-    "benchmark-all": "ts-node ./src/benchmark/all.ts",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",

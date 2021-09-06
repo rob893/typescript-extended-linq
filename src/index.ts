@@ -37,6 +37,14 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public static range(start: number, count: number): Enumerable<number> {
+    if (count < 0) {
+      throw new Error('Count must be greater than or equal to 0');
+    }
+
+    if (start + count >= Number.MAX_SAFE_INTEGER) {
+      throw new Error('start + count must be less than Number.MAX_SAFE_INTEGER');
+    }
+
     function* generator(): Generator<number> {
       for (let i = start; i < start + count; i++) {
         yield i;
@@ -47,6 +55,10 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public static repeat<TResult>(element: TResult, count: number): Enumerable<TResult> {
+    if (count < 0) {
+      throw new Error('Count must be greater than or equal to 0');
+    }
+
     function* generator(): Generator<TResult> {
       for (let i = 0; i < count; i++) {
         yield element;
@@ -156,6 +168,70 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     }
 
     return new Enumerable(generator);
+  }
+
+  public asEnumerable(): Enumerable<TSource> {
+    return new Enumerable(this.srcGenerator);
+  }
+
+  public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
+    let matches = 0;
+
+    if (predicate) {
+      let i = 0;
+
+      for (const item of this.srcGenerator()) {
+        if (predicate(item, i)) {
+          matches++;
+
+          if (matches >= count) {
+            return true;
+          }
+        }
+
+        i++;
+      }
+    } else {
+      for (const _ of this.srcGenerator()) {
+        matches++;
+
+        if (matches >= count) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public atMost(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
+    let matches = 0;
+
+    if (predicate) {
+      let i = 0;
+
+      for (const item of this.srcGenerator()) {
+        if (predicate(item, i)) {
+          matches++;
+
+          if (matches > count) {
+            return false;
+          }
+        }
+
+        i++;
+      }
+    } else {
+      for (const _ of this.srcGenerator()) {
+        matches++;
+
+        if (matches > count) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   public average(selector?: (item: TSource) => number): number {
@@ -355,6 +431,32 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     }
 
     return null;
+  }
+
+  public endsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
+    const src = [...this.srcGenerator()];
+    const secondArr = Array.isArray(second) ? second : [...second];
+
+    if (secondArr.length > src.length) {
+      return false;
+    }
+
+    for (let i = src.length - secondArr.length, j = 0; i < src.length; i++, j++) {
+      const srcItem = src[i];
+      const secondItem = secondArr[j];
+
+      if (equalityComparer) {
+        if (!equalityComparer(srcItem, secondItem)) {
+          return false;
+        }
+      } else {
+        if (srcItem !== secondItem) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   public except(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
@@ -952,6 +1054,32 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return new Enumerable(generator);
   }
 
+  public startsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
+    const src = [...this.srcGenerator()];
+    const secondArr = Array.isArray(second) ? second : [...second];
+
+    if (secondArr.length > src.length) {
+      return false;
+    }
+
+    for (let i = 0; i < secondArr.length; i++) {
+      const srcItem = src[i];
+      const secondItem = secondArr[i];
+
+      if (equalityComparer) {
+        if (!equalityComparer(srcItem, secondItem)) {
+          return false;
+        }
+      } else {
+        if (srcItem !== secondItem) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   public sum(selector?: (item: TSource) => number): number {
     if (!selector) {
       return this.aggregate((prev, curr) => {
@@ -987,6 +1115,14 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     }
 
     return new Enumerable(generator);
+  }
+
+  public takeEvery(step: number): Enumerable<TSource> {
+    if (step <= 0) {
+      throw new Error('Count must be greater than 0');
+    }
+
+    return this.where((_, i) => i % step === 0);
   }
 
   public takeLast(count: number): Enumerable<TSource> {

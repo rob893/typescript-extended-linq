@@ -1,47 +1,71 @@
-import { from } from './functions/from';
-import { aggregate } from './functions/aggregate';
-import { all } from './functions/all';
-import { any } from './functions/any';
-import { append } from './functions/append';
-import { atLeast } from './functions/atLeast';
-import { atMost } from './functions/atMost';
-import { concat } from './functions/concat';
-import { contains } from './functions/contains';
-import { count } from './functions/count';
-import { defaultIfEmpty } from './functions/defaultIfEmpty';
-import { distinct, distinctBy } from './functions/distinct';
-import { elementAt, elementAtOrDefault } from './functions/elementAt';
-import { empty } from './functions/empty';
-import { endsWith } from './functions/endsWith';
-import { except, exceptBy } from './functions/except';
-import { first, firstOrDefault } from './functions/first';
-import { forEach } from './functions/forEach';
-import { groupBy } from './functions/groupBy';
-import { intersect, intersectBy } from './functions/intersect';
-import { last, lastOrDefault } from './functions/last';
-import { max, maxBy } from './functions/max';
-import { ofType } from './functions/ofType';
-import { orderBy } from './functions/orderBy';
-import { prepend } from './functions/prepend';
-import { quantile } from './functions/quantile';
-import { range } from './functions/range';
-import { repeat } from './functions/repeat';
-import { reverse } from './functions/reverse';
-import { select, selectMany } from './functions/select';
-import { sequenceEqual } from './functions/sequenceEqual';
-import { shuffle } from './functions/shuffle';
-import { skip, skipLast, skipWhile } from './functions/skip';
-import { startsWith } from './functions/startsWith';
-import { sum } from './functions/sum';
-import { take, takeEvery, takeLast, takeWhile } from './functions/take';
-import { thenBy } from './functions/thenBy';
-import { toMap } from './functions/toMap';
-import { toObject } from './functions/toObject';
-import { toSet } from './functions/toSet';
-import { union, unionBy } from './functions/union';
-import { where } from './functions/where';
-import { zip } from './functions/zip';
-import { Comparer, EqualityComparer } from './types';
+import {
+  from,
+  empty,
+  range,
+  repeat,
+  aggregate,
+  all,
+  any,
+  append,
+  asEnumerable,
+  atLeast,
+  atMost,
+  average,
+  chunk,
+  concat,
+  EqualityComparer,
+  contains,
+  count,
+  defaultIfEmpty,
+  distinct,
+  distinctBy,
+  elementAt,
+  elementAtOrDefault,
+  endsWith,
+  except,
+  exceptBy,
+  first,
+  firstOrDefault,
+  forEach,
+  groupBy,
+  intersect,
+  intersectBy,
+  last,
+  lastOrDefault,
+  max,
+  maxBy,
+  min,
+  minBy,
+  ofType,
+  Comparer,
+  orderBy,
+  pipe,
+  prepend,
+  quantile,
+  reverse,
+  select,
+  selectMany,
+  sequenceEqual,
+  shuffle,
+  skip,
+  skipLast,
+  skipWhile,
+  startsWith,
+  sum,
+  take,
+  takeEvery,
+  takeLast,
+  takeWhile,
+  toArray,
+  toMap,
+  toObject,
+  toSet,
+  union,
+  unionBy,
+  where,
+  zip,
+  thenBy
+} from '.';
 
 export class Enumerable<TSource> implements Iterable<TSource> {
   private readonly srcGenerator: () => Generator<TSource>;
@@ -87,7 +111,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return this.srcGenerator();
   }
 
-  public aggregate<T>(aggregator: (prev: T, curr: T, index: number) => T): T;
+  public aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
   public aggregate<TAccumulate>(
     aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
     seed: TAccumulate
@@ -112,7 +136,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public asEnumerable(): Enumerable<TSource> {
-    return new Enumerable(this.srcGenerator);
+    return asEnumerable(this);
   }
 
   public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
@@ -124,13 +148,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public average(selector?: (item: TSource) => number): number {
-    return this.sum(selector) / this.count();
+    return average(this, selector);
   }
 
   public chunk(chunkSize: number): Enumerable<Enumerable<TSource>> {
-    return this.select((x, i) => ({ index: i, value: x }))
-      .groupBy(x => Math.floor(x.index / chunkSize))
-      .select(x => x.select(v => v.value));
+    return chunk(this, chunkSize);
   }
 
   public concat(second: Iterable<TSource>): Enumerable<TSource> {
@@ -256,15 +278,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   public min(): TSource;
   public min<TResult>(selector: (item: TSource) => TResult): TResult;
   public min<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
-    if (!selector) {
-      return this.aggregate((prev, curr) => (prev < curr ? prev : curr));
-    }
-
-    return this.select(selector).aggregate((prev, curr) => (prev < curr ? prev : curr));
+    return min(this, selector);
   }
 
   public minBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
-    return this.aggregate((prev, curr) => (keySelector(prev) <= keySelector(curr) ? prev : curr));
+    return minBy(this, keySelector);
   }
 
   public ofType<TResult>(type: new (...params: unknown[]) => TResult): Enumerable<TResult> {
@@ -280,6 +298,10 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     comparer?: Comparer<TKey>
   ): OrderedEnumerable<TSource> {
     return orderBy(this, false, selector, comparer);
+  }
+
+  public pipe(action: (item: TSource, index: number) => void): Enumerable<TSource> {
+    return pipe(this, action);
   }
 
   public prepend(item: TSource): Enumerable<TSource> {
@@ -362,7 +384,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public toArray(): TSource[] {
-    return [...this];
+    return toArray(this);
   }
 
   public toLookup(): unknown {

@@ -1,3 +1,17 @@
+export function toObject<TSource>(
+  src: Iterable<TSource>,
+  keySelector: (item: TSource) => string
+): Record<string, TSource>;
+export function toObject<TSource, TValue>(
+  src: Iterable<TSource>,
+  keySelector: (item: TSource) => string,
+  valueSelector: (item: TSource) => TValue
+): Record<string, TValue>;
+export function toObject<TSource, TValue>(
+  src: Iterable<TSource>,
+  keySelector: (item: TSource) => string,
+  valueSelector?: (item: TSource) => TValue
+): Record<string, TSource | TValue>;
 export function toObject<TSource, TValue>(
   src: Iterable<TSource>,
   keySelector: (item: TSource) => string,

@@ -11,5 +11,5 @@ export function sum<TSource>(src: Iterable<TSource>, selector?: (item: TSource) 
     });
   }
 
-  return aggregate(src, (prev, curr) => (prev as number) + selector(curr), 0) as number;
+  return aggregate(src, (prev, curr) => prev + selector(curr), 0);
 }

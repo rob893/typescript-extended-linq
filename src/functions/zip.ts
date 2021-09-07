@@ -1,5 +1,19 @@
 import { Enumerable } from '../Enumerable';
 
+export function zip<TSource, TSecond>(
+  src: Iterable<TSource>,
+  second: Iterable<TSecond>
+): Enumerable<[TSource, TSecond]>;
+export function zip<TSource, TSecond, TResult>(
+  src: Iterable<TSource>,
+  second: Iterable<TSecond>,
+  resultSelector: (first: TSource, second: TSecond) => TResult
+): Enumerable<TResult>;
+export function zip<TSource, TSecond, TResult>(
+  src: Iterable<TSource>,
+  second: Iterable<TSecond>,
+  resultSelector?: (first: TSource, second: TSecond) => TResult
+): Enumerable<[TSource, TSecond] | TResult>;
 export function zip<TSource, TSecond, TResult>(
   src: Iterable<TSource>,
   second: Iterable<TSecond>,

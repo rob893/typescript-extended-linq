@@ -60,6 +60,36 @@ describe('takeLast', () => {
   });
 });
 
+describe('takeEvery', () => {
+  it('should return an Enumerable', () => {
+    const result = from([1, 2, 3]).takeEvery(2);
+
+    expect(result).toBeInstanceOf(Enumerable);
+  });
+
+  it('should return the every second', () => {
+    const result = from([1, 2, 3, 4, 5]).takeEvery(2).toArray();
+
+    expect(result).toEqual([1, 3, 5]);
+  });
+
+  it('should return the first', () => {
+    const result = from([1, 2, 3]).takeEvery(100).toArray();
+
+    expect(result).toEqual([1]);
+  });
+
+  it('should return all', () => {
+    const result = from([1, 2, 3]).takeEvery(1).toArray();
+
+    expect(result).toEqual([1, 2, 3]);
+  });
+
+  it.each([-1, 0])('should throw', count => {
+    expect(() => from([1, 2, 3]).takeEvery(count)).toThrow();
+  });
+});
+
 describe('takeWhile', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).takeWhile(x => true);

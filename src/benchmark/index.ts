@@ -3,6 +3,7 @@ import { anyBenchmark } from './any';
 import { whereBenchmark } from './where';
 import { complexBenchmark } from './complex';
 import { countBenchmark } from './count';
+import { selectBenchmark } from './select';
 
 const args = process.argv.slice(2);
 
@@ -27,6 +28,9 @@ switch (benchmark.toLowerCase()) {
     break;
   case 'count':
     countBenchmark();
+    break;
+  case 'select':
+    selectBenchmark();
     break;
   default:
     throw new Error(`${benchmark} is not a valid benchmark name.`);

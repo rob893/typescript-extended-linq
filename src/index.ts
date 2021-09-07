@@ -1,3 +1,3 @@
 export * from './types';
-export * from './from';
+export * from './functions/from';
 export * from './Enumerable';

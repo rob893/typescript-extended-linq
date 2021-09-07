@@ -4,6 +4,7 @@ import { whereBenchmark } from './where';
 import { complexBenchmark } from './complex';
 import { countBenchmark } from './count';
 import { selectBenchmark } from './select';
+import { sumBenchmark } from './sum';
 
 const args = process.argv.slice(2);
 
@@ -31,6 +32,9 @@ switch (benchmark.toLowerCase()) {
     break;
   case 'select':
     selectBenchmark();
+    break;
+  case 'sum':
+    sumBenchmark();
     break;
   default:
     throw new Error(`${benchmark} is not a valid benchmark name.`);

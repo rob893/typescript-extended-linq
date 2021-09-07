@@ -1,13 +1,43 @@
+import { from } from '.';
 import { aggregate } from './functions/aggregate';
+import { all } from './functions/all';
+import { any } from './functions/any';
+import { append } from './functions/append';
+import { atLeast } from './functions/atLeast';
+import { atMost } from './functions/atMost';
+import { concat } from './functions/concat';
+import { contains } from './functions/contains';
+import { count } from './functions/count';
+import { defaultIfEmpty } from './functions/defaultIfEmpty';
+import { distinct, distinctBy } from './functions/distinct';
+import { elementAt, elementAtOrDefault } from './functions/elementAt';
+import { empty } from './functions/empty';
+import { endsWith } from './functions/endsWith';
 import { except, exceptBy } from './functions/except';
+import { first, firstOrDefault } from './functions/first';
+import { forEach } from './functions/forEach';
 import { groupBy } from './functions/groupBy';
 import { intersect, intersectBy } from './functions/intersect';
+import { last, lastOrDefault } from './functions/last';
+import { max, maxBy } from './functions/max';
+import { ofType } from './functions/ofType';
 import { orderBy } from './functions/orderBy';
+import { prepend } from './functions/prepend';
+import { quantile } from './functions/quantile';
 import { range } from './functions/range';
 import { repeat } from './functions/repeat';
+import { reverse } from './functions/reverse';
 import { select, selectMany } from './functions/select';
+import { sequenceEqual } from './functions/sequenceEqual';
+import { shuffle } from './functions/shuffle';
+import { skip, skipLast, skipWhile } from './functions/skip';
+import { startsWith } from './functions/startsWith';
+import { sum } from './functions/sum';
 import { take, takeEvery, takeLast, takeWhile } from './functions/take';
 import { thenBy } from './functions/thenBy';
+import { toMap } from './functions/toMap';
+import { toObject } from './functions/toObject';
+import { toSet } from './functions/toSet';
 import { union, unionBy } from './functions/union';
 import { where } from './functions/where';
 import { zip } from './functions/zip';
@@ -38,15 +68,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult> {
-    if (src instanceof Enumerable) {
-      return src;
-    }
-
-    return new Enumerable(src);
+    return from(src);
   }
 
   public static empty<TResult>(): Enumerable<TResult> {
-    return new Enumerable<TResult>([]);
+    return empty();
   }
 
   public static range(start: number, count: number): Enumerable<number> {
@@ -74,51 +100,15 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public all(condition: (item: TSource, index: number) => boolean): boolean {
-    let i = 0;
-
-    for (const item of this.srcGenerator()) {
-      if (!condition(item, i)) {
-        return false;
-      }
-
-      i++;
-    }
-
-    return true;
+    return all(this, condition);
   }
 
   public any(condition?: (item: TSource, index: number) => boolean): boolean {
-    if (!condition) {
-      for (const _ of this.srcGenerator()) {
-        return true;
-      }
-    } else if (condition) {
-      let i = 0;
-
-      for (const item of this.srcGenerator()) {
-        if (condition(item, i)) {
-          return true;
-        }
-
-        i++;
-      }
-    }
-
-    return false;
+    return any(this, condition);
   }
 
   public append(item: TSource): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      for (const currentItem of src()) {
-        yield currentItem;
-      }
-
-      yield item;
-    }
-
-    return new Enumerable(generator);
+    return append(this, item);
   }
 
   public asEnumerable(): Enumerable<TSource> {
@@ -126,63 +116,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
-    let matches = 0;
-
-    if (predicate) {
-      let i = 0;
-
-      for (const item of this.srcGenerator()) {
-        if (predicate(item, i)) {
-          matches++;
-
-          if (matches >= count) {
-            return true;
-          }
-        }
-
-        i++;
-      }
-    } else {
-      for (const _ of this.srcGenerator()) {
-        matches++;
-
-        if (matches >= count) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    return atLeast(this, count, predicate);
   }
 
   public atMost(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
-    let matches = 0;
-
-    if (predicate) {
-      let i = 0;
-
-      for (const item of this.srcGenerator()) {
-        if (predicate(item, i)) {
-          matches++;
-
-          if (matches > count) {
-            return false;
-          }
-        }
-
-        i++;
-      }
-    } else {
-      for (const _ of this.srcGenerator()) {
-        matches++;
-
-        if (matches > count) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return atMost(this, count, predicate);
   }
 
   public average(selector?: (item: TSource) => number): number {
@@ -196,218 +134,42 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public concat(second: Iterable<TSource>): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      for (const item of src()) {
-        yield item;
-      }
-
-      if (Array.isArray(second) || typeof second === 'string') {
-        for (let i = 0; i < second.length; i++) {
-          yield second[i];
-        }
-      } else {
-        for (const secondItem of second) {
-          yield secondItem;
-        }
-      }
-    }
-
-    return new Enumerable(generator);
+    return concat(this, second);
   }
 
   public contains(value: TSource, equalityComparer?: EqualityComparer<TSource>): boolean {
-    if (equalityComparer) {
-      for (const item of this.srcGenerator()) {
-        if (equalityComparer(item, value)) {
-          return true;
-        }
-      }
-    } else {
-      for (const item of this.srcGenerator()) {
-        if (item === value) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    return contains(this, value, equalityComparer);
   }
 
   public count(condition?: (item: TSource, index: number) => boolean): number {
-    let count = 0;
-
-    if (condition) {
-      let i = 0;
-
-      for (const item of this.srcGenerator()) {
-        if (condition(item, i)) {
-          count++;
-        }
-
-        i++;
-      }
-    } else {
-      for (const _ of this.srcGenerator()) {
-        count++;
-      }
-    }
-
-    return count;
+    return count(this, condition);
   }
 
   public defaultIfEmpty(defaultItem: TSource): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      let returnDefault = true;
-
-      for (const item of src()) {
-        returnDefault = false;
-        yield item;
-      }
-
-      if (returnDefault) {
-        yield defaultItem;
-      }
-    }
-
-    return new Enumerable(generator);
+    return defaultIfEmpty(this, defaultItem);
   }
 
   public distinct(equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      if (!equalityComparer) {
-        const seenItems = new Set<TSource>();
-
-        for (const item of src()) {
-          if (!seenItems.has(item)) {
-            seenItems.add(item);
-            yield item;
-          }
-        }
-      } else {
-        const seenitems: TSource[] = [];
-
-        for (const item of src()) {
-          let returnItem = true;
-
-          for (let i = 0; i < seenitems.length; i++) {
-            if (equalityComparer(item, seenitems[i])) {
-              returnItem = false;
-              break;
-            }
-          }
-
-          if (returnItem) {
-            seenitems.push(item);
-            yield item;
-          }
-        }
-      }
-    }
-
-    return new Enumerable(generator);
+    return distinct(this, equalityComparer);
   }
 
   public distinctBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      if (!equalityComparer) {
-        const seenKeys = new Set<TKey>();
-
-        for (const item of src()) {
-          const key = keySelector(item);
-
-          if (!seenKeys.has(key)) {
-            seenKeys.add(key);
-            yield item;
-          }
-        }
-      } else {
-        const seenKeys: TKey[] = [];
-
-        for (const item of src()) {
-          const key = keySelector(item);
-          let returnItem = true;
-
-          for (let i = 0; i < seenKeys.length; i++) {
-            if (equalityComparer(key, seenKeys[i])) {
-              returnItem = false;
-              break;
-            }
-          }
-
-          if (returnItem) {
-            seenKeys.push(key);
-            yield item;
-          }
-        }
-      }
-    }
-
-    return new Enumerable(generator);
+    return distinctBy(this, keySelector, equalityComparer);
   }
 
   public elementAt(index: number): TSource {
-    const element = this.elementAtOrDefault(index);
-
-    if (element === null) {
-      throw new Error('Index out of bounds');
-    }
-
-    return element;
+    return elementAt(this, index);
   }
 
   public elementAtOrDefault(index: number): TSource | null {
-    if (index < 0) {
-      throw new Error('Index must be greater than or equal to 0');
-    }
-
-    let i = 0;
-
-    for (const item of this.srcGenerator()) {
-      if (i === index) {
-        return item;
-      }
-
-      i++;
-    }
-
-    return null;
+    return elementAtOrDefault(this, index);
   }
 
   public endsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
-    const src = [...this.srcGenerator()];
-    const secondArr = Array.isArray(second) ? second : [...second];
-
-    if (secondArr.length > src.length) {
-      return false;
-    }
-
-    for (let i = src.length - secondArr.length, j = 0; i < src.length; i++, j++) {
-      const srcItem = src[i];
-      const secondItem = secondArr[j];
-
-      if (equalityComparer) {
-        if (!equalityComparer(srcItem, secondItem)) {
-          return false;
-        }
-      } else {
-        if (srcItem !== secondItem) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return endsWith(this, second, equalityComparer);
   }
 
   public except(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
@@ -423,42 +185,15 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public first(condition?: (item: TSource, index: number) => boolean): TSource {
-    const first = this.firstOrDefault(condition);
-
-    if (first === null) {
-      throw new Error('Sequence contains no elements.');
-    }
-
-    return first;
+    return first(this, condition);
   }
 
   public firstOrDefault(condition?: (item: TSource, index: number) => boolean): TSource | null {
-    if (!condition) {
-      for (const item of this.srcGenerator()) {
-        return item;
-      }
-    } else {
-      let i = 0;
-
-      for (const item of this.srcGenerator()) {
-        if (condition(item, i)) {
-          return item;
-        }
-
-        i++;
-      }
-    }
-
-    return null;
+    return firstOrDefault(this, condition);
   }
 
   public forEach(callback: (item: TSource, index: number) => void): void {
-    let i = 0;
-
-    for (const item of this.srcGenerator()) {
-      callback(item, i);
-      i++;
-    }
+    forEach(this, callback);
   }
 
   public groupBy<TKey>(
@@ -497,49 +232,25 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     resultSelector: (item: TSource, inner: TInner) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TResult> {
-    throw new Error('Not yeu implemented.');
+    throw new Error('Not yet implemented.');
   }
 
   public last(predicate?: (item: TSource, index: number) => boolean): TSource {
-    const lastOrDefault = this.lastOrDefault(predicate);
-
-    if (lastOrDefault === null) {
-      throw new Error('Sequence contains no elements');
-    }
-
-    return lastOrDefault;
+    return last(this, predicate);
   }
 
   public lastOrDefault(predicate?: (item: TSource, index: number) => boolean): TSource | null {
-    const arr = [...this.srcGenerator()];
-
-    if (predicate) {
-      for (let i = arr.length - 1; i >= 0; i--) {
-        if (predicate(arr[i], i)) {
-          return arr[i];
-        }
-      }
-    } else {
-      if (arr.length > 0) {
-        return arr[arr.length - 1];
-      }
-    }
-
-    return null;
+    return lastOrDefault(this, predicate);
   }
 
   public max(): TSource;
   public max<TResult>(selector: (item: TSource) => TResult): TResult;
   public max<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
-    if (!selector) {
-      return this.aggregate((prev, curr) => (prev > curr ? prev : curr));
-    }
-
-    return this.select(selector).aggregate((prev, curr) => (prev > curr ? prev : curr));
+    return max(this, selector);
   }
 
   public maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
-    return this.aggregate((prev, curr) => (keySelector(prev) >= keySelector(curr) ? prev : curr));
+    return maxBy(this, keySelector);
   }
 
   public min(): TSource;
@@ -557,17 +268,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public ofType<TResult>(type: new (...params: unknown[]) => TResult): Enumerable<TResult> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TResult> {
-      for (const item of src()) {
-        if (item instanceof type) {
-          yield item;
-        }
-      }
-    }
-
-    return new Enumerable(generator);
+    return ofType(this, type);
   }
 
   public orderBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): OrderedEnumerable<TSource> {
@@ -582,45 +283,15 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public prepend(item: TSource): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      yield item;
-
-      for (const currentItem of src()) {
-        yield currentItem;
-      }
-    }
-
-    return new Enumerable(generator);
+    return prepend(this, item);
   }
 
   public quantile(selector: (item: TSource) => number, q: number): number {
-    const sorted = this.select(selector)
-      .orderBy(x => x)
-      .toArray();
-    const pos = (sorted.length - 1) * q;
-    const base = Math.floor(pos);
-    const rest = pos - base;
-    if (sorted[base + 1] !== undefined) {
-      return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
-    } else {
-      return sorted[base];
-    }
+    return quantile(this, selector, q);
   }
 
   public reverse(): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      const items = [...src()];
-
-      for (let i = items.length - 1; i >= 0; i--) {
-        yield items[i];
-      }
-    }
-
-    return new Enumerable(generator);
+    return reverse(this);
   }
 
   public select<TDestination>(exp: (item: TSource, index: number) => TDestination): Enumerable<TDestination> {
@@ -632,53 +303,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public sequenceEqual(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
-    const firstArr = [...this.srcGenerator()];
-    const secondArr = Array.isArray(second) || typeof second === 'string' ? second : [...second];
-
-    if (firstArr.length !== secondArr.length) {
-      return false;
-    }
-
-    for (let i = 0; i < firstArr.length; i++) {
-      if (equalityComparer) {
-        if (!equalityComparer(firstArr[i], secondArr[i])) {
-          return false;
-        }
-      } else {
-        if (firstArr[i] !== secondArr[i]) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return sequenceEqual(this, second, equalityComparer);
   }
 
   public shuffle(): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      const array = [...src()];
-      let currentIndex = array.length,
-        temporaryValue,
-        randomIndex;
-
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-
-        yield array[currentIndex];
-      }
-    }
-
-    return new Enumerable(generator);
+    return shuffle(this);
   }
 
   public single(predicate?: (item: TSource) => boolean): TSource {
@@ -697,108 +326,23 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public skip(count: number): Enumerable<TSource> {
-    if (count <= 0) {
-      throw new Error('Count must be greater than 0');
-    }
-
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      let i = 0;
-
-      for (const item of src()) {
-        i++;
-
-        if (i > count) {
-          yield item;
-        }
-      }
-    }
-
-    return new Enumerable(generator);
+    return skip(this, count);
   }
 
   public skipLast(count: number): Enumerable<TSource> {
-    if (count <= 0) {
-      throw new Error('Count must be greater than 0');
-    }
-
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      const arr = [...src()];
-
-      for (let i = 0; i < arr.length - count; i++) {
-        yield arr[i];
-      }
-    }
-
-    return new Enumerable(generator);
+    return skipLast(this, count);
   }
 
   public skipWhile(predicate: (item: TSource, index: number) => boolean): Enumerable<TSource> {
-    const src = this.srcGenerator;
-
-    function* generator(): Generator<TSource> {
-      let i = 0;
-      let keepSkipping = true;
-
-      for (const item of src()) {
-        if (keepSkipping) {
-          if (!predicate(item, i)) {
-            keepSkipping = false;
-          }
-        }
-
-        if (!keepSkipping) {
-          yield item;
-        }
-
-        i++;
-      }
-    }
-
-    return new Enumerable(generator);
+    return skipWhile(this, predicate);
   }
 
   public startsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
-    const src = [...this.srcGenerator()];
-    const secondArr = Array.isArray(second) ? second : [...second];
-
-    if (secondArr.length > src.length) {
-      return false;
-    }
-
-    for (let i = 0; i < secondArr.length; i++) {
-      const srcItem = src[i];
-      const secondItem = secondArr[i];
-
-      if (equalityComparer) {
-        if (!equalityComparer(srcItem, secondItem)) {
-          return false;
-        }
-      } else {
-        if (srcItem !== secondItem) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return startsWith(this, second, equalityComparer);
   }
 
   public sum(selector?: (item: TSource) => number): number {
-    if (!selector) {
-      return this.aggregate((prev, curr) => {
-        if (typeof curr !== 'number') {
-          throw new Error('sum can only be used with numbers');
-        }
-
-        return prev + curr;
-      });
-    }
-
-    return this.aggregate((prev, curr) => prev + selector(curr), 0);
+    return sum(this, selector);
   }
 
   public take(count: number): Enumerable<TSource> {
@@ -834,21 +378,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     keySelector: (item: TSource) => TKey,
     valueSelector?: (item: TSource) => TValue
   ): Map<TKey, TSource | TValue> {
-    const map = new Map<TKey, TSource | TValue>();
-
-    if (valueSelector) {
-      for (const item of this.srcGenerator()) {
-        const key = keySelector(item);
-        map.set(key, valueSelector(item));
-      }
-    } else {
-      for (const item of this.srcGenerator()) {
-        const key = keySelector(item);
-        map.set(key, item);
-      }
-    }
-
-    return map;
+    return toMap(this, keySelector, valueSelector);
   }
 
   public toObject(keySelector: (item: TSource) => string): Record<string, TSource>;
@@ -860,25 +390,11 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     keySelector: (item: TSource) => string,
     valueSelector?: (item: TSource) => TValue
   ): Record<string, TSource | TValue> {
-    const obj: Record<string, TSource | TValue> = {};
-
-    if (valueSelector) {
-      for (const item of this.srcGenerator()) {
-        const key = keySelector(item);
-        obj[key] = valueSelector(item);
-      }
-    } else {
-      for (const item of this.srcGenerator()) {
-        const key = keySelector(item);
-        obj[key] = item;
-      }
-    }
-
-    return obj;
+    return toObject(this, keySelector, valueSelector);
   }
 
   public toSet(): Set<TSource> {
-    return new Set(this);
+    return toSet(this);
   }
 
   public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
@@ -919,6 +435,7 @@ export class OrderedEnumerable<T> extends Enumerable<T> {
         yield* pair;
       }
     });
+
     this.orderedPairs = orderedPairs;
   }
 

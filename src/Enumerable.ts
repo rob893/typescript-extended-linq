@@ -1,4 +1,4 @@
-import { from } from '.';
+import { from } from './functions/from';
 import { aggregate } from './functions/aggregate';
 import { all } from './functions/all';
 import { any } from './functions/any';

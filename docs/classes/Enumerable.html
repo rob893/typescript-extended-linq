@@ -205,7 +205,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L79">Enumerable.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L79">Enumerable.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -233,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">src<wbr>Generator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L77">Enumerable.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L77">Enumerable.ts:77</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -266,7 +266,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of Iterable.__@iterator@83</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L116">Enumerable.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L116">Enumerable.ts:116</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -284,7 +284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L120">Enumerable.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L120">Enumerable.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -322,7 +322,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L121">Enumerable.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L121">Enumerable.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -378,13 +378,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L132">Enumerable.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L144">Enumerable.ts:144</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Determines whether all elements of a sequence satisfy a condition.</p>
+								</div>
+								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">areAllNumbersEven</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> % </span><span style="color: #098658">2</span><span style="color: #000000"> === </span><span style="color: #098658">0</span><span style="color: #000000">);</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>condition: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function to test each element for a condition.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -409,6 +421,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.</p>
 						</li>
 					</ul>
 				</section>
@@ -422,7 +435,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L136">Enumerable.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L148">Enumerable.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -466,7 +479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L140">Enumerable.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L152">Enumerable.ts:152</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -489,7 +502,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L144">Enumerable.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L156">Enumerable.ts:156</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -506,7 +519,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L148">Enumerable.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L160">Enumerable.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -553,7 +566,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L152">Enumerable.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L164">Enumerable.ts:164</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -600,7 +613,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L156">Enumerable.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L168">Enumerable.ts:168</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -641,7 +654,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L160">Enumerable.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L172">Enumerable.ts:172</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -664,7 +677,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L164">Enumerable.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L176">Enumerable.ts:176</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -687,7 +700,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L168">Enumerable.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L180">Enumerable.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -713,7 +726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L172">Enumerable.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L184">Enumerable.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -757,7 +770,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L176">Enumerable.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L188">Enumerable.ts:188</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -780,7 +793,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L180">Enumerable.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L192">Enumerable.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -803,7 +816,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L184">Enumerable.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L196">Enumerable.ts:196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -853,7 +866,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L191">Enumerable.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L203">Enumerable.ts:203</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -876,7 +889,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L195">Enumerable.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L207">Enumerable.ts:207</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -899,7 +912,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L199">Enumerable.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L211">Enumerable.ts:211</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -925,7 +938,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L203">Enumerable.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L215">Enumerable.ts:215</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -951,7 +964,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L207">Enumerable.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L219">Enumerable.ts:219</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1004,7 +1017,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L215">Enumerable.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L227">Enumerable.ts:227</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1048,7 +1061,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L219">Enumerable.ts:219</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L231">Enumerable.ts:231</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1092,7 +1105,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L223">Enumerable.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L235">Enumerable.ts:235</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1136,7 +1149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L227">Enumerable.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L239">Enumerable.ts:239</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1186,7 +1199,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L242">Enumerable.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L254">Enumerable.ts:254</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1310,7 +1323,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L252">Enumerable.ts:252</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L264">Enumerable.ts:264</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1336,7 +1349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L256">Enumerable.ts:256</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L268">Enumerable.ts:268</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1389,7 +1402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L273">Enumerable.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L285">Enumerable.ts:285</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1514,7 +1527,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L283">Enumerable.ts:283</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L295">Enumerable.ts:295</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1558,7 +1571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L287">Enumerable.ts:287</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L299">Enumerable.ts:299</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1602,7 +1615,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L301">Enumerable.ts:301</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L313">Enumerable.ts:313</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1751,7 +1764,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L329">Enumerable.ts:329</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L341">Enumerable.ts:341</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1874,7 +1887,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L339">Enumerable.ts:339</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L351">Enumerable.ts:351</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
@@ -1882,7 +1895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L340">Enumerable.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L352">Enumerable.ts:352</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1929,7 +1942,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L345">Enumerable.ts:345</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L357">Enumerable.ts:357</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1977,7 +1990,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L349">Enumerable.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L361">Enumerable.ts:361</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
@@ -1985,7 +1998,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L350">Enumerable.ts:350</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L362">Enumerable.ts:362</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2032,7 +2045,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L355">Enumerable.ts:355</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L367">Enumerable.ts:367</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2079,7 +2092,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L359">Enumerable.ts:359</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L371">Enumerable.ts:371</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2126,7 +2139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L363">Enumerable.ts:363</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L375">Enumerable.ts:375</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2176,7 +2189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L367">Enumerable.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L379">Enumerable.ts:379</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2226,7 +2239,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L374">Enumerable.ts:374</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L386">Enumerable.ts:386</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2270,7 +2283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L378">Enumerable.ts:378</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L390">Enumerable.ts:390</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2293,7 +2306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L382">Enumerable.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L394">Enumerable.ts:394</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2337,7 +2350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L386">Enumerable.ts:386</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L398">Enumerable.ts:398</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2354,7 +2367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L400">Enumerable.ts:400</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L412">Enumerable.ts:412</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2503,7 +2516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L428">Enumerable.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L440">Enumerable.ts:440</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2625,7 +2638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L438">Enumerable.ts:438</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L450">Enumerable.ts:450</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2675,7 +2688,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L442">Enumerable.ts:442</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L454">Enumerable.ts:454</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2725,7 +2738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L446">Enumerable.ts:446</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L458">Enumerable.ts:458</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2751,7 +2764,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L450">Enumerable.ts:450</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L462">Enumerable.ts:462</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2768,7 +2781,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L454">Enumerable.ts:454</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L466">Enumerable.ts:466</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2812,7 +2825,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L458">Enumerable.ts:458</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L470">Enumerable.ts:470</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></h4>
@@ -2820,7 +2833,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L459">Enumerable.ts:459</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L471">Enumerable.ts:471</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2852,7 +2865,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L460">Enumerable.ts:460</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L472">Enumerable.ts:472</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2866,7 +2879,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L461">Enumerable.ts:461</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L473">Enumerable.ts:473</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2910,7 +2923,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L469">Enumerable.ts:469</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L481">Enumerable.ts:481</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2933,7 +2946,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L473">Enumerable.ts:473</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L485">Enumerable.ts:485</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2956,7 +2969,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L477">Enumerable.ts:477</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L489">Enumerable.ts:489</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3000,7 +3013,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L481">Enumerable.ts:481</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L493">Enumerable.ts:493</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3026,7 +3039,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L485">Enumerable.ts:485</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L497">Enumerable.ts:497</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3067,7 +3080,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L489">Enumerable.ts:489</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L501">Enumerable.ts:501</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3090,7 +3103,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L493">Enumerable.ts:493</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L505">Enumerable.ts:505</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3113,7 +3126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L497">Enumerable.ts:497</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L509">Enumerable.ts:509</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3136,7 +3149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L501">Enumerable.ts:501</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L513">Enumerable.ts:513</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3180,7 +3193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L505">Enumerable.ts:505</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L517">Enumerable.ts:517</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -3197,7 +3210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L509">Enumerable.ts:509</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L521">Enumerable.ts:521</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
@@ -3215,7 +3228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L513">Enumerable.ts:513</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L525">Enumerable.ts:525</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3253,7 +3266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L514">Enumerable.ts:514</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L526">Enumerable.ts:526</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3325,7 +3338,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L525">Enumerable.ts:525</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L537">Enumerable.ts:537</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3357,7 +3370,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L526">Enumerable.ts:526</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L538">Enumerable.ts:538</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3425,7 +3438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L537">Enumerable.ts:537</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L549">Enumerable.ts:549</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3442,7 +3455,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L541">Enumerable.ts:541</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L553">Enumerable.ts:553</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3468,7 +3481,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L545">Enumerable.ts:545</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L557">Enumerable.ts:557</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3521,7 +3534,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L553">Enumerable.ts:553</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L565">Enumerable.ts:565</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3566,7 +3579,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L557">Enumerable.ts:557</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L569">Enumerable.ts:569</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3586,7 +3599,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L558">Enumerable.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L570">Enumerable.ts:570</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3642,7 +3655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L104">Enumerable.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L104">Enumerable.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3665,7 +3678,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L100">Enumerable.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L100">Enumerable.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3694,7 +3707,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L108">Enumerable.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L108">Enumerable.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3720,7 +3733,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/288ea17/src/Enumerable.ts#L112">Enumerable.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/151cea4/src/Enumerable.ts#L112">Enumerable.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

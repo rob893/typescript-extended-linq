@@ -1,0 +1,20 @@
+name: Publish Docs
+
+on:
+  release:
+    types:
+      - never
+
+jobs:
+  deploy-github-pages:
+    name: Deploy to Github Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: docs

@@ -129,6 +129,18 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return aggregate(this, aggregator, seed);
   }
 
+  /**
+   * Determines whether all elements of a sequence satisfy a condition.
+   *
+   * ```typescript
+   * const numbers = [1, 2, 3, 4];
+   * const areAllNumbersEven = from(numbers)
+   *   .all(x => x % 2 === 0);
+   * ```
+   *
+   * @param condition A function to test each element for a condition.
+   * @returns true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+   */
   public all(condition: (item: TSource, index: number) => boolean): boolean {
     return all(this, condition);
   }

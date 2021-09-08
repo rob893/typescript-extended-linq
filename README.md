@@ -8,7 +8,7 @@ This is a library that is a direct translation of [System.Linq](https://docs.mic
 npm i typescript-extended-linq
 ```
 
-## Why use this LRU Cache?
+## Why use this library?
 
 ### Additional Functionality
 

@@ -68,7 +68,9 @@ import {
   join,
   groupJoin,
   leftJoinHeterogeneous,
-  leftJoinHomogeneous
+  leftJoinHomogeneous,
+  rightJoinHeterogeneous,
+  rightJoinHomogeneous
 } from '.';
 
 export class Enumerable<TSource> implements Iterable<TSource> {
@@ -383,6 +385,54 @@ export class Enumerable<TSource> implements Iterable<TSource> {
 
   public reverse(): Enumerable<TSource> {
     return reverse(this);
+  }
+
+  /**
+   * Performs a right outer join on two heterogeneous sequences.
+   * @param second The second sequence of the join operation.
+   * @param firstKeySelector Function that projects the key given an element from first.
+   * @param secondKeySelector Function that projects the key given an element from second.
+   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a right outer join of the two input sequences.
+   */
+  public rightJoinHeterogeneous<TSecond, TKey, TResult>(
+    second: Iterable<TSecond>,
+    firstKeySelector: (item: TSource) => TKey,
+    secondKeySelector: (item: TSecond) => TKey,
+    secondSelector: (item: TSecond) => TResult,
+    bothSelector: (a: TSource, b: TSecond) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return rightJoinHeterogeneous(
+      this,
+      second,
+      firstKeySelector,
+      secondKeySelector,
+      secondSelector,
+      bothSelector,
+      equalityComparer
+    );
+  }
+
+  /**
+   * Performs a right outer join on two homogeneous sequences.
+   * @param second The second sequence of the join operation.
+   * @param keySelector Function that projects the key given an element of one of the sequences to join.
+   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a right outer join of the two input sequences.
+   */
+  public rightJoinHomogeneous<TKey, TResult>(
+    second: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    secondSelector: (item: TSource) => TResult,
+    bothSelector: (a: TSource, b: TSource) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return rightJoinHomogeneous(this, second, keySelector, secondSelector, bothSelector, equalityComparer);
   }
 
   public select<TDestination>(exp: (item: TSource, index: number) => TDestination): Enumerable<TDestination> {

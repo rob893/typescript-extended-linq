@@ -35,6 +35,7 @@ export * from './quantile';
 export * from './range';
 export * from './repeat';
 export * from './reverse';
+export * from './rightJoin';
 export * from './select';
 export * from './sequenceEqual';
 export * from './shuffle';

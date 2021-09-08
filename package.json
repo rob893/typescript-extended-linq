@@ -34,7 +34,8 @@
     "test-clean": "jest --clearCache",
     "test-mutate": "npx stryker run",
     "typedoc": "rm -rf ./docs && typedoc src/index.ts",
-    "version": "npm run build && npm run typedoc"
+    "version": "npm run build && npm run typedoc",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
@@ -51,8 +52,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^4.3.8",
-    "jest": "^27.1.0",
+    "husky": "^7.0.0",
+    "jest": "^27.1.1",
     "linq-to-typescript": "^8.1.0",
     "linq-typescript": "^1.0.251",
     "np": "^7.5.0",

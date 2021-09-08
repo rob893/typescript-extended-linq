@@ -64,7 +64,11 @@ import {
   unionBy,
   where,
   zip,
-  thenBy
+  thenBy,
+  join,
+  groupJoin,
+  leftJoinHeterogeneous,
+  leftJoinHomogeneous
 } from '.';
 
 export class Enumerable<TSource> implements Iterable<TSource> {
@@ -225,14 +229,22 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return groupBy(this, keySelector, equalityComparer);
   }
 
+  /**
+   * Correlates the elements of two sequences based on key equality, and groups the results.
+   * @param inner The sequence to join to the first sequence.
+   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+   * @param resultSelector A function to create a result element from an element from the first sequence and a collection of matching elements from the second sequence.
+   * @param equalityComparer An Enumerable<TResult> that contains elements of type TResult that are obtained by performing a grouped join on two sequences.
+   */
   public groupJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
-    resultSelector: (item: TSource, inner: Iterable<TInner>) => TResult,
+    resultSelector: (item: TSource, inner: Enumerable<TInner>) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TResult> {
-    throw new Error('Not yet implemented');
+    return groupJoin(this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
   }
 
   public intersect(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
@@ -247,6 +259,15 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return intersectBy(this, second, keySelector, equalityComparer);
   }
 
+  /**
+   * Correlates the elements of two sequences based on matching keys.
+   * @param inner The second sequence to join to the first.
+   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+   * @param resultSelector A function to create a result element from two matching elements.
+   * @param equalityComparer A function to compare keys.
+   * @returns An Enumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
+   */
   public join<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
@@ -254,7 +275,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     resultSelector: (item: TSource, inner: TInner) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TResult> {
-    throw new Error('Not yet implemented.');
+    return join(this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
   }
 
   public last(predicate?: (item: TSource, index: number) => boolean): TSource {
@@ -263,6 +284,54 @@ export class Enumerable<TSource> implements Iterable<TSource> {
 
   public lastOrDefault(predicate?: (item: TSource, index: number) => boolean): TSource | null {
     return lastOrDefault(this, predicate);
+  }
+
+  /**
+   * Performs a left outer join on two heterogeneous sequences. Additional arguments specify key selection functions and result projection functions.
+   * @param second The second sequence of the join operation.
+   * @param firstKeySelector Function that projects the key given an element from first.
+   * @param secondKeySelector Function that projects the key given an element from second.
+   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a left outer join of the two input sequences.
+   */
+  public leftJoinHeterogeneous<TSecond, TKey, TResult>(
+    second: Iterable<TSecond>,
+    firstKeySelector: (item: TSource) => TKey,
+    secondKeySelector: (item: TSecond) => TKey,
+    firstSelector: (item: TSource) => TResult,
+    bothSelector: (a: TSource, b: TSecond) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return leftJoinHeterogeneous(
+      this,
+      second,
+      firstKeySelector,
+      secondKeySelector,
+      firstSelector,
+      bothSelector,
+      equalityComparer
+    );
+  }
+
+  /**
+   * Performs a left outer join on two homogeneous sequences. Additional arguments specify key selection functions and result projection functions.
+   * @param second The second sequence of the join operation.
+   * @param keySelector Function that projects the key given an element of one of the sequences to join.
+   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a left outer join of the two input sequences.
+   */
+  public leftJoinHomogeneous<TKey, TResult>(
+    second: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    firstSelector: (item: TSource) => TResult,
+    bothSelector: (a: TSource, b: TSource) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return leftJoinHomogeneous(this, second, keySelector, firstSelector, bothSelector, equalityComparer);
   }
 
   public max(): TSource;

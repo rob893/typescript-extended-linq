@@ -39,6 +39,7 @@ export * from './rightJoin';
 export * from './select';
 export * from './sequenceEqual';
 export * from './shuffle';
+export * from './single';
 export * from './skip';
 export * from './startsWith';
 export * from './sum';

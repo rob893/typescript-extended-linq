@@ -88,52 +88,51 @@ export function rightJoinHomogeneous<TFirst, TKey, TResult>(
   bothSelector: (a: TFirst, b: TFirst) => TResult,
   equalityComparer?: EqualityComparer<TKey>
 ): Enumerable<TResult> {
-  // function* generator(): Generator<TResult> {
-  //   if (equalityComparer) {
-  //     for (const firstItem of first) {
-  //       const firstKey = keySelector(firstItem);
-  //       let matched = false;
+  function* generator(): Generator<TResult> {
+    if (equalityComparer) {
+      for (const secondItem of second) {
+        const secondKey = keySelector(secondItem);
+        let matched = false;
 
-  //       for (const secondItem of second) {
-  //         if (equalityComparer(firstKey, keySelector(secondItem))) {
-  //           matched = true;
-  //           yield bothSelector(firstItem, secondItem);
-  //         }
-  //       }
+        for (const firstItem of first) {
+          if (equalityComparer(secondKey, keySelector(firstItem))) {
+            matched = true;
+            yield bothSelector(firstItem, secondItem);
+          }
+        }
 
-  //       if (!matched) {
-  //         yield firstSelector(firstItem);
-  //       }
-  //     }
-  //   } else {
-  //     const secondKeyMap = new Map<TKey, TFirst[]>();
+        if (!matched) {
+          yield secondSelector(secondItem);
+        }
+      }
+    } else {
+      const firstKeyMap = new Map<TKey, TFirst[]>();
 
-  //     for (const secondItem of second) {
-  //       const secondKey = keySelector(secondItem);
-  //       const currentMatches = secondKeyMap.get(secondKey);
+      for (const firstItem of first) {
+        const firstKey = keySelector(firstItem);
+        const currentMatches = firstKeyMap.get(firstKey);
 
-  //       if (currentMatches !== undefined) {
-  //         currentMatches.push(secondItem);
-  //       } else {
-  //         secondKeyMap.set(secondKey, [secondItem]);
-  //       }
-  //     }
+        if (currentMatches !== undefined) {
+          currentMatches.push(firstItem);
+        } else {
+          firstKeyMap.set(firstKey, [firstItem]);
+        }
+      }
 
-  //     for (const firstItem of first) {
-  //       const firstKey = keySelector(firstItem);
-  //       const secondMatches = secondKeyMap.get(firstKey);
+      for (const secondItem of second) {
+        const secondKey = keySelector(secondItem);
+        const firstMatches = firstKeyMap.get(secondKey);
 
-  //       if (secondMatches !== undefined) {
-  //         for (let i = 0; i < secondMatches.length; i++) {
-  //           yield bothSelector(firstItem, secondMatches[i]);
-  //         }
-  //       } else {
-  //         yield firstSelector(firstItem);
-  //       }
-  //     }
-  //   }
-  // }
+        if (firstMatches !== undefined) {
+          for (let i = 0; i < firstMatches.length; i++) {
+            yield bothSelector(firstMatches[i], secondItem);
+          }
+        } else {
+          yield secondSelector(secondItem);
+        }
+      }
+    }
+  }
 
-  // return new Enumerable(generator);
-  throw new Error('NYI');
+  return new Enumerable(generator);
 }

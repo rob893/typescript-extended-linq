@@ -5,18 +5,21 @@ import { from } from './from';
 
 /**
  * Correlates the elements of two sequences based on key equality, and groups the results.
- * ``` typescript
+ * @example
+ * ```typescript
  * const magnus = { name: 'Magnus' };
  * const terry = { name: 'Terry' };
  * const adam = { name: 'Adam' };
+ * const john = { name: 'John' };
  *
  * const barley = { name: 'Barley', owner: terry };
  * const boots = { name: 'Boots', owner: terry };
  * const whiskers = { name: 'Whiskers', owner: adam };
  * const daisy = { name: 'Daisy', owner: magnus };
+ * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
  *
- * const people = from([magnus, terry, adam]);
- * const pets = from([barley, boots, whiskers, daisy]);
+ * const people = from([magnus, terry, adam, john]);
+ * const pets = from([barley, boots, whiskers, daisy, scratchy]);
  *
  * const result = groupJoin(
  *     people,
@@ -30,7 +33,8 @@ import { from } from './from';
  * expect(result).toEqual([
  *   { ownerName: 'Magnus', pets: ['Daisy'] },
  *   { ownerName: 'Terry', pets: ['Barley', 'Boots'] },
- *   { ownerName: 'Adam', pets: ['Whiskers'] }
+ *   { ownerName: 'Adam', pets: ['Whiskers'] },
+ *   { ownerName: 'John', pets: [] }
  * ]);
  * ```
  * @typeparam TOuter The type of the elements of the first sequence.

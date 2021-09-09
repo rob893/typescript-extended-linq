@@ -65,11 +65,23 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Class that exposes an iterator, which supports a simple iteration and various methods.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>TSource</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of elements in the Enumerable.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -205,9 +217,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L79">Enumerable.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L89">Enumerable.ts:89</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new Enumerable.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -218,6 +235,11 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>srcOrGenerator: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The source Iterable or a Generator function.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -233,7 +255,7 @@
 					<div class="tsd-signature tsd-kind-icon">src<wbr>Generator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L77">Enumerable.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L83">Enumerable.ts:83</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -266,10 +288,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of Iterable.__@iterator@83</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L116">Enumerable.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L155">Enumerable.ts:155</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Exposes an iterator that can be used for iteration.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">]);</span>
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">number</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">numbers</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Iteration is allowed because of the iterator.</span>
+<span style="color: #000000">}</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The iterator for the Enumerable.</p>
 						</li>
 					</ul>
 				</section>
@@ -278,19 +315,28 @@
 					<h3>aggregate</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">aggregate<span class="tsd-signature-symbol">(</span>aggregator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span></li>
+						<li class="tsd-signature tsd-kind-icon">aggregate&lt;TAccumulate, TResult&gt;<span class="tsd-signature-symbol">(</span>aggregator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAccumulate</span>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, resultSelector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>accumulated<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
 						<li class="tsd-signature tsd-kind-icon">aggregate&lt;TAccumulate&gt;<span class="tsd-signature-symbol">(</span>aggregator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAccumulate</span>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L120">Enumerable.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L164">Enumerable.ts:164</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Applies an accumulator function over a sequence.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>aggregator: <span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TSource</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An accumulator function to be invoked on each element.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -318,23 +364,42 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
+							<p>The final accumulator value.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L121">Enumerable.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L176">Enumerable.ts:176</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Applies an accumulator function over a sequence.
+									The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TAccumulate</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of the accumulator value.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of the resulting value.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>aggregator: <span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAccumulate</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An accumulator function to be invoked on each element.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -362,9 +427,99 @@
 								</li>
 								<li>
 									<h5>seed: <span class="tsd-signature-type">TAccumulate</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The initial accumulator value.</p>
+									</div>
+								</li>
+								<li>
+									<h5>resultSelector: <span class="tsd-signature-symbol">(</span>accumulated<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An accumulator function to be invoked on each element.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>accumulated<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>accumulated: <span class="tsd-signature-type">TAccumulate</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
+							<p>The final accumulator value.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L189">Enumerable.ts:189</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TAccumulate</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of the accumulator value.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>aggregator: <span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAccumulate</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An accumulator function to be invoked on each element.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>prev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span>, curr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAccumulate</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>prev: <span class="tsd-signature-type">TAccumulate</span></h5>
+														</li>
+														<li>
+															<h5>curr: <span class="tsd-signature-type">TSource</span></h5>
+														</li>
+														<li>
+															<h5>index: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TAccumulate</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>seed: <span class="tsd-signature-type">TAccumulate</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The initial accumulator value.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TAccumulate</span></h4>
+							<p>The final accumulator value.</p>
 						</li>
 					</ul>
 				</section>
@@ -378,17 +533,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L144">Enumerable.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L212">Enumerable.ts:212</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Determines whether all elements of a sequence satisfy a condition.</p>
 								</div>
-								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">areAllNumbersEven</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">)</span>
-<span style="color: #000000">  .</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> % </span><span style="color: #098658">2</span><span style="color: #000000"> === </span><span style="color: #098658">0</span><span style="color: #000000">);</span>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">areAllNumbersEven</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> % </span><span style="color: #098658">2</span><span style="color: #000000"> === </span><span style="color: #098658">0</span><span style="color: #000000">); </span><span style="color: #008000">// false</span>
 </code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -435,13 +593,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L148">Enumerable.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L226">Enumerable.ts:226</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Determines whether any element of a sequence exists or satisfies a condition.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">areAnyNumbersEven</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">any</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> % </span><span style="color: #098658">2</span><span style="color: #000000"> === </span><span style="color: #098658">0</span><span style="color: #000000">); </span><span style="color: #008000">// true</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> condition: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function to test each element for a condition.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -466,6 +639,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>true if the source sequence contains any elements (or if at least one matches condition if condition is passed); otherwise, false.</p>
 						</li>
 					</ul>
 				</section>
@@ -479,16 +653,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L152">Enumerable.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L240">Enumerable.ts:240</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Appends a value to the end of the sequence.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">withFive</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">append</span><span style="color: #000000">(</span><span style="color: #098658">5</span><span style="color: #000000">); </span><span style="color: #008000">// [1, 2, 3, 4, 5]</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>item: <span class="tsd-signature-type">TSource</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The value to append.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A new sequence that ends with element.</p>
 						</li>
 					</ul>
 				</section>
@@ -502,10 +692,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L156">Enumerable.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L248">Enumerable.ts:248</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the input as an Enumerable.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The input sequence as Enumerable.</p>
 						</li>
 					</ul>
 				</section>
@@ -519,7 +715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L160">Enumerable.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L252">Enumerable.ts:252</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -566,7 +762,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L164">Enumerable.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L256">Enumerable.ts:256</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -613,13 +809,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L168">Enumerable.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L270">Enumerable.ts:270</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Computes the average of a sequence of numeric values.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">average</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">average</span><span style="color: #000000">(); </span><span style="color: #008000">// 2</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> selector: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A transform function to apply to each element.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -641,6 +852,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							<p>The average of the sequence of values.</p>
 						</li>
 					</ul>
 				</section>
@@ -654,16 +866,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L172">Enumerable.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L284">Enumerable.ts:284</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Split the elements of a sequence into chunks of size at most chunkSize.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">chunks</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">chunk</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">); </span><span style="color: #008000">// [[1, 2], [3, 4], [5]]</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>chunkSize: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The maximum size of each chunk.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An Enumerable<TSource> that contains the elements the input sequence split into chunks of size chunkSize.</p>
 						</li>
 					</ul>
 				</section>
@@ -677,16 +905,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L176">Enumerable.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L298">Enumerable.ts:298</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Concatenates two sequences.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">moreNumbers</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">concat</span><span style="color: #000000">([</span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">]); </span><span style="color: #008000">// [1, 2, 3, 4, 5]</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>second: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The sequence to concatenate to the first sequence.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An Enumerable<TSource> that contains the concatenated elements of the two input sequences.</p>
 						</li>
 					</ul>
 				</section>
@@ -700,19 +944,38 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L180">Enumerable.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L313">Enumerable.ts:313</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Determines whether a sequence contains a specified element.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">hasThree</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">); </span><span style="color: #008000">// true</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">TSource</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The value to locate in the sequence.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> equalityComparer: <a href="../modules.html#EqualityComparer" class="tsd-signature-type" data-tsd-kind="Type alias">EqualityComparer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An equality comparer to compare values.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>true if the source sequence contains an element that has the specified value; otherwise, false.</p>
 						</li>
 					</ul>
 				</section>
@@ -726,13 +989,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L184">Enumerable.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L328">Enumerable.ts:328</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the number of elements in a sequence.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numCount</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">count</span><span style="color: #000000">(); </span><span style="color: #008000">// 3</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">evenNumCount</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">).</span><span style="color: #795E26">count</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> % </span><span style="color: #098658">2</span><span style="color: #000000"> === </span><span style="color: #098658">0</span><span style="color: #000000">); </span><span style="color: #008000">// 1</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> condition: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function to test each element for a condition.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -757,6 +1036,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							<p>The number of elements in the input sequence.</p>
 						</li>
 					</ul>
 				</section>
@@ -770,7 +1050,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L188">Enumerable.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L332">Enumerable.ts:332</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -793,7 +1073,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L192">Enumerable.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L336">Enumerable.ts:336</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -816,7 +1096,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L196">Enumerable.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L340">Enumerable.ts:340</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -866,7 +1146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L203">Enumerable.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L347">Enumerable.ts:347</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -889,7 +1169,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L207">Enumerable.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L351">Enumerable.ts:351</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -912,7 +1192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L211">Enumerable.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L355">Enumerable.ts:355</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -938,7 +1218,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L215">Enumerable.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L359">Enumerable.ts:359</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -964,7 +1244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L219">Enumerable.ts:219</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L363">Enumerable.ts:363</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1017,7 +1297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L227">Enumerable.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L371">Enumerable.ts:371</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1061,7 +1341,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L231">Enumerable.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L375">Enumerable.ts:375</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1105,7 +1385,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L235">Enumerable.ts:235</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L379">Enumerable.ts:379</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1149,7 +1429,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L239">Enumerable.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L383">Enumerable.ts:383</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1199,37 +1479,47 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L285">Enumerable.ts:285</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L433">Enumerable.ts:433</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Correlates the elements of two sequences based on key equality, and groups the results.</p>
-									<p>``` typescript
-										const magnus = { name: &#39;Magnus&#39; };
-										const terry = { name: &#39;Terry&#39; };
-									const adam = { name: &#39;Adam&#39; };</p>
 								</div>
-								<p>const barley = { name: &#39;Barley&#39;, owner: terry };
-									const boots = { name: &#39;Boots&#39;, owner: terry };
-									const whiskers = { name: &#39;Whiskers&#39;, owner: adam };
-								const daisy = { name: &#39;Daisy&#39;, owner: magnus };</p>
-								<p>const people = from([magnus, terry, adam]);
-								const pets = from([barley, boots, whiskers, daisy]);</p>
-								<p>const result = people
-									.groupJoin(
-									pets,
-									person =&gt; person,
-									pet =&gt; pet.owner,
-									(person, petCollection) =&gt; ({ ownerName: person.name, pets: petCollection.select(p =&gt; p.name).toArray() })
-									)
-								.toArray();</p>
-								<p>expect(result).toEqual([
-									{ ownerName: &#39;Magnus&#39;, pets: [&#39;Daisy&#39;] },
-									{ ownerName: &#39;Terry&#39;, pets: [&#39;Barley&#39;, &#39;Boots&#39;] },
-									{ ownerName: &#39;Adam&#39;, pets: [&#39;Whiskers&#39;] }
-									]);
-								```</p>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">magnus</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Magnus&#039;</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">terry</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Terry&#039;</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">adam</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Adam&#039;</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">john</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;John&#039;</span><span style="color: #000000"> };</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">barley</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Barley&#039;</span><span style="color: #000000">, </span><span style="color: #001080">owner:</span><span style="color: #000000"> </span><span style="color: #001080">terry</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">boots</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Boots&#039;</span><span style="color: #000000">, </span><span style="color: #001080">owner:</span><span style="color: #000000"> </span><span style="color: #001080">terry</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">whiskers</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Whiskers&#039;</span><span style="color: #000000">, </span><span style="color: #001080">owner:</span><span style="color: #000000"> </span><span style="color: #001080">adam</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">daisy</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Daisy&#039;</span><span style="color: #000000">, </span><span style="color: #001080">owner:</span><span style="color: #000000"> </span><span style="color: #001080">magnus</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">scratchy</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Scratchy&#039;</span><span style="color: #000000">, </span><span style="color: #001080">owner:</span><span style="color: #000000"> { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Bob&#039;</span><span style="color: #000000"> } };</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">people</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #001080">magnus</span><span style="color: #000000">, </span><span style="color: #001080">terry</span><span style="color: #000000">, </span><span style="color: #001080">adam</span><span style="color: #000000">, </span><span style="color: #001080">john</span><span style="color: #000000">]);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">pets</span><span style="color: #000000"> = </span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #001080">barley</span><span style="color: #000000">, </span><span style="color: #001080">boots</span><span style="color: #000000">, </span><span style="color: #001080">whiskers</span><span style="color: #000000">, </span><span style="color: #001080">daisy</span><span style="color: #000000">, </span><span style="color: #001080">scratchy</span><span style="color: #000000">]);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">result</span><span style="color: #000000"> = </span><span style="color: #001080">people</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">groupJoin</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #001080">pets</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">person</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">person</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">pet</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">pet</span><span style="color: #000000">.</span><span style="color: #001080">owner</span><span style="color: #000000">,</span>
+<span style="color: #000000">    (</span><span style="color: #001080">person</span><span style="color: #000000">, </span><span style="color: #001080">petCollection</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">ownerName:</span><span style="color: #000000"> </span><span style="color: #001080">person</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">, </span><span style="color: #001080">pets:</span><span style="color: #000000"> </span><span style="color: #001080">petCollection</span><span style="color: #000000">.</span><span style="color: #795E26">select</span><span style="color: #000000">(</span><span style="color: #001080">p</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">p</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">).</span><span style="color: #795E26">toArray</span><span style="color: #000000">() })</span>
+<span style="color: #000000">  )</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">toArray</span><span style="color: #000000">();</span>
+
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">([</span>
+<span style="color: #000000">  { </span><span style="color: #001080">ownerName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Magnus&#039;</span><span style="color: #000000">, </span><span style="color: #001080">pets:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;Daisy&#039;</span><span style="color: #000000">] },</span>
+<span style="color: #000000">  { </span><span style="color: #001080">ownerName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Terry&#039;</span><span style="color: #000000">, </span><span style="color: #001080">pets:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;Barley&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;Boots&#039;</span><span style="color: #000000">] },</span>
+<span style="color: #000000">  { </span><span style="color: #001080">ownerName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Adam&#039;</span><span style="color: #000000">, </span><span style="color: #001080">pets:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;Whiskers&#039;</span><span style="color: #000000">] },</span>
+<span style="color: #000000">  { </span><span style="color: #001080">ownerName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;John&#039;</span><span style="color: #000000">, </span><span style="color: #001080">pets:</span><span style="color: #000000"> [] }</span>
+<span style="color: #000000">]);</span>
+</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -1356,7 +1646,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L295">Enumerable.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L443">Enumerable.ts:443</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1382,7 +1672,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L299">Enumerable.ts:299</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L447">Enumerable.ts:447</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1435,7 +1725,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L316">Enumerable.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L464">Enumerable.ts:464</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1560,7 +1850,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L326">Enumerable.ts:326</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L474">Enumerable.ts:474</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1604,7 +1894,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L330">Enumerable.ts:330</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L478">Enumerable.ts:478</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1648,7 +1938,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L344">Enumerable.ts:344</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L492">Enumerable.ts:492</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1797,7 +2087,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L372">Enumerable.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L520">Enumerable.ts:520</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1920,7 +2210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L382">Enumerable.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L530">Enumerable.ts:530</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
@@ -1928,7 +2218,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L383">Enumerable.ts:383</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L531">Enumerable.ts:531</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1975,7 +2265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L388">Enumerable.ts:388</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L536">Enumerable.ts:536</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2023,7 +2313,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L392">Enumerable.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L540">Enumerable.ts:540</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
@@ -2031,7 +2321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L393">Enumerable.ts:393</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L541">Enumerable.ts:541</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2078,7 +2368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L398">Enumerable.ts:398</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L546">Enumerable.ts:546</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2125,7 +2415,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L402">Enumerable.ts:402</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L550">Enumerable.ts:550</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2172,7 +2462,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L406">Enumerable.ts:406</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L554">Enumerable.ts:554</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2222,7 +2512,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L410">Enumerable.ts:410</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L558">Enumerable.ts:558</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2272,7 +2562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L417">Enumerable.ts:417</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L565">Enumerable.ts:565</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2316,7 +2606,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L421">Enumerable.ts:421</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L569">Enumerable.ts:569</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2339,7 +2629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L425">Enumerable.ts:425</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L573">Enumerable.ts:573</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2383,7 +2673,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L429">Enumerable.ts:429</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L577">Enumerable.ts:577</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2400,7 +2690,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L443">Enumerable.ts:443</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L591">Enumerable.ts:591</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2549,7 +2839,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L471">Enumerable.ts:471</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L619">Enumerable.ts:619</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2671,7 +2961,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L481">Enumerable.ts:481</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L629">Enumerable.ts:629</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2721,7 +3011,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L485">Enumerable.ts:485</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L633">Enumerable.ts:633</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2771,7 +3061,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L489">Enumerable.ts:489</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L637">Enumerable.ts:637</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2797,7 +3087,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L493">Enumerable.ts:493</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L641">Enumerable.ts:641</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2808,23 +3098,31 @@
 					<a name="single" class="tsd-anchor"></a>
 					<h3>single</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">single<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span></li>
+						<li class="tsd-signature tsd-kind-icon">single<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L497">Enumerable.ts:497</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L650">Enumerable.ts:650</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> predicate: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> predicate: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function to test an element for a condition.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -2832,6 +3130,9 @@
 													<ul class="tsd-parameters">
 														<li>
 															<h5>item: <span class="tsd-signature-type">TSource</span></h5>
+														</li>
+														<li>
+															<h5>index: <span class="tsd-signature-type">number</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -2842,6 +3143,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
+							<p>The single element of the input sequence that satisfies a condition.</p>
 						</li>
 					</ul>
 				</section>
@@ -2849,34 +3151,23 @@
 					<a name="singleOrDefault" class="tsd-anchor"></a>
 					<h3>single<wbr>OrDefault</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">single<wbr>OrDefault<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></li>
-						<li class="tsd-signature tsd-kind-icon">single<wbr>OrDefault<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></li>
-						<li class="tsd-signature tsd-kind-icon">single<wbr>OrDefault<span class="tsd-signature-symbol">(</span>defaultItem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span></li>
-						<li class="tsd-signature tsd-kind-icon">single<wbr>OrDefault<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, defaultItem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span></li>
+						<li class="tsd-signature tsd-kind-icon">single<wbr>OrDefault<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L501">Enumerable.ts:501</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L502">Enumerable.ts:502</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L654">Enumerable.ts:654</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>predicate: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> predicate: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -2884,6 +3175,9 @@
 													<ul class="tsd-parameters">
 														<li>
 															<h5>item: <span class="tsd-signature-type">TSource</span></h5>
+														</li>
+														<li>
+															<h5>index: <span class="tsd-signature-type">number</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -2894,55 +3188,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TSource</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L503">Enumerable.ts:503</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>defaultItem: <span class="tsd-signature-type">TSource</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L504">Enumerable.ts:504</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>predicate: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>item: <span class="tsd-signature-type">TSource</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5>defaultItem: <span class="tsd-signature-type">TSource</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2956,7 +3201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L512">Enumerable.ts:512</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L658">Enumerable.ts:658</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2979,7 +3224,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L516">Enumerable.ts:516</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L662">Enumerable.ts:662</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3002,7 +3247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L520">Enumerable.ts:520</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L666">Enumerable.ts:666</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3046,7 +3291,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L524">Enumerable.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L670">Enumerable.ts:670</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3072,7 +3317,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L528">Enumerable.ts:528</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L674">Enumerable.ts:674</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3113,7 +3358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L532">Enumerable.ts:532</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L678">Enumerable.ts:678</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3136,7 +3381,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L536">Enumerable.ts:536</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L682">Enumerable.ts:682</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3159,7 +3404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L540">Enumerable.ts:540</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L686">Enumerable.ts:686</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3182,7 +3427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L544">Enumerable.ts:544</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L690">Enumerable.ts:690</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3226,7 +3471,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L548">Enumerable.ts:548</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L694">Enumerable.ts:694</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -3243,9 +3488,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L552">Enumerable.ts:552</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L701">Enumerable.ts:701</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>Not yet implemented. Do not use.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
 						</li>
 					</ul>
@@ -3261,7 +3513,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L556">Enumerable.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L705">Enumerable.ts:705</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3299,7 +3551,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L557">Enumerable.ts:557</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L706">Enumerable.ts:706</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3371,7 +3623,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L568">Enumerable.ts:568</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L717">Enumerable.ts:717</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3403,7 +3655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L569">Enumerable.ts:569</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L718">Enumerable.ts:718</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3471,7 +3723,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L580">Enumerable.ts:580</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L729">Enumerable.ts:729</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSource</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3488,7 +3740,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L584">Enumerable.ts:584</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L733">Enumerable.ts:733</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3514,7 +3766,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L588">Enumerable.ts:588</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L737">Enumerable.ts:737</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3567,7 +3819,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L596">Enumerable.ts:596</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L745">Enumerable.ts:745</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3612,7 +3864,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L600">Enumerable.ts:600</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L749">Enumerable.ts:749</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3632,7 +3884,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L601">Enumerable.ts:601</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L750">Enumerable.ts:750</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3688,9 +3940,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L104">Enumerable.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L132">Enumerable.ts:132</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an empty Enumerable.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">empty</span><span style="color: #000000"> = </span><span style="color: #001080">Enumerable</span><span style="color: #000000">.</span><span style="color: #795E26">empty</span><span style="color: #000000">();</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -3698,6 +3961,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A new empty Enumerable.</p>
 						</li>
 					</ul>
 				</section>
@@ -3711,9 +3975,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L100">Enumerable.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L120">Enumerable.ts:120</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new Enumerable from the input Iterable.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">numbers</span><span style="color: #000000"> = [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">];</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">enumerable</span><span style="color: #000000"> = </span><span style="color: #001080">Enumerable</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">numbers</span><span style="color: #000000">);</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -3724,9 +4000,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>src: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Iterable to create an Enumerable from.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Enumerable.html" class="tsd-signature-type" data-tsd-kind="Class">Enumerable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A new Enumerable.</p>
 						</li>
 					</ul>
 				</section>
@@ -3740,7 +4020,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L108">Enumerable.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L136">Enumerable.ts:136</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3766,7 +4046,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/7bad349/src/Enumerable.ts#L112">Enumerable.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/rob893/typescript-extended-linq/blob/ee94fd4/src/Enumerable.ts#L140">Enumerable.ts:140</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

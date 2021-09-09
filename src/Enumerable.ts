@@ -70,12 +70,22 @@ import {
   leftJoinHeterogeneous,
   leftJoinHomogeneous,
   rightJoinHeterogeneous,
-  rightJoinHomogeneous
+  rightJoinHomogeneous,
+  single,
+  singleOrDefault
 } from '.';
 
+/**
+ * Class that exposes an iterator, which supports a simple iteration and various methods.
+ * @typeparam TSource The type of elements in the Enumerable.
+ */
 export class Enumerable<TSource> implements Iterable<TSource> {
   private readonly srcGenerator: () => Generator<TSource>;
 
+  /**
+   * Creates a new Enumerable.
+   * @param srcOrGenerator The source Iterable or a Generator function.
+   */
   public constructor(srcOrGenerator: (() => Generator<TSource>) | Iterable<TSource>) {
     if (typeof srcOrGenerator === 'function') {
       this.srcGenerator = srcOrGenerator;
@@ -97,10 +107,28 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     }
   }
 
+  /**
+   * Creates a new Enumerable from the input Iterable.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3, 4];
+   * const enumerable = Enumerable.from(numbers);
+   * ```
+   * @param src The Iterable to create an Enumerable from.
+   * @returns A new Enumerable.
+   */
   public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult> {
     return from(src);
   }
 
+  /**
+   * Creates an empty Enumerable.
+   * @example
+   * ```typescript
+   * const empty = Enumerable.empty();
+   * ```
+   * @returns A new empty Enumerable.
+   */
   public static empty<TResult>(): Enumerable<TResult> {
     return empty();
   }
@@ -113,31 +141,71 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return repeat(element, count);
   }
 
+  /**
+   * Exposes an iterator that can be used for iteration.
+   * @example
+   * ```typescript
+   * const numbers = from([1, 2, 3]);
+   * for (const number of numbers) {
+   *   // Iteration is allowed because of the iterator.
+   * }
+   * ```
+   * @returns The iterator for the Enumerable.
+   */
   public [Symbol.iterator](): Generator<TSource> {
     return this.srcGenerator();
   }
 
+  /**
+   * Applies an accumulator function over a sequence.
+   * @param aggregator An accumulator function to be invoked on each element.
+   * @returns The final accumulator value.
+   */
   public aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
+
+  /**
+   * Applies an accumulator function over a sequence.
+   * The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
+   * @typeparam TAccumulate The type of the accumulator value.
+   * @typeparam TResult The type of the resulting value.
+   * @param aggregator An accumulator function to be invoked on each element.
+   * @param seed The initial accumulator value.
+   * @param resultSelector An accumulator function to be invoked on each element.
+   * @returns The final accumulator value.
+   */
+  public aggregate<TAccumulate, TResult>(
+    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
+    seed: TAccumulate,
+    resultSelector: (accumulated: TAccumulate) => TResult
+  ): TResult;
+
+  /**
+   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
+   * @typeparam TAccumulate The type of the accumulator value.
+   * @param aggregator An accumulator function to be invoked on each element.
+   * @param seed The initial accumulator value.
+   * @returns The final accumulator value.
+   */
   public aggregate<TAccumulate>(
     aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
     seed: TAccumulate
   ): TAccumulate;
-  public aggregate<TAccumulate>(
+
+  public aggregate<TAccumulate, TResult>(
     aggregator: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
-    seed?: TAccumulate | TSource
-  ): TAccumulate | TSource {
-    return aggregate(this, aggregator, seed);
+    seed?: TAccumulate | TSource,
+    resultSelector?: (accumulated: TAccumulate) => TResult
+  ): TAccumulate | TSource | TResult {
+    return aggregate(this, aggregator, seed, resultSelector);
   }
 
   /**
    * Determines whether all elements of a sequence satisfy a condition.
-   *
+   * @example
    * ```typescript
    * const numbers = [1, 2, 3, 4];
-   * const areAllNumbersEven = from(numbers)
-   *   .all(x => x % 2 === 0);
+   * const areAllNumbersEven = from(numbers).all(x => x % 2 === 0); // false
    * ```
-   *
    * @param condition A function to test each element for a condition.
    * @returns true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
    */
@@ -145,14 +213,38 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return all(this, condition);
   }
 
+  /**
+   * Determines whether any element of a sequence exists or satisfies a condition.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3, 4];
+   * const areAnyNumbersEven = from(numbers).any(x => x % 2 === 0); // true
+   * ```
+   * @param condition A function to test each element for a condition.
+   * @returns true if the source sequence contains any elements (or if at least one matches condition if condition is passed); otherwise, false.
+   */
   public any(condition?: (item: TSource, index: number) => boolean): boolean {
     return any(this, condition);
   }
 
+  /**
+   * Appends a value to the end of the sequence.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3, 4];
+   * const withFive = from(numbers).append(5); // [1, 2, 3, 4, 5]
+   * ```
+   * @param item The value to append.
+   * @returns A new sequence that ends with element.
+   */
   public append(item: TSource): Enumerable<TSource> {
     return append(this, item);
   }
 
+  /**
+   * Returns the input as an Enumerable.
+   * @returns The input sequence as Enumerable.
+   */
   public asEnumerable(): Enumerable<TSource> {
     return asEnumerable(this);
   }
@@ -165,22 +257,74 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return atMost(this, count, predicate);
   }
 
+  /**
+   * Computes the average of a sequence of numeric values.
+   * @example
+   * ```typescript
+   * const numbers = [2, 2, 1, 3];
+   * const average = from(numbers).average(); // 2
+   * ```
+   * @param selector A transform function to apply to each element.
+   * @returns The average of the sequence of values.
+   */
   public average(selector?: (item: TSource) => number): number {
     return average(this, selector);
   }
 
+  /**
+   * Split the elements of a sequence into chunks of size at most chunkSize.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3, 4, 5];
+   * const chunks = from(numbers).chunk(2); // [[1, 2], [3, 4], [5]]
+   * ```
+   * @param chunkSize The maximum size of each chunk.
+   * @returns An Enumerable<TSource> that contains the elements the input sequence split into chunks of size chunkSize.
+   */
   public chunk(chunkSize: number): Enumerable<Enumerable<TSource>> {
     return chunk(this, chunkSize);
   }
 
+  /**
+   * Concatenates two sequences.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2];
+   * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * ```
+   * @param second The sequence to concatenate to the first sequence.
+   * @returns An Enumerable<TSource> that contains the concatenated elements of the two input sequences.
+   */
   public concat(second: Iterable<TSource>): Enumerable<TSource> {
     return concat(this, second);
   }
 
+  /**
+   * Determines whether a sequence contains a specified element.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3];
+   * const hasThree = from(numbers).contains(3); // true
+   * ```
+   * @param value The value to locate in the sequence.
+   * @param equalityComparer An equality comparer to compare values.
+   * @returns true if the source sequence contains an element that has the specified value; otherwise, false.
+   */
   public contains(value: TSource, equalityComparer?: EqualityComparer<TSource>): boolean {
     return contains(this, value, equalityComparer);
   }
 
+  /**
+   * Returns the number of elements in a sequence.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3];
+   * const numCount = from(numbers).count(); // 3
+   * const evenNumCount = from(numbers).count(x => x % 2 === 0); // 1
+   * ```
+   * @param condition A function to test each element for a condition.
+   * @returns The number of elements in the input sequence.
+   */
   public count(condition?: (item: TSource, index: number) => boolean): number {
     return count(this, condition);
   }
@@ -245,18 +389,21 @@ export class Enumerable<TSource> implements Iterable<TSource> {
 
   /**
    * Correlates the elements of two sequences based on key equality, and groups the results.
-   * ``` typescript
+   * @example
+   * ```typescript
    * const magnus = { name: 'Magnus' };
    * const terry = { name: 'Terry' };
    * const adam = { name: 'Adam' };
+   * const john = { name: 'John' };
    *
    * const barley = { name: 'Barley', owner: terry };
    * const boots = { name: 'Boots', owner: terry };
    * const whiskers = { name: 'Whiskers', owner: adam };
    * const daisy = { name: 'Daisy', owner: magnus };
+   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
    *
-   * const people = from([magnus, terry, adam]);
-   * const pets = from([barley, boots, whiskers, daisy]);
+   * const people = from([magnus, terry, adam, john]);
+   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
    *
    * const result = people
    *   .groupJoin(
@@ -270,7 +417,8 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * expect(result).toEqual([
    *   { ownerName: 'Magnus', pets: ['Daisy'] },
    *   { ownerName: 'Terry', pets: ['Barley', 'Boots'] },
-   *   { ownerName: 'Adam', pets: ['Whiskers'] }
+   *   { ownerName: 'Adam', pets: ['Whiskers'] },
+   *   { ownerName: 'John', pets: [] }
    * ]);
    * ```
    * @typeparam TInner The type of the elements of the second sequence.
@@ -494,19 +642,17 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return shuffle(this);
   }
 
-  public single(predicate?: (item: TSource) => boolean): TSource {
-    throw new Error('Not yet implemented.');
+  /**
+   * Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.
+   * @param predicate A function to test an element for a condition.
+   * @returns The single element of the input sequence that satisfies a condition.
+   */
+  public single(predicate?: (item: TSource, index: number) => boolean): TSource {
+    return single(this, predicate);
   }
 
-  public singleOrDefault(): TSource | null;
-  public singleOrDefault(predicate: (item: TSource) => boolean): TSource | null;
-  public singleOrDefault(defaultItem: TSource): TSource;
-  public singleOrDefault(predicate: (item: TSource) => boolean, defaultItem: TSource): TSource;
-  public singleOrDefault(
-    predicateOrDefaultItem?: ((item: TSource) => boolean) | TSource,
-    defaultItem?: TSource
-  ): TSource | null {
-    throw new Error('Not yet implemented.');
+  public singleOrDefault(predicate?: (item: TSource, index: number) => boolean): TSource | null {
+    return singleOrDefault(this, predicate);
   }
 
   public skip(count: number): Enumerable<TSource> {
@@ -549,6 +695,9 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return toArray(this);
   }
 
+  /**
+   * @deprecated Not yet implemented. Do not use.
+   */
   public toLookup(): unknown {
     throw new Error('Not yet implemented');
   }

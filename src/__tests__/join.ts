@@ -22,14 +22,16 @@ describe('join', () => {
     const magnus: Person = { name: 'Magnus' };
     const terry: Person = { name: 'Terry' };
     const adam: Person = { name: 'Adam' };
+    const john: Person = { name: 'John' };
 
     const barley: Pet = { name: 'Barley', owner: terry };
     const boots: Pet = { name: 'Boots', owner: terry };
     const whiskers: Pet = { name: 'Whiskers', owner: adam };
     const daisy: Pet = { name: 'Daisy', owner: magnus };
+    const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam]);
-    const pets = from([barley, boots, whiskers, daisy]);
+    const people = from([magnus, terry, adam, john]);
+    const pets = from([barley, boots, whiskers, daisy, scratchy]);
 
     const result = people
       .join(
@@ -55,14 +57,16 @@ describe('join', () => {
     const magnus: Person = { name: 'Magnus' };
     const terry: Person = { name: 'Terry' };
     const adam: Person = { name: 'Adam' };
+    const john: Person = { name: 'John' };
 
     const barley: Pet = { name: 'Barley', owner: terry };
     const boots: Pet = { name: 'Boots', owner: terry };
     const whiskers: Pet = { name: 'Whiskers', owner: adam };
     const daisy: Pet = { name: 'Daisy', owner: magnus };
+    const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam]);
-    const pets = from([barley, boots, whiskers, daisy]);
+    const people = from([magnus, terry, adam, john]);
+    const pets = from([barley, boots, whiskers, daisy, scratchy]);
 
     const result = people
       .join(

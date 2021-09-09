@@ -6,10 +6,6 @@ export function ofType<TSource, TResult>(
   type: new (...params: unknown[]) => TResult
 ): Enumerable<TResult>;
 export function ofType<TSource, TResult>(src: Iterable<TSource>, type: TypeOfMember): Enumerable<TResult>;
-// export function ofType<TSource, TResult>(
-//   src: Iterable<TSource>,
-//   type: (new (...params: unknown[]) => TResult) | TypeOfMember
-// ): Enumerable<TResult | TSource>;
 export function ofType<TSource, TResult>(
   src: Iterable<TSource>,
   type: (new (...params: unknown[]) => TResult) | TypeOfMember

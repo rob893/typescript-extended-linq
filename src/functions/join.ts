@@ -2,7 +2,43 @@ import { Enumerable } from '../Enumerable';
 import { EqualityComparer } from '../types';
 
 /**
- * Correlates the elements of two sequences based on matching keys.
+ * Performs an inner join by correlating the elements of two sequences based on matching keys.
+ * @example
+ * ```typescript
+ * const magnus = { name: 'Magnus' };
+ * const terry = { name: 'Terry' };
+ * const adam = { name: 'Adam' };
+ * const john = { name: 'John' };
+ *
+ * const barley = { name: 'Barley', owner: terry };
+ * const boots = { name: 'Boots', owner: terry };
+ * const whiskers = { name: 'Whiskers', owner: adam };
+ * const daisy = { name: 'Daisy', owner: magnus };
+ * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
+ *
+ * const people = from([magnus, terry, adam, john]);
+ * const pets = from([barley, boots, whiskers, daisy, scratchy]);
+ *
+ * const result = join(
+ *     people,
+ *     pets,
+ *     person => person,
+ *     pet => pet.owner,
+ *     (person, pet) => ({ ownerName: person.name, pet: pet.name })
+ *   )
+ *   .toArray();
+ *
+ * expect(result).toEqual([
+ *   { ownerName: 'Magnus', pet: 'Daisy' },
+ *   { ownerName: 'Terry', pet: 'Barley' },
+ *   { ownerName: 'Terry', pet: 'Boots' },
+ *   { ownerName: 'Adam', pet: 'Whiskers' }
+ * ]);
+ * ```
+ * @typeparam TOuter The type of the elements of the first sequence.
+ * @typeparam TInner The type of the elements of the second sequence.
+ * @typeparam TKey The type of the keys returned by the key selector functions.
+ * @typeparam TResult The type of the result elements.
  * @param outer The first sequence to join.
  * @param inner The second sequence to join to the first.
  * @param outerKeySelector A function to extract the join key from each element of the first sequence.

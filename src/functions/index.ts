@@ -19,6 +19,7 @@ export * from './except';
 export * from './first';
 export * from './forEach';
 export * from './from';
+export * from './fullJoin';
 export * from './groupBy';
 export * from './groupJoin';
 export * from './intersect';

@@ -72,7 +72,9 @@ import {
   rightJoinHeterogeneous,
   rightJoinHomogeneous,
   single,
-  singleOrDefault
+  singleOrDefault,
+  fullJoinHeterogeneous,
+  fullJoinHomogeneous
 } from '.';
 
 /**
@@ -117,7 +119,24 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param src The Iterable to create an Enumerable from.
    * @returns A new Enumerable.
    */
-  public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult> {
+  public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult>;
+
+  /**
+   * Creates a new Enumerable from the input object.
+   * @example
+   * ```typescript
+   * const obj = {
+   *   foo: 1,
+   *   bar: 'b'
+   * };
+   * const enumerable = Enumerable.from(obj);
+   * ```
+   * @param src The object to create an Enumerable from.
+   * @returns A new Enumerable.
+   */
+  public static from<TResult>(src: TResult): Enumerable<[keyof TResult, TResult[keyof TResult]]>;
+
+  public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult | [keyof TResult, TResult[keyof TResult]]> {
     return from(src);
   }
 
@@ -380,6 +399,74 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     forEach(this, callback);
   }
 
+  /**
+   * Performs a full outer join on two heterogeneous sequences.
+   * Additional arguments specify key selection functions, result projection functions and a key comparer.
+   * @typeparam TSecond The type of elements in the second sequence.
+   * @typeparam TKey The type of the key returned by the key selector functions.
+   * @typeparam TResult The type of the result elements.
+   * @param second The second sequence of the join operation.
+   * @param firstKeySelector Function that projects the key given an element from first.
+   * @param secondKeySelector Function that projects the key given an element from second.
+   * @param firstSelector: Function that projects the result given just an element from first where there is no corresponding element in second.
+   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a right outer join of the two input sequences.
+   */
+  public fullJoinHeterogeneous<TSecond, TKey, TResult>(
+    second: Iterable<TSecond>,
+    firstKeySelector: (item: TSource) => TKey,
+    secondKeySelector: (item: TSecond) => TKey,
+    firstSelector: (item: TSource) => TResult,
+    secondSelector: (item: TSecond) => TResult,
+    bothSelector: (a: TSource, b: TSecond) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return fullJoinHeterogeneous(
+      this,
+      second,
+      firstKeySelector,
+      secondKeySelector,
+      firstSelector,
+      secondSelector,
+      bothSelector,
+      equalityComparer
+    );
+  }
+
+  /**
+   * Performs a full outer join on two homogeneous sequences.
+   * Additional arguments specify key selection functions and result projection functions.
+   * @typeparam TKey The type of the key returned by the key selector functions.
+   * @typeparam TResult The type of the result elements.
+   * @param second The second sequence of the join operation.
+   * @param keySelector Function that projects the key given an element of one of the sequences to join.
+   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
+   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
+   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence containing results projected from a full outer join of the two input sequences.
+   */
+  public fullJoinHomogeneous<TKey, TResult>(
+    second: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    firstSelector: (item: TSource) => TResult,
+    secondSelector: (item: TSource) => TResult,
+    bothSelector: (a: TSource, b: TSource) => TResult,
+    equalityComparer?: EqualityComparer<TKey>
+  ): Enumerable<TResult> {
+    return fullJoinHomogeneous(
+      this,
+      second,
+      keySelector,
+      firstSelector,
+      secondSelector,
+      bothSelector,
+      equalityComparer
+    );
+  }
+
   public groupBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
@@ -453,7 +540,41 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   /**
-   * Correlates the elements of two sequences based on matching keys.
+   * Performs an inner join by correlating the elements of two sequences based on matching keys.
+   * @example
+   * ```typescript
+   * const magnus = { name: 'Magnus' };
+   * const terry = { name: 'Terry' };
+   * const adam = { name: 'Adam' };
+   * const john = { name: 'John' };
+   *
+   * const barley = { name: 'Barley', owner: terry };
+   * const boots = { name: 'Boots', owner: terry };
+   * const whiskers = { name: 'Whiskers', owner: adam };
+   * const daisy = { name: 'Daisy', owner: magnus };
+   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
+   *
+   * const people = from([magnus, terry, adam, john]);
+   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
+   *
+   * const result = people.join(
+   *     pets,
+   *     person => person,
+   *     pet => pet.owner,
+   *     (person, pet) => ({ ownerName: person.name, pet: pet.name })
+   *   )
+   *   .toArray();
+   *
+   * expect(result).toEqual([
+   *   { ownerName: 'Magnus', pet: 'Daisy' },
+   *   { ownerName: 'Terry', pet: 'Barley' },
+   *   { ownerName: 'Terry', pet: 'Boots' },
+   *   { ownerName: 'Adam', pet: 'Whiskers' }
+   * ]);
+   * ```
+   * @typeparam TInner The type of the elements of the second sequence.
+   * @typeparam TKey The type of the keys returned by the key selector functions.
+   * @typeparam TResult The type of the result elements.
    * @param inner The second sequence to join to the first.
    * @param outerKeySelector A function to extract the join key from each element of the first sequence.
    * @param innerKeySelector A function to extract the join key from each element of the second sequence.

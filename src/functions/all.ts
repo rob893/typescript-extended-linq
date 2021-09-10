@@ -1,11 +1,11 @@
 /**
  * Determines whether all elements of a sequence satisfy a condition.
- *
+ * @see {@link Enumerable.all} for fluent syntax.
+ * @example
  * ```typescript
  * const numbers = [1, 2, 3, 4];
  * const areAllNumbersEven = all(numbers, x => x % 2 === 0);
  * ```
- *
  * @param src An Enumerable<TSource> that contains the elements to apply the predicate to.
  * @param condition A function to test each element for a condition.
  * @returns true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.

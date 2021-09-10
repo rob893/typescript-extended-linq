@@ -57,7 +57,7 @@
     "linq-to-typescript": "^8.1.0",
     "linq-typescript": "^1.0.251",
     "np": "^7.5.0",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.0",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "typedoc": "^0.21.9",

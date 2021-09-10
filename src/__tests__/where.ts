@@ -52,6 +52,8 @@ describe('where', () => {
 
     const result = from(items).where(x => x.id % 2 === 0);
 
+    expect(result.toArray()).toEqual([]);
+
     items.push({ id: 2 });
 
     expect(result.toArray()).toEqual([{ id: 2 }]);

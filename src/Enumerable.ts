@@ -62,13 +62,10 @@ import {
   toSet,
   union,
   unionBy,
-  where,
   zip,
   thenBy,
   join,
   groupJoin,
-  leftJoinHeterogeneous,
-  leftJoinHomogeneous,
   rightJoinHeterogeneous,
   rightJoinHomogeneous,
   single,
@@ -76,6 +73,8 @@ import {
   fullJoinHeterogeneous,
   fullJoinHomogeneous
 } from '.';
+import { leftJoinHeterogeneousGenerator, leftJoinHomogeneousGenerator } from './functions/generators/leftJoinGenerator';
+import { whereGenerator } from './functions/generators/whereGenetator';
 
 /**
  * Class that exposes an iterator, which supports a simple iteration and various methods.
@@ -88,25 +87,26 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * Creates a new Enumerable.
    * @param srcOrGenerator The source Iterable or a Generator function.
    */
-  public constructor(srcOrGenerator: (() => Generator<TSource>) | Iterable<TSource>) {
-    if (typeof srcOrGenerator === 'function') {
-      this.srcGenerator = srcOrGenerator;
-    } else {
-      if (Array.isArray(srcOrGenerator) || typeof srcOrGenerator === 'string') {
-        this.srcGenerator = function* (): Generator<TSource> {
-          // Traditional for loop is faster than for..of
-          for (let i = 0; i < srcOrGenerator.length; i++) {
-            yield srcOrGenerator[i];
-          }
-        };
-      } else {
-        this.srcGenerator = function* (): Generator<TSource> {
-          for (const item of srcOrGenerator) {
-            yield item;
-          }
-        };
-      }
-    }
+  public constructor(srcOrGenerator: () => Generator<TSource>) {
+    this.srcGenerator = srcOrGenerator;
+    // if (typeof srcOrGenerator === 'function') {
+    //   this.srcGenerator = srcOrGenerator;
+    // } else {
+    //   if (Array.isArray(srcOrGenerator) || typeof srcOrGenerator === 'string') {
+    //     this.srcGenerator = function* (): Generator<TSource> {
+    //       // Traditional for loop is faster than for..of
+    //       for (let i = 0; i < srcOrGenerator.length; i++) {
+    //         yield srcOrGenerator[i];
+    //       }
+    //     };
+    //   } else {
+    //     this.srcGenerator = function* (): Generator<TSource> {
+    //       for (const item of srcOrGenerator) {
+    //         yield item;
+    //       }
+    //     };
+    //   }
+    // }
   }
 
   /**
@@ -618,14 +618,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     bothSelector: (a: TSource, b: TSecond) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TResult> {
-    return leftJoinHeterogeneous(
-      this,
-      second,
-      firstKeySelector,
-      secondKeySelector,
-      firstSelector,
-      bothSelector,
-      equalityComparer
+    return new Enumerable(() =>
+      leftJoinHeterogeneousGenerator(
+        this,
+        second,
+        firstKeySelector,
+        secondKeySelector,
+        firstSelector,
+        bothSelector,
+        equalityComparer
+      )
     );
   }
 
@@ -645,7 +647,9 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     bothSelector: (a: TSource, b: TSource) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): Enumerable<TResult> {
-    return leftJoinHomogeneous(this, second, keySelector, firstSelector, bothSelector, equalityComparer);
+    return new Enumerable(() =>
+      leftJoinHomogeneousGenerator(this, second, keySelector, firstSelector, bothSelector, equalityComparer)
+    );
   }
 
   public max(): TSource;
@@ -951,7 +955,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public where(exp: (item: TSource, index: number) => boolean): Enumerable<TSource> {
-    return where(this, exp);
+    return new Enumerable(() => whereGenerator(this, exp));
   }
 
   public zip<TSecond>(second: Iterable<TSecond>): Enumerable<[TSource, TSecond]>;
@@ -989,10 +993,10 @@ export class OrderedEnumerable<T> extends Enumerable<T> {
   }
 }
 
-export class Grouping<TKey, TElement> extends Enumerable<TElement> {
+export class Grouping<TKey, TSource> extends Enumerable<TSource> {
   public readonly key: TKey;
 
-  public constructor(key: TKey, src: Iterable<TElement>) {
+  public constructor(key: TKey, src: () => Generator<TSource>) {
     super(src);
     this.key = key;
   }

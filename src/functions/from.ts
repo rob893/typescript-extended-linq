@@ -1,4 +1,5 @@
 import { Enumerable } from '../Enumerable';
+import { getIterableGenerator } from './shared/getIterableGenerator';
 
 export function from<TSource>(src: Iterable<TSource>): Enumerable<TSource>;
 
@@ -12,7 +13,7 @@ export function from<TSource>(
   }
 
   if (typeof (src as Iterable<TSource>)[Symbol.iterator] === 'function') {
-    return new Enumerable(src as Iterable<TSource>);
+    return new Enumerable(getIterableGenerator(src as Iterable<TSource>));
   }
 
   if (typeof src === 'object') {

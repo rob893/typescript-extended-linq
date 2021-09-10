@@ -1,5 +1,6 @@
 import { Enumerable, Grouping } from '../Enumerable';
 import { EqualityComparer } from '../types';
+import { getIterableGenerator } from './shared/getIterableGenerator';
 import { toKeyMap } from './shared/toKeyMap';
 
 export function groupBy<TSource, TKey>(
@@ -31,11 +32,11 @@ export function groupBy<TSource, TKey>(
 
       for (let i = 0; i < groupings.length; i++) {
         const [groupKey, group] = groupings[i];
-        yield new Grouping(groupKey, group);
+        yield new Grouping(groupKey, getIterableGenerator(group));
       }
     } else {
-      for (const [key, value] of toKeyMap(src, keySelector)) {
-        yield new Grouping(key, value);
+      for (const [groupKey, group] of toKeyMap(src, keySelector)) {
+        yield new Grouping(groupKey, getIterableGenerator(group));
       }
     }
   }

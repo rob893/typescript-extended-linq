@@ -3,12 +3,12 @@ import { Enumerable } from '../Enumerable';
 describe('complex', () => {
   it('should allow for multiple statements', () => {
     const items = [
-      { id: 1, foo: 'a', bar: new Date('8/1/2021') },
-      { id: 2, foo: 'a', bar: new Date('8/1/2021') },
-      { id: 2, foo: 'b', bar: new Date('8/1/2021') },
-      { id: 2, foo: 'a', bar: new Date('9/1/2021') },
-      { id: 3, foo: 'a', bar: new Date('8/1/2021') },
-      { id: 3, foo: 'b', bar: new Date('8/1/2021') }
+      { id: 1, foo: 'a', bar: new Date('2021-08-01T00:00:00.000Z') },
+      { id: 2, foo: 'a', bar: new Date('2021-08-01T00:00:00.000Z') },
+      { id: 2, foo: 'b', bar: new Date('2021-08-01T00:00:00.000Z') },
+      { id: 2, foo: 'a', bar: new Date('2021-09-01T00:00:00.000Z') },
+      { id: 3, foo: 'a', bar: new Date('2021-08-01T00:00:00.000Z') },
+      { id: 3, foo: 'b', bar: new Date('2021-08-01T00:00:00.000Z') }
     ];
 
     let iterationCounter = 0;
@@ -33,9 +33,9 @@ describe('complex', () => {
     expect(mock).toBeCalledTimes(1);
     expect(iterationCounter).toBe(6);
     expect(asArray).toEqual([
-      { id: 2, foo: 'a', bar: new Date('2021-08-01T07:00:00.000Z') },
-      { id: 2, foo: 'a', bar: new Date('2021-09-01T07:00:00.000Z') },
-      { id: 2, foo: 'b', bar: new Date('2021-08-01T07:00:00.000Z') }
+      { id: 2, foo: 'a', bar: new Date('2021-08-01T00:00:00.000Z') },
+      { id: 2, foo: 'a', bar: new Date('2021-09-01T00:00:00.000Z') },
+      { id: 2, foo: 'b', bar: new Date('2021-08-01T00:00:00.000Z') }
     ]);
   });
 });

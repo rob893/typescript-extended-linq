@@ -1,13 +1,7 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyReverse } from './applicators/applyReverse';
 
-export function reverse<TSource>(src: Iterable<TSource>): Enumerable<TSource> {
-  function* generator(): Generator<TSource> {
-    const items = [...src];
-
-    for (let i = items.length - 1; i >= 0; i--) {
-      yield items[i];
-    }
-  }
-
-  return new Enumerable(generator);
+export function reverse<TSource>(src: Iterable<TSource>): IEnumerable<TSource> {
+  return applyReverse(Enumerable, src);
 }

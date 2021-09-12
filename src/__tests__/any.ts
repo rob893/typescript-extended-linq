@@ -1,4 +1,4 @@
-import { from } from '..';
+import { from } from '../functions/from';
 
 describe('any', () => {
   it('should return true when any elements match predicate', () => {

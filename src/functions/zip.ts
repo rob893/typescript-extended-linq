@@ -1,38 +1,28 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyZip } from './applicators/applyZip';
 
 export function zip<TSource, TSecond>(
   src: Iterable<TSource>,
   second: Iterable<TSecond>
-): Enumerable<[TSource, TSecond]>;
+): IEnumerable<[TSource, TSecond]>;
+
 export function zip<TSource, TSecond, TResult>(
   src: Iterable<TSource>,
   second: Iterable<TSecond>,
   resultSelector: (first: TSource, second: TSecond) => TResult
-): Enumerable<TResult>;
+): IEnumerable<TResult>;
+
 export function zip<TSource, TSecond, TResult>(
   src: Iterable<TSource>,
   second: Iterable<TSecond>,
   resultSelector?: (first: TSource, second: TSecond) => TResult
-): Enumerable<[TSource, TSecond] | TResult>;
+): IEnumerable<[TSource, TSecond] | TResult>;
+
 export function zip<TSource, TSecond, TResult>(
   src: Iterable<TSource>,
   second: Iterable<TSecond>,
   resultSelector?: (first: TSource, second: TSecond) => TResult
-): Enumerable<[TSource, TSecond] | TResult> {
-  function* generator(): Generator<[TSource, TSecond] | TResult> {
-    const firstArr = [...src];
-    const secondArr = Array.isArray(second) || typeof second === 'string' ? second : [...second];
-
-    const limit = Math.min(firstArr.length, secondArr.length);
-
-    for (let i = 0; i < limit; i++) {
-      if (resultSelector) {
-        yield resultSelector(firstArr[i], secondArr[i]);
-      } else {
-        yield [firstArr[i], secondArr[i]];
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<[TSource, TSecond] | TResult> {
+  return applyZip(Enumerable, src, second, resultSelector);
 }

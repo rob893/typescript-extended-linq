@@ -1,19 +1,10 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyPipe } from './applicators/applyPipe';
 
 export function pipe<TSource>(
   src: Iterable<TSource>,
   action: (item: TSource, index: number) => void
-): Enumerable<TSource> {
-  function* generator(): Generator<TSource> {
-    let i = 0;
-
-    for (const item of src) {
-      action(item, i);
-      yield item;
-
-      i++;
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TSource> {
+  return applyPipe(Enumerable, src, action);
 }

@@ -1,6 +1,7 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
-import { leftJoinHeterogeneousGenerator, leftJoinHomogeneousGenerator } from './generators/leftJoinGenerator';
+import { applyLeftJoinHeterogeneous, applyLeftJoinHomogeneous } from './applicators/applyLeftJoin';
 
 /**
  * Performs a left outer join on two heterogeneous sequences.
@@ -62,17 +63,16 @@ export function leftJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
   firstSelector: (item: TFirst) => TResult,
   bothSelector: (a: TFirst, b: TSecond) => TResult,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TResult> {
-  return new Enumerable(() =>
-    leftJoinHeterogeneousGenerator(
-      first,
-      second,
-      firstKeySelector,
-      secondKeySelector,
-      firstSelector,
-      bothSelector,
-      equalityComparer
-    )
+): IEnumerable<TResult> {
+  return applyLeftJoinHeterogeneous(
+    Enumerable,
+    first,
+    second,
+    firstKeySelector,
+    secondKeySelector,
+    firstSelector,
+    bothSelector,
+    equalityComparer
   );
 }
 
@@ -133,8 +133,14 @@ export function leftJoinHomogeneous<TFirst, TKey, TResult>(
   firstSelector: (item: TFirst) => TResult,
   bothSelector: (a: TFirst, b: TFirst) => TResult,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TResult> {
-  return new Enumerable(() =>
-    leftJoinHomogeneousGenerator(first, second, keySelector, firstSelector, bothSelector, equalityComparer)
+): IEnumerable<TResult> {
+  return applyLeftJoinHomogeneous(
+    Enumerable,
+    first,
+    second,
+    keySelector,
+    firstSelector,
+    bothSelector,
+    equalityComparer
   );
 }

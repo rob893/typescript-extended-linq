@@ -1,45 +1,14 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
+import { applyIntersect } from './applicators/applyIntersect';
 
 export function intersect<TSource>(
   src: Iterable<TSource>,
   second: Iterable<TSource>,
   equalityComparer?: EqualityComparer<TSource>
-): Enumerable<TSource> {
-  function* generator(): Generator<TSource> {
-    const secondSet: Set<TSource> = second instanceof Set ? second : new Set(second);
-
-    if (equalityComparer) {
-      for (const item of src) {
-        let returnItem = false;
-        let toDelete: TSource | null = null;
-
-        for (const secondItem of secondSet) {
-          if (equalityComparer(item, secondItem)) {
-            toDelete = secondItem;
-            returnItem = true;
-            break;
-          }
-        }
-
-        if (toDelete !== null) {
-          secondSet.delete(toDelete);
-        }
-
-        if (returnItem) {
-          yield item;
-        }
-      }
-    } else {
-      for (const item of src) {
-        if (secondSet.delete(item)) {
-          yield item;
-        }
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TSource> {
+  return applyIntersect(Enumerable, src, second, x => x, equalityComparer);
 }
 
 export function intersectBy<TSource, TKey>(
@@ -47,40 +16,6 @@ export function intersectBy<TSource, TKey>(
   second: Iterable<TKey>,
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TSource> {
-  function* generator(): Generator<TSource> {
-    const secondKeySet: Set<TKey> = second instanceof Set ? second : new Set(second);
-
-    if (equalityComparer) {
-      for (const item of src) {
-        const key = keySelector(item);
-        let returnItem = false;
-        let toDeleteKey: TKey | null = null;
-
-        for (const secondItemKey of secondKeySet) {
-          if (equalityComparer(key, secondItemKey)) {
-            toDeleteKey = secondItemKey;
-            returnItem = true;
-            break;
-          }
-        }
-
-        if (toDeleteKey !== null) {
-          secondKeySet.delete(toDeleteKey);
-        }
-
-        if (returnItem) {
-          yield item;
-        }
-      }
-    } else {
-      for (const item of src) {
-        if (secondKeySet.delete(keySelector(item))) {
-          yield item;
-        }
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TSource> {
+  return applyIntersect(Enumerable, src, second, keySelector, equalityComparer);
 }

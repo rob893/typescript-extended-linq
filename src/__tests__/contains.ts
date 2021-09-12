@@ -1,4 +1,4 @@
-import { from } from '..';
+import { from } from '../functions/from';
 
 describe('contains', () => {
   it('should return true for containing the item', () => {

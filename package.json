@@ -24,18 +24,26 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "benchmark": "ts-node ./src/benchmark/index.ts",
-    "build": "rm -rf ./dist && tsc",
+    "build": "rm -rf ./dist && tsc && npm run build-circular-dependency-check",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "prettier": "prettier --write **/*.{ts,js,css,html,json} !**/node_modules/** !**/dist/** !**/coverage/** !**/compiled/**",
-    "release": "np --no-cleanup --no-2fa",
+    "build-circular-dependency-check": "madge --circular ./dist",
+    "circular-dependency-check": "madge --circular --extensions ts --ts-config tsconfig.json ./src",
+    "prettier": "prettier --write **/*.{ts,js,css,html,json} !**/node_modules/** !**/dist/** !**/coverage/** !**/compiled/** !**/docs/**",
+    "release": "npm run build && npm run lint && npm t && npm run typedoc && np --no-cleanup --no-2fa",
     "test": "jest --coverage",
     "test-watch": "jest --watchAll --coverage",
     "test-clean": "jest --clearCache",
     "test-mutate": "npx stryker run",
     "typedoc": "rm -rf ./docs && typedoc src/index.ts",
-    "version": "npm run build && npm run typedoc",
     "prepare": "husky install"
+  },
+  "madge": {
+    "detectiveOptions": {
+      "ts": {
+        "skipTypeImports": true
+      }
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
@@ -56,11 +64,12 @@
     "jest": "^27.1.1",
     "linq-to-typescript": "^8.1.0",
     "linq-typescript": "^1.0.251",
+    "madge": "^5.0.1",
     "np": "^7.5.0",
     "prettier": "^2.4.0",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
-    "typedoc": "^0.22.1",
+    "typedoc": "^0.22.2",
     "typescript": "^4.4.3"
   }
 }

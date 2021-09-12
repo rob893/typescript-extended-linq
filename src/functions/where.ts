@@ -1,9 +1,10 @@
-import { Enumerable } from '../Enumerable';
-import { whereGenerator } from './generators/whereGenetator';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyWhere } from './applicators/applyWhere';
 
 export function where<TSource>(
   src: Iterable<TSource>,
   exp: (item: TSource, index: number) => boolean
-): Enumerable<TSource> {
-  return new Enumerable(() => whereGenerator(src, exp));
+): IEnumerable<TSource> {
+  return applyWhere(Enumerable, src, exp);
 }

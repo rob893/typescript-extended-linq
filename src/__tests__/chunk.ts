@@ -1,4 +1,5 @@
-import { from, Enumerable } from '..';
+import { from } from '../functions/from';
+import { Enumerable } from '..';
 
 describe('chunk', () => {
   it('should return an Enumerable', () => {

@@ -1,12 +1,13 @@
-import { OrderedEnumerable } from '../Enumerable';
+import { OrderedEnumerable } from '../enumerables';
+import { IOrderedEnumerable } from '../types';
 import { Comparer } from '../types';
-import { orderByGenerator } from './shared/orderByGenerator';
+import { applyOrderBy } from './applicators/applyOrderBy';
 
 export function orderBy<TSource, TKey>(
   src: Iterable<TSource>,
   ascending: boolean,
   selector: (item: TSource) => TKey,
   comparer?: Comparer<TKey>
-): OrderedEnumerable<TSource> {
-  return new OrderedEnumerable(() => orderByGenerator(src, ascending, selector, comparer));
+): IOrderedEnumerable<TSource> {
+  return applyOrderBy(OrderedEnumerable, src, ascending, selector, comparer);
 }

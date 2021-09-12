@@ -1,5 +1,7 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
+import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from './applicators/applyFullJoin';
 
 /**
  * Performs a full outer join on two heterogeneous sequences.
@@ -27,82 +29,18 @@ export function fullJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
   secondSelector: (item: TSecond) => TResult,
   bothSelector: (a: TFirst, b: TSecond) => TResult,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TResult> {
-  function* generator(): Generator<TResult> {
-    if (equalityComparer) {
-      const firstKeys: TKey[] = [];
-
-      for (const firstItem of first) {
-        const firstKey = firstKeySelector(firstItem);
-        firstKeys.push(firstKey);
-        let matched = false;
-
-        for (const secondItem of second) {
-          if (equalityComparer(firstKey, secondKeySelector(secondItem))) {
-            matched = true;
-            yield bothSelector(firstItem, secondItem);
-          }
-        }
-
-        if (!matched) {
-          yield firstSelector(firstItem);
-        }
-      }
-
-      for (const secondItem of second) {
-        const secondKey = secondKeySelector(secondItem);
-        let seenKey = false;
-
-        for (let i = 0; i < firstKeys.length; i++) {
-          if (equalityComparer(secondKey, firstKeys[i])) {
-            seenKey = true;
-            break;
-          }
-        }
-
-        if (!seenKey) {
-          yield secondSelector(secondItem);
-        }
-      }
-    } else {
-      const secondKeyMap = new Map<TKey, TSecond[]>();
-      const firstKeys = new Set<TKey>();
-
-      for (const secondItem of second) {
-        const secondKey = secondKeySelector(secondItem);
-        const currentMatches = secondKeyMap.get(secondKey);
-
-        if (currentMatches !== undefined) {
-          currentMatches.push(secondItem);
-        } else {
-          secondKeyMap.set(secondKey, [secondItem]);
-        }
-      }
-
-      for (const firstItem of first) {
-        const firstKey = firstKeySelector(firstItem);
-        firstKeys.add(firstKey);
-
-        const secondMatches = secondKeyMap.get(firstKey);
-
-        if (secondMatches !== undefined) {
-          for (let i = 0; i < secondMatches.length; i++) {
-            yield bothSelector(firstItem, secondMatches[i]);
-          }
-        } else {
-          yield firstSelector(firstItem);
-        }
-      }
-
-      for (const secondItem of second) {
-        if (!firstKeys.has(secondKeySelector(secondItem))) {
-          yield secondSelector(secondItem);
-        }
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TResult> {
+  return applyFullJoinHeterogeneous(
+    Enumerable,
+    first,
+    second,
+    firstKeySelector,
+    secondKeySelector,
+    firstSelector,
+    secondSelector,
+    bothSelector,
+    equalityComparer
+  );
 }
 
 /**
@@ -128,80 +66,15 @@ export function fullJoinHomogeneous<TFirst, TKey, TResult>(
   secondSelector: (item: TFirst) => TResult,
   bothSelector: (a: TFirst, b: TFirst) => TResult,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TResult> {
-  function* generator(): Generator<TResult> {
-    if (equalityComparer) {
-      const firstKeys: TKey[] = [];
-
-      for (const firstItem of first) {
-        const firstKey = keySelector(firstItem);
-        firstKeys.push(firstKey);
-        let matched = false;
-
-        for (const secondItem of second) {
-          if (equalityComparer(firstKey, keySelector(secondItem))) {
-            matched = true;
-            yield bothSelector(firstItem, secondItem);
-          }
-        }
-
-        if (!matched) {
-          yield firstSelector(firstItem);
-        }
-      }
-
-      for (const secondItem of second) {
-        const secondKey = keySelector(secondItem);
-        let seenKey = false;
-
-        for (let i = 0; i < firstKeys.length; i++) {
-          if (equalityComparer(secondKey, firstKeys[i])) {
-            seenKey = true;
-            break;
-          }
-        }
-
-        if (!seenKey) {
-          yield secondSelector(secondItem);
-        }
-      }
-    } else {
-      const secondKeyMap = new Map<TKey, TFirst[]>();
-      const firstKeys = new Set<TKey>();
-
-      for (const secondItem of second) {
-        const secondKey = keySelector(secondItem);
-        const currentMatches = secondKeyMap.get(secondKey);
-
-        if (currentMatches !== undefined) {
-          currentMatches.push(secondItem);
-        } else {
-          secondKeyMap.set(secondKey, [secondItem]);
-        }
-      }
-
-      for (const firstItem of first) {
-        const firstKey = keySelector(firstItem);
-        firstKeys.add(firstKey);
-
-        const secondMatches = secondKeyMap.get(firstKey);
-
-        if (secondMatches !== undefined) {
-          for (let i = 0; i < secondMatches.length; i++) {
-            yield bothSelector(firstItem, secondMatches[i]);
-          }
-        } else {
-          yield firstSelector(firstItem);
-        }
-      }
-
-      for (const secondItem of second) {
-        if (!firstKeys.has(keySelector(secondItem))) {
-          yield secondSelector(secondItem);
-        }
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TResult> {
+  return applyFullJoinHomogeneous(
+    Enumerable,
+    first,
+    second,
+    keySelector,
+    firstSelector,
+    secondSelector,
+    bothSelector,
+    equalityComparer
+  );
 }

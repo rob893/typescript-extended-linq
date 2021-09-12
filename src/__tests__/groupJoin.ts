@@ -1,4 +1,4 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
 import { from, groupJoin } from '..';
 
 describe('groupJoin', () => {

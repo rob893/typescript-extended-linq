@@ -1,86 +1,65 @@
-import {
-  from,
-  empty,
-  range,
-  repeat,
-  aggregate,
-  all,
-  any,
-  append,
-  asEnumerable,
-  atLeast,
-  atMost,
-  average,
-  chunk,
-  concat,
-  EqualityComparer,
-  contains,
-  count,
-  defaultIfEmpty,
-  distinct,
-  distinctBy,
-  elementAt,
-  elementAtOrDefault,
-  endsWith,
-  except,
-  exceptBy,
-  first,
-  firstOrDefault,
-  forEach,
-  groupBy,
-  intersect,
-  intersectBy,
-  last,
-  lastOrDefault,
-  max,
-  maxBy,
-  min,
-  minBy,
-  ofType,
-  Comparer,
-  orderBy,
-  pipe,
-  prepend,
-  quantile,
-  reverse,
-  select,
-  selectMany,
-  sequenceEqual,
-  shuffle,
-  skip,
-  skipLast,
-  skipWhile,
-  startsWith,
-  sum,
-  take,
-  takeEvery,
-  takeLast,
-  takeWhile,
-  toArray,
-  toMap,
-  toObject,
-  toSet,
-  union,
-  unionBy,
-  zip,
-  thenBy,
-  join,
-  groupJoin,
-  rightJoinHeterogeneous,
-  rightJoinHomogeneous,
-  single,
-  singleOrDefault,
-  fullJoinHeterogeneous,
-  fullJoinHomogeneous
-} from '.';
-import { leftJoinHeterogeneousGenerator, leftJoinHomogeneousGenerator } from './functions/generators/leftJoinGenerator';
-import { whereGenerator } from './functions/generators/whereGenetator';
+import { aggregate } from './functions/aggregate';
+import { all } from './functions/all';
+import { any } from './functions/any';
+import { applyAppend } from './functions/applicators/applyAppend';
+import { applyAsEnumerable } from './functions/applicators/applyAsEnumerable';
+import { applyChunk } from './functions/applicators/applyChunk';
+import { applyConcat } from './functions/applicators/applyConcat';
+import { applyDefaultIfEmpty } from './functions/applicators/applyDefaultIfEmpty';
+import { applyDistinct } from './functions/applicators/applyDistinct';
+import { applyEmpty } from './functions/applicators/applyEmpty';
+import { applyExcept } from './functions/applicators/applyExcept';
+import { applyFrom } from './functions/applicators/applyFrom';
+import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from './functions/applicators/applyFullJoin';
+import { applyGroupBy } from './functions/applicators/applyGroupBy';
+import { applyGroupJoin } from './functions/applicators/applyGroupJoin';
+import { applyIntersect } from './functions/applicators/applyIntersect';
+import { applyJoin } from './functions/applicators/applyJoin';
+import { applyLeftJoinHeterogeneous, applyLeftJoinHomogeneous } from './functions/applicators/applyLeftJoin';
+import { applyMax } from './functions/applicators/applyMax';
+import { applyMin } from './functions/applicators/applyMin';
+import { applyOfType } from './functions/applicators/applyOfType';
+import { applyOrderBy } from './functions/applicators/applyOrderBy';
+import { applyPipe } from './functions/applicators/applyPipe';
+import { applyPrepend } from './functions/applicators/applyPrepend';
+import { applyQuantile } from './functions/applicators/applyQuantile';
+import { applyRange } from './functions/applicators/applyRange';
+import { applyRepeat } from './functions/applicators/applyRepeat';
+import { applyReverse } from './functions/applicators/applyReverse';
+import { applyRightJoinHeterogeneous, applyRightJoinHomogeneous } from './functions/applicators/applyRightJoin';
+import { applySelect, applySelectMany } from './functions/applicators/applySelect';
+import { applyShuffle } from './functions/applicators/applyShuffle';
+import { applySkip, applySkipLast, applySkipWhile } from './functions/applicators/applySkip';
+import { applyTake, applyTakeEvery, applyTakeLast, applyTakeWhile } from './functions/applicators/applyTake';
+import { applyThenBy } from './functions/applicators/applyThenBy';
+import { applyUnion } from './functions/applicators/applyUnion';
+import { applyWhere } from './functions/applicators/applyWhere';
+import { applyZip } from './functions/applicators/applyZip';
+import { atLeast } from './functions/atLeast';
+import { atMost } from './functions/atMost';
+import { average } from './functions/average';
+import { contains } from './functions/contains';
+import { count } from './functions/count';
+import { elementAt, elementAtOrDefault } from './functions/elementAt';
+import { endsWith } from './functions/endsWith';
+import { first, firstOrDefault } from './functions/first';
+import { forEach } from './functions/forEach';
+import { last, lastOrDefault } from './functions/last';
+import { sequenceEqual } from './functions/sequenceEqual';
+import { single, singleOrDefault } from './functions/single';
+import { startsWith } from './functions/startsWith';
+import { sum } from './functions/sum';
+import { toArray } from './functions/toArray';
+import { toMap } from './functions/toMap';
+import { toObject } from './functions/toObject';
+import { toSet } from './functions/toSet';
+import { Comparer, EqualityComparer, IEnumerable, IGrouping, IOrderedEnumerable } from './types';
 
 /**
  * Class that exposes an iterator, which supports a simple iteration and various methods.
  * @typeparam TSource The type of elements in the Enumerable.
  */
-export class Enumerable<TSource> implements Iterable<TSource> {
+export class Enumerable<TSource> implements IEnumerable<TSource> {
   private readonly srcGenerator: () => Generator<TSource>;
 
   /**
@@ -89,24 +68,6 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    */
   public constructor(srcOrGenerator: () => Generator<TSource>) {
     this.srcGenerator = srcOrGenerator;
-    // if (typeof srcOrGenerator === 'function') {
-    //   this.srcGenerator = srcOrGenerator;
-    // } else {
-    //   if (Array.isArray(srcOrGenerator) || typeof srcOrGenerator === 'string') {
-    //     this.srcGenerator = function* (): Generator<TSource> {
-    //       // Traditional for loop is faster than for..of
-    //       for (let i = 0; i < srcOrGenerator.length; i++) {
-    //         yield srcOrGenerator[i];
-    //       }
-    //     };
-    //   } else {
-    //     this.srcGenerator = function* (): Generator<TSource> {
-    //       for (const item of srcOrGenerator) {
-    //         yield item;
-    //       }
-    //     };
-    //   }
-    // }
   }
 
   /**
@@ -119,7 +80,7 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param src The Iterable to create an Enumerable from.
    * @returns A new Enumerable.
    */
-  public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult>;
+  public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult>;
 
   /**
    * Creates a new Enumerable from the input object.
@@ -134,10 +95,10 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param src The object to create an Enumerable from.
    * @returns A new Enumerable.
    */
-  public static from<TResult>(src: TResult): Enumerable<[keyof TResult, TResult[keyof TResult]]>;
+  public static from<TResult>(src: TResult): IEnumerable<[keyof TResult, TResult[keyof TResult]]>;
 
-  public static from<TResult>(src: Iterable<TResult>): Enumerable<TResult | [keyof TResult, TResult[keyof TResult]]> {
-    return from(src);
+  public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult | [keyof TResult, TResult[keyof TResult]]> {
+    return applyFrom(Enumerable, src);
   }
 
   /**
@@ -148,16 +109,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * ```
    * @returns A new empty Enumerable.
    */
-  public static empty<TResult>(): Enumerable<TResult> {
-    return empty();
+  public static empty<TResult>(): IEnumerable<TResult> {
+    return applyEmpty(Enumerable);
   }
 
-  public static range(start: number, count: number): Enumerable<number> {
-    return range(start, count);
+  public static range(start: number, count: number): IEnumerable<number> {
+    return applyRange(Enumerable, start, count);
   }
 
-  public static repeat<TResult>(element: TResult, count: number): Enumerable<TResult> {
-    return repeat(element, count);
+  public static repeat<TResult>(element: TResult, count: number): IEnumerable<TResult> {
+    return applyRepeat(Enumerable, element, count);
   }
 
   /**
@@ -256,16 +217,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param item The value to append.
    * @returns A new sequence that ends with element.
    */
-  public append(item: TSource): Enumerable<TSource> {
-    return append(this, item);
+  public append(item: TSource): IEnumerable<TSource> {
+    return applyAppend(Enumerable, this, item);
   }
 
   /**
    * Returns the input as an Enumerable.
    * @returns The input sequence as Enumerable.
    */
-  public asEnumerable(): Enumerable<TSource> {
-    return asEnumerable(this);
+  public asEnumerable(): IEnumerable<TSource> {
+    return applyAsEnumerable(Enumerable, this);
   }
 
   public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
@@ -300,8 +261,8 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param chunkSize The maximum size of each chunk.
    * @returns An Enumerable<TSource> that contains the elements the input sequence split into chunks of size chunkSize.
    */
-  public chunk(chunkSize: number): Enumerable<Enumerable<TSource>> {
-    return chunk(this, chunkSize);
+  public chunk(chunkSize: number): IEnumerable<IEnumerable<TSource>> {
+    return applyChunk(Enumerable, this, chunkSize);
   }
 
   /**
@@ -314,8 +275,8 @@ export class Enumerable<TSource> implements Iterable<TSource> {
    * @param second The sequence to concatenate to the first sequence.
    * @returns An Enumerable<TSource> that contains the concatenated elements of the two input sequences.
    */
-  public concat(second: Iterable<TSource>): Enumerable<TSource> {
-    return concat(this, second);
+  public concat(second: Iterable<TSource>): IEnumerable<TSource> {
+    return applyConcat(Enumerable, this, second);
   }
 
   /**
@@ -348,19 +309,19 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return count(this, condition);
   }
 
-  public defaultIfEmpty(defaultItem: TSource): Enumerable<TSource> {
-    return defaultIfEmpty(this, defaultItem);
+  public defaultIfEmpty(defaultItem: TSource): IEnumerable<TSource> {
+    return applyDefaultIfEmpty(Enumerable, this, defaultItem);
   }
 
-  public distinct(equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
-    return distinct(this, equalityComparer);
+  public distinct(equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
+    return applyDistinct(Enumerable, this, x => x, equalityComparer);
   }
 
   public distinctBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TSource> {
-    return distinctBy(this, keySelector, equalityComparer);
+  ): IEnumerable<TSource> {
+    return applyDistinct(Enumerable, this, keySelector, equalityComparer);
   }
 
   public elementAt(index: number): TSource {
@@ -375,16 +336,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return endsWith(this, second, equalityComparer);
   }
 
-  public except(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
-    return except(this, second, equalityComparer);
+  public except(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
+    return applyExcept(Enumerable, this, second, x => x, equalityComparer);
   }
 
   public exceptBy<TKey>(
     second: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TSource> {
-    return exceptBy(this, second, keySelector, equalityComparer);
+  ): IEnumerable<TSource> {
+    return applyExcept(Enumerable, this, second, keySelector, equalityComparer);
   }
 
   public first(condition?: (item: TSource, index: number) => boolean): TSource {
@@ -422,8 +383,9 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     secondSelector: (item: TSecond) => TResult,
     bothSelector: (a: TSource, b: TSecond) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return fullJoinHeterogeneous(
+  ): IEnumerable<TResult> {
+    return applyFullJoinHeterogeneous(
+      Enumerable,
       this,
       second,
       firstKeySelector,
@@ -455,8 +417,9 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     secondSelector: (item: TSource) => TResult,
     bothSelector: (a: TSource, b: TSource) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return fullJoinHomogeneous(
+  ): IEnumerable<TResult> {
+    return applyFullJoinHomogeneous(
+      Enumerable,
       this,
       second,
       keySelector,
@@ -470,8 +433,14 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   public groupBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<Grouping<TKey, TSource>> {
-    return groupBy(this, keySelector, equalityComparer);
+  ): IEnumerable<IGrouping<TKey, TSource>> {
+    return applyGroupBy(
+      Enumerable,
+      (key, groupGenerator) => new Grouping(key, groupGenerator),
+      this,
+      keySelector,
+      equalityComparer
+    );
   }
 
   /**
@@ -521,22 +490,30 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
-    resultSelector: (item: TSource, inner: Enumerable<TInner>) => TResult,
+    resultSelector: (item: TSource, inner: IEnumerable<TInner>) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return groupJoin(this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
+  ): IEnumerable<TResult> {
+    return applyGroupJoin(
+      Enumerable,
+      this,
+      inner,
+      outerKeySelector,
+      innerKeySelector,
+      resultSelector,
+      equalityComparer
+    );
   }
 
-  public intersect(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
-    return intersect(this, second, equalityComparer);
+  public intersect(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
+    return applyIntersect(Enumerable, this, second, x => x, equalityComparer);
   }
 
   public intersectBy<TKey>(
     second: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TSource> {
-    return intersectBy(this, second, keySelector, equalityComparer);
+  ): IEnumerable<TSource> {
+    return applyIntersect(Enumerable, this, second, keySelector, equalityComparer);
   }
 
   /**
@@ -588,8 +565,8 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     innerKeySelector: (item: TInner) => TKey,
     resultSelector: (item: TSource, inner: TInner) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return join(this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
+  ): IEnumerable<TResult> {
+    return applyJoin(Enumerable, this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
   }
 
   public last(predicate?: (item: TSource, index: number) => boolean): TSource {
@@ -617,17 +594,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     firstSelector: (item: TSource) => TResult,
     bothSelector: (a: TSource, b: TSecond) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return new Enumerable(() =>
-      leftJoinHeterogeneousGenerator(
-        this,
-        second,
-        firstKeySelector,
-        secondKeySelector,
-        firstSelector,
-        bothSelector,
-        equalityComparer
-      )
+  ): IEnumerable<TResult> {
+    return applyLeftJoinHeterogeneous(
+      Enumerable,
+      this,
+      second,
+      firstKeySelector,
+      secondKeySelector,
+      firstSelector,
+      bothSelector,
+      equalityComparer
     );
   }
 
@@ -646,61 +622,71 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     firstSelector: (item: TSource) => TResult,
     bothSelector: (a: TSource, b: TSource) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return new Enumerable(() =>
-      leftJoinHomogeneousGenerator(this, second, keySelector, firstSelector, bothSelector, equalityComparer)
+  ): IEnumerable<TResult> {
+    return applyLeftJoinHomogeneous(
+      Enumerable,
+      this,
+      second,
+      keySelector,
+      firstSelector,
+      bothSelector,
+      equalityComparer
     );
   }
 
   public max(): TSource;
+
   public max<TResult>(selector: (item: TSource) => TResult): TResult;
+
   public max<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
-    return max(this, selector);
+    return applyMax(Enumerable, this, x => x, selector);
   }
 
   public maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
-    return maxBy(this, keySelector);
+    return applyMax(Enumerable, this, keySelector);
   }
 
   public min(): TSource;
+
   public min<TResult>(selector: (item: TSource) => TResult): TResult;
+
   public min<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
-    return min(this, selector);
+    return applyMin(Enumerable, this, x => x, selector);
   }
 
   public minBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
-    return minBy(this, keySelector);
+    return applyMin(Enumerable, this, keySelector);
   }
 
-  public ofType<TResult>(type: new (...params: unknown[]) => TResult): Enumerable<TResult> {
-    return ofType(this, type);
+  public ofType<TResult>(type: new (...params: unknown[]) => TResult): IEnumerable<TResult> {
+    return applyOfType(Enumerable, this, type) as IEnumerable<TResult>;
   }
 
-  public orderBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): OrderedEnumerable<TSource> {
-    return orderBy(this, true, selector, comparer);
+  public orderBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
+    return applyOrderBy(OrderedEnumerable, this, true, selector, comparer);
   }
 
   public orderByDescending<TKey>(
     selector: (item: TSource) => TKey,
     comparer?: Comparer<TKey>
-  ): OrderedEnumerable<TSource> {
-    return orderBy(this, false, selector, comparer);
+  ): IOrderedEnumerable<TSource> {
+    return applyOrderBy(OrderedEnumerable, this, false, selector, comparer);
   }
 
-  public pipe(action: (item: TSource, index: number) => void): Enumerable<TSource> {
-    return pipe(this, action);
+  public pipe(action: (item: TSource, index: number) => void): IEnumerable<TSource> {
+    return applyPipe(Enumerable, this, action);
   }
 
-  public prepend(item: TSource): Enumerable<TSource> {
-    return prepend(this, item);
+  public prepend(item: TSource): IEnumerable<TSource> {
+    return applyPrepend(Enumerable, this, item);
   }
 
   public quantile(selector: (item: TSource) => number, q: number): number {
-    return quantile(this, selector, q);
+    return applyQuantile(Enumerable, this, selector, q);
   }
 
-  public reverse(): Enumerable<TSource> {
-    return reverse(this);
+  public reverse(): IEnumerable<TSource> {
+    return applyReverse(Enumerable, this);
   }
 
   /**
@@ -764,8 +750,9 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     secondSelector: (item: TSecond) => TResult,
     bothSelector: (a: TSource, b: TSecond) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return rightJoinHeterogeneous(
+  ): IEnumerable<TResult> {
+    return applyRightJoinHeterogeneous(
+      Enumerable,
       this,
       second,
       firstKeySelector,
@@ -834,24 +821,32 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     secondSelector: (item: TSource) => TResult,
     bothSelector: (a: TSource, b: TSource) => TResult,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TResult> {
-    return rightJoinHomogeneous(this, second, keySelector, secondSelector, bothSelector, equalityComparer);
+  ): IEnumerable<TResult> {
+    return applyRightJoinHomogeneous(
+      Enumerable,
+      this,
+      second,
+      keySelector,
+      secondSelector,
+      bothSelector,
+      equalityComparer
+    );
   }
 
-  public select<TDestination>(exp: (item: TSource, index: number) => TDestination): Enumerable<TDestination> {
-    return select(this, exp);
+  public select<TResult>(exp: (item: TSource, index: number) => TResult): IEnumerable<TResult> {
+    return applySelect(Enumerable, this, exp);
   }
 
-  public selectMany<TDestination>(exp: (item: TSource, index: number) => TDestination[]): Enumerable<TDestination> {
-    return selectMany(this, exp);
+  public selectMany<TResult>(exp: (item: TSource, index: number) => Iterable<TResult>): IEnumerable<TResult> {
+    return applySelectMany(Enumerable, this, exp);
   }
 
   public sequenceEqual(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
     return sequenceEqual(this, second, equalityComparer);
   }
 
-  public shuffle(): Enumerable<TSource> {
-    return shuffle(this);
+  public shuffle(): IEnumerable<TSource> {
+    return applyShuffle(Enumerable, this);
   }
 
   /**
@@ -867,16 +862,16 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return singleOrDefault(this, predicate);
   }
 
-  public skip(count: number): Enumerable<TSource> {
-    return skip(this, count);
+  public skip(count: number): IEnumerable<TSource> {
+    return applySkip(Enumerable, this, count);
   }
 
-  public skipLast(count: number): Enumerable<TSource> {
-    return skipLast(this, count);
+  public skipLast(count: number): IEnumerable<TSource> {
+    return applySkipLast(Enumerable, this, count);
   }
 
-  public skipWhile(predicate: (item: TSource, index: number) => boolean): Enumerable<TSource> {
-    return skipWhile(this, predicate);
+  public skipWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
+    return applySkipWhile(Enumerable, this, predicate);
   }
 
   public startsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
@@ -887,20 +882,20 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return sum(this, selector);
   }
 
-  public take(count: number): Enumerable<TSource> {
-    return take(this, count);
+  public take(count: number): IEnumerable<TSource> {
+    return applyTake(Enumerable, this, count);
   }
 
-  public takeEvery(step: number): Enumerable<TSource> {
-    return takeEvery(this, step);
+  public takeEvery(step: number): IEnumerable<TSource> {
+    return applyTakeEvery(Enumerable, this, step);
   }
 
-  public takeLast(count: number): Enumerable<TSource> {
-    return takeLast(this, count);
+  public takeLast(count: number): IEnumerable<TSource> {
+    return applyTakeLast(Enumerable, this, count);
   }
 
-  public takeWhile(predicate: (item: TSource, index: number) => boolean): Enumerable<TSource> {
-    return takeWhile(this, predicate);
+  public takeWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
+    return applyTakeWhile(Enumerable, this, predicate);
   }
 
   public toArray(): TSource[] {
@@ -915,10 +910,12 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public toMap<TKey>(keySelector: (item: TSource) => TKey): Map<TKey, TSource>;
+
   public toMap<TKey, TValue>(
     keySelector: (item: TSource) => TKey,
     valueSelector: (item: TSource) => TValue
   ): Map<TKey, TValue>;
+
   public toMap<TKey, TValue>(
     keySelector: (item: TSource) => TKey,
     valueSelector?: (item: TSource) => TValue
@@ -927,10 +924,12 @@ export class Enumerable<TSource> implements Iterable<TSource> {
   }
 
   public toObject(keySelector: (item: TSource) => string): Record<string, TSource>;
+
   public toObject<TValue>(
     keySelector: (item: TSource) => string,
     valueSelector: (item: TSource) => TValue
   ): Record<string, TValue>;
+
   public toObject<TValue>(
     keySelector: (item: TSource) => string,
     valueSelector?: (item: TSource) => TValue
@@ -942,40 +941,42 @@ export class Enumerable<TSource> implements Iterable<TSource> {
     return toSet(this);
   }
 
-  public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): Enumerable<TSource> {
-    return union(this, second, equalityComparer);
+  public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
+    return applyUnion(Enumerable, this, second, x => x, equalityComparer);
   }
 
   public unionBy<TKey>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
-  ): Enumerable<TSource> {
-    return unionBy(this, second, keySelector, equalityComparer);
+  ): IEnumerable<TSource> {
+    return applyUnion(Enumerable, this, second, keySelector, equalityComparer);
   }
 
-  public where(exp: (item: TSource, index: number) => boolean): Enumerable<TSource> {
-    return new Enumerable(() => whereGenerator(this, exp));
+  public where(exp: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
+    return applyWhere(Enumerable, this, exp);
   }
 
-  public zip<TSecond>(second: Iterable<TSecond>): Enumerable<[TSource, TSecond]>;
+  public zip<TSecond>(second: Iterable<TSecond>): IEnumerable<[TSource, TSecond]>;
+
   public zip<TSecond, TResult>(
     second: Iterable<TSecond>,
     resultSelector: (first: TSource, second: TSecond) => TResult
-  ): Enumerable<TResult>;
+  ): IEnumerable<TResult>;
+
   public zip<TSecond, TResult>(
     second: Iterable<TSecond>,
     resultSelector?: (first: TSource, second: TSecond) => TResult
-  ): Enumerable<[TSource, TSecond] | TResult> {
-    return zip(this, second, resultSelector);
+  ): IEnumerable<[TSource, TSecond] | TResult> {
+    return applyZip(Enumerable, this, second, resultSelector);
   }
 }
 
-export class OrderedEnumerable<T> extends Enumerable<T> {
-  private readonly orderedPairs: () => Generator<T[]>;
+export class OrderedEnumerable<TSource> extends Enumerable<TSource> implements IOrderedEnumerable<TSource> {
+  private readonly orderedPairs: () => Generator<TSource[]>;
 
-  public constructor(orderedPairs: () => Generator<T[]>) {
-    super(function* (): Generator<T, void, undefined> {
+  public constructor(orderedPairs: () => Generator<TSource[]>) {
+    super(function* (): Generator<TSource, void, undefined> {
       for (const pair of orderedPairs()) {
         yield* pair;
       }
@@ -984,16 +985,19 @@ export class OrderedEnumerable<T> extends Enumerable<T> {
     this.orderedPairs = orderedPairs;
   }
 
-  public thenBy<TKey>(selector: (item: T) => TKey, comparer?: Comparer<TKey>): OrderedEnumerable<T> {
-    return thenBy(this.orderedPairs, true, selector, comparer);
+  public thenBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
+    return applyThenBy(OrderedEnumerable, this.orderedPairs, true, selector, comparer);
   }
 
-  public thenByDescending<TKey>(selector: (item: T) => TKey, comparer?: Comparer<TKey>): OrderedEnumerable<T> {
-    return thenBy(this.orderedPairs, false, selector, comparer);
+  public thenByDescending<TKey>(
+    selector: (item: TSource) => TKey,
+    comparer?: Comparer<TKey>
+  ): IOrderedEnumerable<TSource> {
+    return applyThenBy(OrderedEnumerable, this.orderedPairs, false, selector, comparer);
   }
 }
 
-export class Grouping<TKey, TSource> extends Enumerable<TSource> {
+export class Grouping<TKey, TSource> extends Enumerable<TSource> implements IGrouping<TKey, TSource> {
   public readonly key: TKey;
 
   public constructor(key: TKey, src: () => Generator<TSource>) {

@@ -1,4 +1,5 @@
-import { Enumerable, from } from '..';
+import { Enumerable } from '..';
+import { from } from '../functions/from';
 
 describe('except', () => {
   it('should return an Enumerable', () => {

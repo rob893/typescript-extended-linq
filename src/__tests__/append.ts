@@ -1,4 +1,4 @@
-import { from } from '..';
+import { from } from '../functions/from';
 
 describe('append', () => {
   it.each([[], new Set([1, 2]), [1, 2]])('should append a new element', src => {

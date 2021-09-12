@@ -1,36 +1,17 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applySelect, applySelectMany } from './applicators/applySelect';
 
-export function select<TSource, TDestination>(
+export function select<TSource, TResult>(
   src: Iterable<TSource>,
-  exp: (item: TSource, index: number) => TDestination
-): Enumerable<TDestination> {
-  function* generator(): Generator<TDestination> {
-    let i = 0;
-
-    for (const item of src) {
-      yield exp(item, i);
-      i++;
-    }
-  }
-
-  return new Enumerable(generator);
+  exp: (item: TSource, index: number) => TResult
+): IEnumerable<TResult> {
+  return applySelect(Enumerable, src, exp);
 }
 
-export function selectMany<TSource, TDestination>(
+export function selectMany<TSource, TResult>(
   src: Iterable<TSource>,
-  exp: (item: TSource, index: number) => TDestination[]
-): Enumerable<TDestination> {
-  function* generator(): Generator<TDestination> {
-    let i = 0;
-
-    for (const item of src) {
-      for (const subItem of exp(item, i)) {
-        yield subItem;
-      }
-
-      i++;
-    }
-  }
-
-  return new Enumerable(generator);
+  exp: (item: TSource, index: number) => Iterable<TResult>
+): IEnumerable<TResult> {
+  return applySelectMany(Enumerable, src, exp);
 }

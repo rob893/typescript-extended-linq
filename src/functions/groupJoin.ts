@@ -1,7 +1,7 @@
-import { where } from './where';
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
 import { EqualityComparer } from '../types';
-import { from } from './from';
+import { IEnumerable } from '../types';
+import { applyGroupJoin } from './applicators/applyGroupJoin';
 
 /**
  * Correlates the elements of two sequences based on key equality, and groups the results.
@@ -53,39 +53,8 @@ export function groupJoin<TOuter, TInner, TKey, TResult>(
   inner: Iterable<TInner>,
   outerKeySelector: (item: TOuter) => TKey,
   innerKeySelector: (item: TInner) => TKey,
-  resultSelector: (item: TOuter, inner: Enumerable<TInner>) => TResult,
+  resultSelector: (item: TOuter, inner: IEnumerable<TInner>) => TResult,
   equalityComparer?: EqualityComparer<TKey>
-): Enumerable<TResult> {
-  function* generator(): Generator<TResult> {
-    if (equalityComparer) {
-      for (const outerItem of outer) {
-        const outerKey = outerKeySelector(outerItem);
-
-        const inners = where(inner, innerItem => equalityComparer(outerKey, innerKeySelector(innerItem)));
-        yield resultSelector(outerItem, inners);
-      }
-    } else {
-      const innerMap = new Map<TKey, TInner[]>();
-
-      for (const innerItem of inner) {
-        const key = innerKeySelector(innerItem);
-        const curr = innerMap.get(key);
-
-        if (curr !== undefined) {
-          curr.push(innerItem);
-        } else {
-          innerMap.set(key, [innerItem]);
-        }
-      }
-
-      for (const outerItem of outer) {
-        const key = outerKeySelector(outerItem);
-        const innersToJoin = innerMap.get(key);
-
-        yield resultSelector(outerItem, from(innersToJoin ?? []));
-      }
-    }
-  }
-
-  return new Enumerable(generator);
+): IEnumerable<TResult> {
+  return applyGroupJoin(Enumerable, outer, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
 }

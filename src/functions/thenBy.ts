@@ -1,18 +1,13 @@
-import { OrderedEnumerable } from '../Enumerable';
+import { OrderedEnumerable } from '../enumerables';
+import { IOrderedEnumerable } from '../types';
 import { Comparer } from '../types';
-import { orderByGenerator } from './shared/orderByGenerator';
+import { applyThenBy } from './applicators/applyThenBy';
 
 export function thenBy<TSource, TKey>(
   src: () => Generator<TSource[]>,
   ascending: boolean,
   selector: (item: TSource) => TKey,
   comparer?: Comparer<TKey>
-): OrderedEnumerable<TSource> {
-  function* generator(): Generator<TSource[]> {
-    for (const pair of src()) {
-      yield* orderByGenerator(pair, ascending, selector, comparer);
-    }
-  }
-
-  return new OrderedEnumerable(generator);
+): IOrderedEnumerable<TSource> {
+  return applyThenBy(OrderedEnumerable, src, ascending, selector, comparer);
 }

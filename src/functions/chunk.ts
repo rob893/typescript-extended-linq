@@ -1,8 +1,7 @@
-import { Enumerable } from '../Enumerable';
-import { select } from './select';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyChunk } from './applicators/applyChunk';
 
-export function chunk<TSource>(src: Iterable<TSource>, chunkSize: number): Enumerable<Enumerable<TSource>> {
-  return select(src, (x, i) => ({ index: i, value: x }))
-    .groupBy(x => Math.floor(x.index / chunkSize))
-    .select(x => x.select(v => v.value));
+export function chunk<TSource>(src: Iterable<TSource>, chunkSize: number): IEnumerable<IEnumerable<TSource>> {
+  return applyChunk(Enumerable, src, chunkSize);
 }

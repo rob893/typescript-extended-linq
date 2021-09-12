@@ -1,4 +1,4 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
 import { from } from '../functions/from';
 
 describe('rightJoinHeterogeneous', () => {

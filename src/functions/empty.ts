@@ -1,6 +1,7 @@
-import { Enumerable } from '../Enumerable';
-import { getIterableGenerator } from './shared/getIterableGenerator';
+import { Enumerable } from '../enumerables';
+import { IEnumerable } from '../types';
+import { applyEmpty } from './applicators/applyEmpty';
 
-export function empty<TSource>(): Enumerable<TSource> {
-  return new Enumerable(getIterableGenerator([]));
+export function empty<TSource>(): IEnumerable<TSource> {
+  return applyEmpty(Enumerable);
 }

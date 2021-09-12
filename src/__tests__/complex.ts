@@ -1,4 +1,4 @@
-import { Enumerable } from '../Enumerable';
+import { Enumerable } from '../enumerables';
 
 describe('complex', () => {
   it('should allow for multiple statements', () => {

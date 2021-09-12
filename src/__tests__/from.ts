@@ -1,4 +1,4 @@
-import { from, Enumerable } from '../index';
+import { from, Enumerable, fromObject } from '../index';
 
 describe('from', () => {
   it.each([
@@ -8,15 +8,7 @@ describe('from', () => {
     ],
     ['123', ['1', '2', '3']],
     [new Set([1, 2, 3]), [1, 2, 3]],
-    [new Map(), []],
-    [{}, []],
-    [
-      { foo: 'bar', bar: 1 },
-      [
-        ['foo', 'bar'],
-        ['bar', 1]
-      ]
-    ]
+    [new Map(), []]
   ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
     const result = from<unknown>(collection);
 
@@ -25,7 +17,29 @@ describe('from', () => {
   });
 
   it.each([null, undefined, false, 123, NaN])('should throw', src => {
-    expect(() => from(src)).toThrow();
+    expect(() => from(src as any)).toThrow();
+  });
+});
+
+describe('fromObject', () => {
+  it.each([
+    [{}, []],
+    [
+      { foo: 'bar', bar: 1 },
+      [
+        ['foo', 'bar'],
+        ['bar', 1]
+      ]
+    ]
+  ])('should return an Enumerable from the passed in object', (collection, expected) => {
+    const result = fromObject(collection);
+
+    expect(result).toBeInstanceOf(Enumerable);
+    expect(result.toArray()).toEqual(expected);
+  });
+
+  it.each([null, undefined, false, 123, NaN])('should throw', src => {
+    expect(() => fromObject(src)).toThrow();
   });
 });
 
@@ -37,7 +51,21 @@ describe('Enumerable.from', () => {
     ],
     ['123', ['1', '2', '3']],
     [new Set([1, 2, 3]), [1, 2, 3]],
-    [new Map(), []],
+    [new Map(), []]
+  ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
+    const result = Enumerable.from<unknown>(collection);
+
+    expect(result).toBeInstanceOf(Enumerable);
+    expect(result.toArray()).toEqual(expected);
+  });
+
+  it.each([null, undefined, false, 123, NaN])('should throw', src => {
+    expect(() => Enumerable.from(src as any)).toThrow();
+  });
+});
+
+describe('Enumerable.fromObject', () => {
+  it.each([
     [{}, []],
     [
       { foo: 'bar', bar: 1 },
@@ -47,13 +75,13 @@ describe('Enumerable.from', () => {
       ]
     ]
   ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
-    const result = Enumerable.from<unknown>(collection);
+    const result = Enumerable.fromObject<unknown>(collection);
 
     expect(result).toBeInstanceOf(Enumerable);
     expect(result.toArray()).toEqual(expected);
   });
 
   it.each([null, undefined, false, 123, NaN])('should throw', src => {
-    expect(() => Enumerable.from(src)).toThrow();
+    expect(() => Enumerable.fromObject(src)).toThrow();
   });
 });

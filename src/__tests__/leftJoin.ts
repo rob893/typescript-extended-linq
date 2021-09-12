@@ -3,7 +3,7 @@ import { from } from '../functions/from';
 
 describe('leftJoinHeterogeneous', () => {
   it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
-    const result = from(src).leftJoinHeterogeneous<unknown, unknown, unknown>(
+    const result = from<unknown>(src).leftJoinHeterogeneous<unknown, unknown, unknown>(
       [],
       x => x,
       x => x,
@@ -92,7 +92,7 @@ describe('leftJoinHeterogeneous', () => {
 
 describe('leftJoinHomogeneous', () => {
   it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
-    const result = from(src).leftJoinHomogeneous<unknown, unknown>(
+    const result = from<unknown>(src).leftJoinHomogeneous<unknown, unknown>(
       [],
       x => x,
       x => x,

@@ -80,7 +80,9 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
    * @param src The Iterable to create an Enumerable from.
    * @returns A new Enumerable.
    */
-  public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult>;
+  public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult> {
+    return applyFrom(Enumerable, src) as IEnumerable<TResult>;
+  }
 
   /**
    * Creates a new Enumerable from the input object.
@@ -95,10 +97,8 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
    * @param src The object to create an Enumerable from.
    * @returns A new Enumerable.
    */
-  public static from<TResult>(src: TResult): IEnumerable<[keyof TResult, TResult[keyof TResult]]>;
-
-  public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult | [keyof TResult, TResult[keyof TResult]]> {
-    return applyFrom(Enumerable, src);
+  public static fromObject<TSource>(src: TSource): IEnumerable<[keyof TSource, TSource[keyof TSource]]> {
+    return applyFrom(Enumerable, src) as IEnumerable<[keyof TSource, TSource[keyof TSource]]>;
   }
 
   /**

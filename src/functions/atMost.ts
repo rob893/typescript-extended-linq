@@ -3,6 +3,10 @@ export function atMost<TSource>(
   count: number,
   predicate?: (item: TSource, index: number) => boolean
 ): boolean {
+  if (count < 1) {
+    throw new Error('count must be greater than 0');
+  }
+
   let matches = 0;
 
   if (predicate) {

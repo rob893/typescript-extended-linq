@@ -10,10 +10,6 @@ export function applyChunk<TSource>(
     throw new Error('chunkSize must be greater than 0');
   }
 
-  // return select(src, (x, i) => ({ index: i, value: x }))
-  // .groupBy(x => Math.floor(x.index / chunkSize))
-  // .select(x => x.select(v => v.value));
-
   function* generator(): Generator<IEnumerable<TSource>> {
     let chunk: TSource[] = [];
 

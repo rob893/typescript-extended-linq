@@ -30,14 +30,44 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Applies an accumulator function over a sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const sum = from(items)
+   *   .aggregate((prev, curr) => prev + curr); // sum will be 6
+   * ```
    * @param aggregator An accumulator function to be invoked on each element.
    * @returns The final accumulator value.
    */
   aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
 
   /**
+   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const sum = from(items)
+   *   .aggregate((prev, curr) => prev + curr, 10); // sum will be 16
+   * ```
+   * @typeparam TAccumulate The type of the accumulator value.
+   * @param aggregator An accumulator function to be invoked on each element.
+   * @param seed The initial accumulator value.
+   * @returns The final accumulator value.
+   */
+  aggregate<TAccumulate>(
+    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
+    seed: TAccumulate
+  ): TAccumulate;
+
+  /**
    * Applies an accumulator function over a sequence.
    * The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const sum = from(items)
+   *   .aggregate((prev, curr) => prev + curr, 10, result => ({ result })); // sum will be { result: 16 }
+   * ```
    * @typeparam TAccumulate The type of the accumulator value.
    * @typeparam TResult The type of the resulting value.
    * @param aggregator An accumulator function to be invoked on each element.
@@ -50,18 +80,6 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     seed: TAccumulate,
     resultSelector: (accumulated: TAccumulate) => TResult
   ): TResult;
-
-  /**
-   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
-   * @typeparam TAccumulate The type of the accumulator value.
-   * @param aggregator An accumulator function to be invoked on each element.
-   * @param seed The initial accumulator value.
-   * @returns The final accumulator value.
-   */
-  aggregate<TAccumulate>(
-    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-    seed: TAccumulate
-  ): TAccumulate;
 
   /**
    * Determines whether all elements of a sequence satisfy a condition.

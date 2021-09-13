@@ -4,6 +4,16 @@
 </a>
 <p>This is a library that is a direct translation of <a href="https://docs.microsoft.com/en-us/dotnet/api/system.linq">System.Linq</a> from .NET and many additional functions from <a href="https://github.com/morelinq/MoreLINQ">MoreLINQ</a>.</p>
 
+<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+  <h2>Table of Contents</h2>
+</a>
+<ol>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#why-use-this-library">Why use this library?</a></li>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><a href="#documentation">Documentation</a></li>
+</ol>
+
 <a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
   <h2>Installation:</h2>
 </a>
@@ -36,14 +46,324 @@
 <li><a href="https://rob893.github.io/typescript-extended-linq/">Documentation</a> is also auto-generated on every release so they will always be up to date as well.</li>
 </ul>
 
-<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-  <h2>Documentation</h2>
-</a>
-<p>Please see full documentation <a href="https://rob893.github.io/typescript-extended-linq/">here</a>.</p>
-
 <a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
   <h2>Basic Usage:</h2>
 </a>
 <pre><code class="language-typescript"><span class="hl-9">import</span><span class="hl-1"> { </span><span class="hl-5">from</span><span class="hl-1"> } </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-6">&#39;typescript-extended-linq&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">items</span><span class="hl-1"> = [</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">1</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;a&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;8/1/2021&#39;</span><span class="hl-1">) },</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">2</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;a&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;8/1/2021&#39;</span><span class="hl-1">) },</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">2</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;b&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;8/1/2021&#39;</span><span class="hl-1">) },</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">2</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;a&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;9/1/2021&#39;</span><span class="hl-1">) },</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">3</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;a&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;8/1/2021&#39;</span><span class="hl-1">) },</span><br/><span class="hl-1">  { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-3">3</span><span class="hl-1">, </span><span class="hl-5">foo:</span><span class="hl-1"> </span><span class="hl-6">&#39;b&#39;</span><span class="hl-1">, </span><span class="hl-5">bar:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-7">Date</span><span class="hl-1">(</span><span class="hl-6">&#39;8/1/2021&#39;</span><span class="hl-1">) }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">query</span><span class="hl-1"> = </span><span class="hl-4">from</span><span class="hl-1">(</span><span class="hl-5">items</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-4">where</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1"> % </span><span class="hl-3">2</span><span class="hl-1"> === </span><span class="hl-3">0</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-4">orderBy</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-4">thenBy</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">foo</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-4">thenBy</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">bar</span><span class="hl-1">);</span><br/><br/><span class="hl-8">/**</span><br/><span class="hl-8"> * Will log:</span><br/><span class="hl-8"> * [</span><br/><span class="hl-8"> *  { id: 2, foo: &#39;a&#39;, bar: 2021-08-01T07:00:00.000Z },</span><br/><span class="hl-8"> *  { id: 2, foo: &#39;a&#39;, bar: 2021-09-01T07:00:00.000Z },</span><br/><span class="hl-8"> *  { id: 2, foo: &#39;b&#39;, bar: 2021-08-01T07:00:00.000Z }</span><br/><span class="hl-8"> * ]</span><br/><span class="hl-8"> */</span><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">query</span><span class="hl-1">.</span><span class="hl-4">toArray</span><span class="hl-1">());</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">sumOfIds</span><span class="hl-1"> = </span><span class="hl-5">query</span><span class="hl-1">.</span><span class="hl-4">sum</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1">);</span><br/><br/><span class="hl-8">// Will log 6</span><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">sumOfIds</span><span class="hl-1">);</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">distinct</span><span class="hl-1"> = </span><span class="hl-5">query</span><span class="hl-1">.</span><span class="hl-4">distinctBy</span><span class="hl-1">(</span><span class="hl-5">item</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">item</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1">).</span><span class="hl-4">toArray</span><span class="hl-1">();</span><br/><br/><span class="hl-8">// Will log [ { id: 2, foo: &#39;a&#39;, bar: 2021-08-01T07:00:00.000Z } ]</span><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">distinct</span><span class="hl-1">);</span>
 </code></pre>
+<p>Each function also can be used directly by passing in the source iterable as the first argument:</p>
+<pre><code class="language-typescript"><span class="hl-9">import</span><span class="hl-1"> { </span><span class="hl-5">join</span><span class="hl-1"> } </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-6">&#39;typescript-extended-linq&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">type</span><span class="hl-1"> </span><span class="hl-7">Person</span><span class="hl-1"> = { </span><span class="hl-5">name</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1"> };</span><br/><span class="hl-0">type</span><span class="hl-1"> </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">; </span><span class="hl-5">owner</span><span class="hl-1">: </span><span class="hl-7">Person</span><span class="hl-1"> };</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">magnus</span><span class="hl-1">: </span><span class="hl-7">Person</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Magnus&#39;</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">terry</span><span class="hl-1">: </span><span class="hl-7">Person</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Terry&#39;</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">adam</span><span class="hl-1">: </span><span class="hl-7">Person</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Adam&#39;</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">john</span><span class="hl-1">: </span><span class="hl-7">Person</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;John&#39;</span><span class="hl-1"> };</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">barley</span><span class="hl-1">: </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Barley&#39;</span><span class="hl-1">, </span><span class="hl-5">owner:</span><span class="hl-1"> </span><span class="hl-5">terry</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">boots</span><span class="hl-1">: </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Boots&#39;</span><span class="hl-1">, </span><span class="hl-5">owner:</span><span class="hl-1"> </span><span class="hl-5">terry</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">whiskers</span><span class="hl-1">: </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Whiskers&#39;</span><span class="hl-1">, </span><span class="hl-5">owner:</span><span class="hl-1"> </span><span class="hl-5">adam</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">daisy</span><span class="hl-1">: </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Daisy&#39;</span><span class="hl-1">, </span><span class="hl-5">owner:</span><span class="hl-1"> </span><span class="hl-5">magnus</span><span class="hl-1"> };</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">scratchy</span><span class="hl-1">: </span><span class="hl-7">Pet</span><span class="hl-1"> = { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Scratchy&#39;</span><span class="hl-1">, </span><span class="hl-5">owner:</span><span class="hl-1"> { </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-6">&#39;Bob&#39;</span><span class="hl-1"> } };</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">people</span><span class="hl-1"> = </span><span class="hl-4">from</span><span class="hl-1">([</span><span class="hl-5">magnus</span><span class="hl-1">, </span><span class="hl-5">terry</span><span class="hl-1">, </span><span class="hl-5">adam</span><span class="hl-1">, </span><span class="hl-5">john</span><span class="hl-1">]);</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">pets</span><span class="hl-1"> = </span><span class="hl-4">from</span><span class="hl-1">([</span><span class="hl-5">barley</span><span class="hl-1">, </span><span class="hl-5">boots</span><span class="hl-1">, </span><span class="hl-5">whiskers</span><span class="hl-1">, </span><span class="hl-5">daisy</span><span class="hl-1">, </span><span class="hl-5">scratchy</span><span class="hl-1">]);</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">result</span><span class="hl-1"> = </span><span class="hl-4">join</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-5">people</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">pets</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">person</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">person</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">pet</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">pet</span><span class="hl-1">.</span><span class="hl-5">owner</span><span class="hl-1">,</span><br/><span class="hl-1">  (</span><span class="hl-5">person</span><span class="hl-1">, </span><span class="hl-5">pet</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> ({ </span><span class="hl-5">ownerName:</span><span class="hl-1"> </span><span class="hl-5">person</span><span class="hl-1">.</span><span class="hl-5">name</span><span class="hl-1">, </span><span class="hl-5">pet:</span><span class="hl-1"> </span><span class="hl-5">pet</span><span class="hl-1">.</span><span class="hl-5">name</span><span class="hl-1"> })</span><br/><span class="hl-1">).</span><span class="hl-4">toArray</span><span class="hl-1">();</span><br/><br/><span class="hl-8">/**</span><br/><span class="hl-8"> * Will log:</span><br/><span class="hl-8"> * [</span><br/><span class="hl-8"> *   { ownerName: &#39;Magnus&#39;, pet: &#39;Daisy&#39; },</span><br/><span class="hl-8"> *   { ownerName: &#39;Terry&#39;, pet: &#39;Barley&#39; },</span><br/><span class="hl-8"> *   { ownerName: &#39;Terry&#39;, pet: &#39;Boots&#39; },</span><br/><span class="hl-8"> *   { ownerName: &#39;Adam&#39;, pet: &#39;Whiskers&#39; }</span><br/><span class="hl-8"> * ]</span><br/><span class="hl-8"> */</span><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">result</span><span class="hl-1">);</span>
+</code></pre>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>Please see full documentation <a href="https://rob893.github.io/typescript-extended-linq/">here</a>.</p>
+
+<a href="#aggregate" id="aggregate" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#aggregate">aggregate</a></h3>
+</a>
+<p>Applies an accumulator function over a sequence.</p>
+
+<a href="#all" id="all" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#all">all</a></h3>
+</a>
+<p>Determines whether all elements of a sequence satisfy a condition.</p>
+
+<a href="#any" id="any" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#any">any</a></h3>
+</a>
+<p>Determines whether any element of a sequence exists or satisfies a condition.</p>
+
+<a href="#append" id="append" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#append">append</a></h3>
+</a>
+<p>Appends a value to the end of the sequence.</p>
+
+<a href="#asenumerable" id="asenumerable" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#asEnumerable">asEnumerable</a></h3>
+</a>
+<p>Returns the input as an IEnumerable.</p>
+
+<a href="#atleast" id="atleast" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atLeast">atLeast</a></h3>
+</a>
+
+<a href="#atmost" id="atmost" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atMost">atMost</a></h3>
+</a>
+
+<a href="#average" id="average" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#average">average</a></h3>
+</a>
+<p>Computes the average of a sequence of numeric values.</p>
+
+<a href="#chunk" id="chunk" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#chunk">chunk</a></h3>
+</a>
+<p>Split the elements of a sequence into chunks of size at most chunkSize.</p>
+
+<a href="#concat" id="concat" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#concat">concat</a></h3>
+</a>
+<p>Concatenates two sequences.</p>
+
+<a href="#contains" id="contains" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#contains">contains</a></h3>
+</a>
+<p>Determines whether a sequence contains a specified element.</p>
+
+<a href="#count" id="count" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#count">count</a></h3>
+</a>
+<p>Returns the number of elements in a sequence.</p>
+
+<a href="#defaultifempty" id="defaultifempty" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#defaultIfEmpty">defaultIfEmpty</a></h3>
+</a>
+
+<a href="#distinct" id="distinct" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#distinct">distinct</a></h3>
+</a>
+
+<a href="#distinctby" id="distinctby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#distinctBy">distinctBy</a></h3>
+</a>
+
+<a href="#elementat" id="elementat" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAt">elementAt</a></h3>
+</a>
+
+<a href="#elementatordefault" id="elementatordefault" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAtOrDefault">elementAtOrDefault</a></h3>
+</a>
+
+<a href="#endswith" id="endswith" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#endsWith">endsWith</a></h3>
+</a>
+
+<a href="#except" id="except" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#except">except</a></h3>
+</a>
+
+<a href="#exceptby" id="exceptby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#exceptBy">exceptBy</a></h3>
+</a>
+
+<a href="#first" id="first" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#first">first</a></h3>
+</a>
+
+<a href="#firstordefault" id="firstordefault" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#firstOrDefault">firstOrDefault</a></h3>
+</a>
+
+<a href="#foreach" id="foreach" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#forEach">forEach</a></h3>
+</a>
+
+<a href="#fulljoinheterogeneous" id="fulljoinheterogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#fullJoinHeterogeneous">fullJoinHeterogeneous</a></h3>
+</a>
+<p>Performs a full outer join on two heterogeneous sequences.</p>
+
+<a href="#fulljoinhomogeneous" id="fulljoinhomogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#fullJoinHomogeneous">fullJoinHomogeneous</a></h3>
+</a>
+<p>Performs a full outer join on two homogeneous sequences.</p>
+
+<a href="#groupby" id="groupby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#groupBy">groupBy</a></h3>
+</a>
+
+<a href="#groupjoin" id="groupjoin" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#groupJoin">groupJoin</a></h3>
+</a>
+<p>Correlates the elements of two sequences based on key equality, and groups the results.</p>
+
+<a href="#intersect" id="intersect" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#intersect">intersect</a></h3>
+</a>
+
+<a href="#intersectby" id="intersectby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#intersectBy">intersectBy</a></h3>
+</a>
+
+<a href="#join" id="join" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#join">join</a></h3>
+</a>
+<p>Performs an inner join by correlating the elements of two sequences based on matching keys.</p>
+
+<a href="#last" id="last" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#last">last</a></h3>
+</a>
+
+<a href="#lastordefault" id="lastordefault" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#lastOrDefault">lastOrDefault</a></h3>
+</a>
+
+<a href="#leftjoinheterogeneous" id="leftjoinheterogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#leftJoinHeterogeneous">leftJoinHeterogeneous</a></h3>
+</a>
+<p>Performs a left outer join on two heterogeneous sequences. Additional arguments specify key selection functions and result projection functions.</p>
+
+<a href="#leftjoinhomogeneous" id="leftjoinhomogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#leftJoinHomogeneous">leftJoinHomogeneous</a></h3>
+</a>
+<p>Performs a left outer join on two homogeneous sequences. Additional arguments specify key selection functions and result projection functions.</p>
+
+<a href="#max" id="max" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#max">max</a></h3>
+</a>
+
+<a href="#maxby" id="maxby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#maxBy">maxBy</a></h3>
+</a>
+
+<a href="#min" id="min" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#min">min</a></h3>
+</a>
+
+<a href="#minby" id="minby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#minBy">minBy</a></h3>
+</a>
+
+<a href="#oftype" id="oftype" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#ofType">ofType</a></h3>
+</a>
+
+<a href="#orderby" id="orderby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderBy">orderBy</a></h3>
+</a>
+
+<a href="#orderbydescending" id="orderbydescending" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderByDescending">orderByDescending</a></h3>
+</a>
+
+<a href="#pipe" id="pipe" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#pipe">pipe</a></h3>
+</a>
+
+<a href="#prepend" id="prepend" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#prepend">prepend</a></h3>
+</a>
+
+<a href="#quantile" id="quantile" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#quantile">quantile</a></h3>
+</a>
+
+<a href="#reverse" id="reverse" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#reverse">reverse</a></h3>
+</a>
+
+<a href="#rightjoinheterogeneous" id="rightjoinheterogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#rightJoinHeterogeneous">rightJoinHeterogeneous</a></h3>
+</a>
+<p>Performs a right outer join on two heterogeneous sequences.</p>
+
+<a href="#rightjoinhomogeneous" id="rightjoinhomogeneous" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#rightJoinHomogeneous">rightJoinHomogeneous</a></h3>
+</a>
+<p>Performs a right outer join on two homogeneous sequences.</p>
+
+<a href="#select" id="select" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#select">select</a></h3>
+</a>
+
+<a href="#selectmany" id="selectmany" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#selectMany">selectMany</a></h3>
+</a>
+
+<a href="#sequenceequal" id="sequenceequal" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#sequenceEqual">sequenceEqual</a></h3>
+</a>
+
+<a href="#shuffle" id="shuffle" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#shuffle">shuffle</a></h3>
+</a>
+
+<a href="#single" id="single" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#single">single</a></h3>
+</a>
+<p>Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.</p>
+
+<a href="#singleordefault" id="singleordefault" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#singleOrDefault">singleOrDefault</a></h3>
+</a>
+
+<a href="#skip" id="skip" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skip">skip</a></h3>
+</a>
+
+<a href="#skiplast" id="skiplast" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skipLast">skipLast</a></h3>
+</a>
+
+<a href="#skipwhile" id="skipwhile" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skipWhile">skipWhile</a></h3>
+</a>
+
+<a href="#startswith" id="startswith" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#startsWith">startsWith</a></h3>
+</a>
+
+<a href="#sum" id="sum" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#sum">sum</a></h3>
+</a>
+
+<a href="#take" id="take" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#take">take</a></h3>
+</a>
+
+<a href="#takeevery" id="takeevery" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeEvery">takeEvery</a></h3>
+</a>
+
+<a href="#takelast" id="takelast" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeLast">takeLast</a></h3>
+</a>
+
+<a href="#takewhile" id="takewhile" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeWhile">takeWhile</a></h3>
+</a>
+
+<a href="#thenby" id="thenby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IOrderedEnumerable.html#thenBy">thenBy</a></h3>
+</a>
+
+<a href="#thenbydescending" id="thenbydescending" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IOrderedEnumerable.html#thenByDescending">thenByDescending</a></h3>
+</a>
+
+<a href="#toarray" id="toarray" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toArray">toArray</a></h3>
+</a>
+
+<a href="#tomap" id="tomap" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toMap">toMap</a></h3>
+</a>
+
+<a href="#toobject" id="toobject" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toObject">toObject</a></h3>
+</a>
+
+<a href="#toset" id="toset" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toSet">toSet</a></h3>
+</a>
+
+<a href="#union" id="union" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#union">union</a></h3>
+</a>
+
+<a href="#unionby" id="unionby" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#unionBy">unionBy</a></h3>
+</a>
+
+<a href="#where" id="where" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#where">where</a></h3>
+</a>
+
+<a href="#zip" id="zip" style="color: inherit; text-decoration: none;">
+  <h3><a href="https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#zip">zip</a></h3>
+</a>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/Enumerable.html" class="tsd-kind-icon">Enumerable</a></li><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/Grouping.html" class="tsd-kind-icon">Grouping</a></li><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/OrderedEnumerable.html" class="tsd-kind-icon">Ordered<wbr/>Enumerable</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/IEnumerable.html" class="tsd-kind-icon">IEnumerable</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/IGrouping.html" class="tsd-kind-icon">IGrouping</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/IOrderedEnumerable.html" class="tsd-kind-icon">IOrdered<wbr/>Enumerable</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#Comparer" class="tsd-kind-icon">Comparer</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#EqualityComparer" class="tsd-kind-icon">Equality<wbr/>Comparer</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#IEnumerableConstructor" class="tsd-kind-icon">IEnumerable<wbr/>Constructor</a></li><li class="tsd-kind-type-alias"><a href="modules.html#TypeOfMember" class="tsd-kind-icon">Type<wbr/>Of<wbr/>Member</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#aggregate" class="tsd-kind-icon">aggregate</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#all" class="tsd-kind-icon">all</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#any" class="tsd-kind-icon">any</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#append" class="tsd-kind-icon">append</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#asEnumerable" class="tsd-kind-icon">as<wbr/>Enumerable</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#atLeast" class="tsd-kind-icon">at<wbr/>Least</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#atMost" class="tsd-kind-icon">at<wbr/>Most</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#average" class="tsd-kind-icon">average</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#chunk" class="tsd-kind-icon">chunk</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#concat" class="tsd-kind-icon">concat</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#contains" class="tsd-kind-icon">contains</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#count" class="tsd-kind-icon">count</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#defaultIfEmpty" class="tsd-kind-icon">default<wbr/>If<wbr/>Empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#distinct" class="tsd-kind-icon">distinct</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#distinctBy" class="tsd-kind-icon">distinct<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#elementAt" class="tsd-kind-icon">element<wbr/>At</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#elementAtOrDefault" class="tsd-kind-icon">element<wbr/>At<wbr/>Or<wbr/>Default</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#empty" class="tsd-kind-icon">empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#endsWith" class="tsd-kind-icon">ends<wbr/>With</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#except" class="tsd-kind-icon">except</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#exceptBy" class="tsd-kind-icon">except<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#first" class="tsd-kind-icon">first</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#firstOrDefault" class="tsd-kind-icon">first<wbr/>Or<wbr/>Default</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#forEach" class="tsd-kind-icon">for<wbr/>Each</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#from" class="tsd-kind-icon">from</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#fromObject" class="tsd-kind-icon">from<wbr/>Object</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#fullJoinHeterogeneous" class="tsd-kind-icon">full<wbr/>Join<wbr/>Heterogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#fullJoinHomogeneous" class="tsd-kind-icon">full<wbr/>Join<wbr/>Homogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#groupBy" class="tsd-kind-icon">group<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#groupJoin" class="tsd-kind-icon">group<wbr/>Join</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#intersect" class="tsd-kind-icon">intersect</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#intersectBy" class="tsd-kind-icon">intersect<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#join" class="tsd-kind-icon">join</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#last" class="tsd-kind-icon">last</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#lastOrDefault" class="tsd-kind-icon">last<wbr/>Or<wbr/>Default</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#leftJoinHeterogeneous" class="tsd-kind-icon">left<wbr/>Join<wbr/>Heterogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#leftJoinHomogeneous" class="tsd-kind-icon">left<wbr/>Join<wbr/>Homogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#max" class="tsd-kind-icon">max</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#maxBy" class="tsd-kind-icon">max<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#min" class="tsd-kind-icon">min</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#minBy" class="tsd-kind-icon">min<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#ofType" class="tsd-kind-icon">of<wbr/>Type</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#orderBy" class="tsd-kind-icon">order<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#pipe" class="tsd-kind-icon">pipe</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#prepend" class="tsd-kind-icon">prepend</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#quantile" class="tsd-kind-icon">quantile</a></li><li class="tsd-kind-function"><a href="modules.html#range" class="tsd-kind-icon">range</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#repeat" class="tsd-kind-icon">repeat</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#reverse" class="tsd-kind-icon">reverse</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#rightJoinHeterogeneous" class="tsd-kind-icon">right<wbr/>Join<wbr/>Heterogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#rightJoinHomogeneous" class="tsd-kind-icon">right<wbr/>Join<wbr/>Homogeneous</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#select" class="tsd-kind-icon">select</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#selectMany" class="tsd-kind-icon">select<wbr/>Many</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#sequenceEqual" class="tsd-kind-icon">sequence<wbr/>Equal</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#shuffle" class="tsd-kind-icon">shuffle</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#single" class="tsd-kind-icon">single</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#singleOrDefault" class="tsd-kind-icon">single<wbr/>Or<wbr/>Default</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#skip" class="tsd-kind-icon">skip</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#skipLast" class="tsd-kind-icon">skip<wbr/>Last</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#skipWhile" class="tsd-kind-icon">skip<wbr/>While</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#startsWith" class="tsd-kind-icon">starts<wbr/>With</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#sum" class="tsd-kind-icon">sum</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#take" class="tsd-kind-icon">take</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#takeEvery" class="tsd-kind-icon">take<wbr/>Every</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#takeLast" class="tsd-kind-icon">take<wbr/>Last</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#takeWhile" class="tsd-kind-icon">take<wbr/>While</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#thenBy" class="tsd-kind-icon">then<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#toArray" class="tsd-kind-icon">to<wbr/>Array</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#toMap" class="tsd-kind-icon">to<wbr/>Map</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#toObject" class="tsd-kind-icon">to<wbr/>Object</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#toSet" class="tsd-kind-icon">to<wbr/>Set</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#union" class="tsd-kind-icon">union</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#unionBy" class="tsd-kind-icon">union<wbr/>By</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#where" class="tsd-kind-icon">where</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#zip" class="tsd-kind-icon">zip</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

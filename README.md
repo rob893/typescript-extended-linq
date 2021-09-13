@@ -283,6 +283,10 @@ Returns the only element of a sequence that satisfies a specified condition, and
 
 ### [thenByDescending](https://rob893.github.io/typescript-extended-linq/interfaces/IOrderedEnumerable.html#thenByDescending)
 
+### [to](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#to)
+
+Creates a new instance of the passed in ctor with the Iterable as input.
+
 ### [toArray](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toArray)
 
 ### [toMap](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toMap)

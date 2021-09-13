@@ -48,6 +48,7 @@ export * from './functions/startsWith';
 export * from './functions/sum';
 export * from './functions/take';
 export * from './functions/thenBy';
+export * from './functions/to';
 export * from './functions/toArray';
 export * from './functions/toMap';
 export * from './functions/toObject';

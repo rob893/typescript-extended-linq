@@ -123,7 +123,32 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   asEnumerable(): IEnumerable<TSource>;
 
-  atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean;
+  /**
+   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atLeastThree = from(items).atLeast(3); // true
+   * const atLeastFour = from(items).atLeast(4); // false
+   * ```
+   * @param count The minimum number of items a sequence must have for this function to return true
+   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
+   */
+  atLeast(count: number): boolean;
+
+  /**
+   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atLeastOneEven = from(items).atLeast(1, x => x % 2 === 0); // true
+   * const atLeastTwoEven = from(items).atLeast(2, x => x % 2 === 0); // false
+   * ```
+   * @param count The minimum number of items a sequence must have for this function to return true
+   * @param predicate A function to test each element for a condition.
+   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
+   */
+  atLeast(count: number, predicate: (item: TSource, index: number) => boolean): boolean;
 
   atMost(count: number, predicate?: (item: TSource, index: number) => boolean): boolean;
 
@@ -603,6 +628,27 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   takeLast(count: number): IEnumerable<TSource>;
 
   takeWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
+
+  /**
+   * Creates a new instance of the passed in ctor with the Enumerable as input.
+   * Useful for custom iterables.
+   * @example
+   * ```typescript
+   * class MyCustomEnumerable<T> extends Enumerable<T> {
+   *   public foo(): void {
+   *     console.log('hello');
+   *   }
+   * }
+   *
+   * const items = [1, 2, 3];
+   *
+   * const asCustom = from(items).to(MyCustomEnumerable); // asCustom is now a MyCustomEnumerable instance.
+   * ```
+   * @typeparam TResult The type of the returned object.
+   * @param ctor The constructor function to create the result.
+   * @returns A new instance of the passed in ctor with the enumerable passed as input.
+   */
+  to<TResult>(ctor: new (src: Iterable<TSource>) => TResult): TResult;
 
   toArray(): TSource[];
 

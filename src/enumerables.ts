@@ -49,6 +49,7 @@ import { sequenceEqual } from './functions/sequenceEqual';
 import { single, singleOrDefault } from './functions/single';
 import { startsWith } from './functions/startsWith';
 import { sum } from './functions/sum';
+import { to } from './functions/to';
 import { toArray } from './functions/toArray';
 import { toMap } from './functions/toMap';
 import { toObject } from './functions/toObject';
@@ -64,10 +65,10 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Creates a new Enumerable.
-   * @param srcOrGenerator The source Iterable or a Generator function.
+   * @param srcGenerator The source Iterable or a Generator function.
    */
-  public constructor(srcOrGenerator: () => Generator<TSource>) {
-    this.srcGenerator = srcOrGenerator;
+  public constructor(srcGenerator: () => Generator<TSource>) {
+    this.srcGenerator = srcGenerator;
   }
 
   /**
@@ -81,7 +82,7 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
    * @returns A new Enumerable.
    */
   public static from<TResult>(src: Iterable<TResult>): IEnumerable<TResult> {
-    return applyFrom(Enumerable, src) as IEnumerable<TResult>;
+    return applyFrom(Enumerable, ArrayEnumerable, src);
   }
 
   /**
@@ -98,7 +99,7 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
    * @returns A new Enumerable.
    */
   public static fromObject<TSource>(src: TSource): IEnumerable<[keyof TSource, TSource[keyof TSource]]> {
-    return applyFrom(Enumerable, src) as IEnumerable<[keyof TSource, TSource[keyof TSource]]>;
+    return applyFrom(Enumerable, ArrayEnumerable, src);
   }
 
   /**
@@ -228,6 +229,33 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
   public asEnumerable(): IEnumerable<TSource> {
     return applyAsEnumerable(Enumerable, this);
   }
+
+  /**
+   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atLeastThree = from(items).atLeast(3); // true
+   * const atLeastFour = from(items).atLeast(4); // false
+   * ```
+   * @param count The minimum number of items a sequence must have for this function to return true
+   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
+   */
+  public atLeast(count: number): boolean;
+
+  /**
+   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atLeastOneEven = from(items).atLeast(1, x => x % 2 === 0); // true
+   * const atLeastTwoEven = from(items).atLeast(2, x => x % 2 === 0); // false
+   * ```
+   * @param count The minimum number of items a sequence must have for this function to return true
+   * @param predicate A function to test each element for a condition.
+   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
+   */
+  public atLeast(count: number, predicate: (item: TSource, index: number) => boolean): boolean;
 
   public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
     return atLeast(this, count, predicate);
@@ -898,6 +926,10 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
     return applyTakeWhile(Enumerable, this, predicate);
   }
 
+  public to<TResult>(ctor: new (src: Iterable<TSource>) => TResult): TResult {
+    return to(this, ctor);
+  }
+
   public toArray(): TSource[] {
     return toArray(this);
   }
@@ -1003,5 +1035,22 @@ export class Grouping<TKey, TSource> extends Enumerable<TSource> implements IGro
   public constructor(key: TKey, src: () => Generator<TSource>) {
     super(src);
     this.key = key;
+  }
+}
+
+export class ArrayEnumerable<TSource> extends Enumerable<TSource> {
+  protected readonly srcArr: TSource[];
+
+  public constructor(srcGenerator: () => Generator<TSource>, srcArr: TSource[]) {
+    super(srcGenerator);
+    this.srcArr = srcArr;
+  }
+
+  public override count(predicate?: (item: TSource, index: number) => boolean): number {
+    if (predicate) {
+      return super.count(predicate);
+    }
+
+    return this.srcArr.length;
   }
 }

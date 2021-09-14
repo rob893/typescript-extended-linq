@@ -130,6 +130,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Returns the input as an IEnumerable.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const asEnumerable = from(items).asEnumerable();
+   * ```
    * @returns The input sequence as IEnumerable.
    */
   asEnumerable(): IEnumerable<TSource>;
@@ -260,21 +265,97 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   count(predicate: (item: TSource, index: number) => boolean): number;
 
+  /**
+   * Returns the elements of the specified sequence or the specified value in a singleton collection if the sequence is empty.
+   * @example
+   * ```typescript
+   * const defaultNum = 0;
+   * const items = [];
+   * const itemsWithDefault = from(items).defaultIfEmpty(defaultNum); // [0];
+   * const
+   * ```
+   * @param defaultItem The value to return if the sequence is empty.
+   * @returns An IEnumerable<TSource> that contains defaultValue if source is empty; otherwise, source.
+   */
   defaultIfEmpty(defaultItem: TSource): IEnumerable<TSource>;
 
+  /**
+   * Returns distinct elements from a sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 1, 2];
+   * const distinct = from(items).distinct(); // Will be [1, 2, 3]
+   * ```
+   * @returns An IEnumerable<TSource> that contains distinct elements from the source sequence.
+   */
   distinct(): IEnumerable<TSource>;
 
+  /**
+   * Returns distinct elements from a sequence.
+   * @example
+   * ```typescript
+   * const items = [{ name: 'bob' }, { name: 'Joe' }, { name: 'Bob' }];
+   * const distinct = from(items).distinct((a, b) => a.name.toUpperCase() === b.name.toUpperCase()); // Will be [{ name: 'bob' }, { name: 'Joe' }]
+   * ```
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<TSource> that contains distinct elements from the source sequence.
+   */
   distinct(equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Returns distinct elements from a sequence according to a specified key selector function.
+   * @example
+   * ```typescript
+   * const items = [{ name: 'bob', id: 1 }, { name: 'Joe', id: 2 }, { name: 'Bob', id: 3 }, { name: 'John', id: 2 }];
+   * const distinct = from(items).distinctBy(x => x.id); // Will be [{ name: 'bob', id: 1 }, { name: 'Joe', id: 2 }, { name: 'Bob', id: 3 }]
+   * ```
+   * @typeparam TKey The type of key to distinguish elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<TSource> that contains distinct elements from the source sequence.
+   */
   distinctBy<TKey>(keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Returns distinct elements from a sequence according to a specified key selector function.
+   * @example
+   * ```typescript
+   * const items = [{ name: 'bob', id: 1 }, { name: 'Joe', id: 2 }, { name: 'Bob', id: 3 }, { name: 'John', id: 2 }];
+   * const distinct = from(items).distinctBy(x => x.id, (a, b) => a === b); // Will be [{ name: 'bob', id: 1 }, { name: 'Joe', id: 2 }, { name: 'Bob', id: 3 }]
+   * ```
+   * @typeparam TKey The type of key to distinguish elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<TSource> that contains distinct elements from the source sequence.
+   */
   distinctBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TSource>;
 
+  /**
+   * Returns the element at a specified index in a sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const indexZero = from(items).elementAt(0); // Will be 1
+   * const willThrow = from(items).elementAt(10); // This will throw.
+   * ```
+   * @param index The zero-based index of the element to retrieve.
+   * @returns The element at the specified position in the source sequence.
+   */
   elementAt(index: number): TSource;
 
+  /**
+   * Returns the element at a specified index in a sequence or null if the index is out of range.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const indexZero = from(items).elementAt(0); // Will be 1
+   * const willBeNull = from(items).elementAt(10); // Will be null.
+   * ```
+   * @param index The zero-based index of the element to retrieve.
+   * @returns The element at the specified position in the source sequence.
+   */
   elementAtOrDefault(index: number): TSource | null;
 
   endsWith(second: Iterable<TSource>): boolean;

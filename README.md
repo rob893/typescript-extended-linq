@@ -139,6 +139,8 @@ Returns the input as an IEnumerable.
 
 ### [atLeast](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atLeast)
 
+Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
+
 ### [atMost](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atMost)
 
 ### [average](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#average)
@@ -163,13 +165,23 @@ Returns the number of elements in a sequence.
 
 ### [defaultIfEmpty](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#defaultIfEmpty)
 
+Returns the elements of the specified sequence or the specified value in a singleton collection if the sequence is empty.
+
 ### [distinct](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#distinct)
+
+Returns distinct elements from a sequence.
 
 ### [distinctBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#distinctBy)
 
+Returns distinct elements from a sequence according to a specified key selector function.
+
 ### [elementAt](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAt)
 
+Returns the element at a specified index in a sequence.
+
 ### [elementAtOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAtOrDefault)
+
+Returns the element at a specified index in a sequence or null if the index is out of range.
 
 ### [endsWith](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#endsWith)
 

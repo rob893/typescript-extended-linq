@@ -41,7 +41,7 @@ export class EagerLoad<T> implements Iterable<T> {
     return new EagerLoad(filtered);
   }
 
-  public select<TDestination>(exp: (item: T, index: number) => TDestination): EagerLoad<TDestination> {
+  public select<TResult>(exp: (item: T, index: number) => TResult): EagerLoad<TResult> {
     const mapped = [];
 
     let i = 0;
@@ -53,7 +53,7 @@ export class EagerLoad<T> implements Iterable<T> {
     return new EagerLoad(mapped);
   }
 
-  public selectMany<TDestination>(exp: (item: T, index: number) => TDestination[]): EagerLoad<TDestination> {
+  public selectMany<TResult>(exp: (item: T, index: number) => TResult[]): EagerLoad<TResult> {
     const mapped = [];
 
     let i = 0;

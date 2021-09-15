@@ -16,7 +16,7 @@ export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
         const outerKey = outerKeySelector(outerItem);
 
         const inners = factory
-          .createEnumerable(getIterableGenerator(inner))
+          .createBasicEnumerable(getIterableGenerator(inner))
           .where(innerItem => equalityComparer(outerKey, innerKeySelector(innerItem)));
         yield resultSelector(outerItem, inners);
       }
@@ -38,10 +38,10 @@ export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
         const key = outerKeySelector(outerItem);
         const innersToJoin = innerMap.get(key);
 
-        yield resultSelector(outerItem, factory.createEnumerable(getIterableGenerator(innersToJoin ?? [])));
+        yield resultSelector(outerItem, factory.createBasicEnumerable(getIterableGenerator(innersToJoin ?? [])));
       }
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

@@ -22,5 +22,5 @@ export function applyShuffle<TSource>(factory: IEnumerableFactory, src: Iterable
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

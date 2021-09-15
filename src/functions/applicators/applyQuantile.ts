@@ -8,7 +8,7 @@ export function applyQuantile<TSource>(
   q: number
 ): number {
   const sorted = factory
-    .createEnumerable(getIterableGenerator(src))
+    .createBasicEnumerable(getIterableGenerator(src))
     .select(selector)
     .orderBy(x => x)
     .toArray();

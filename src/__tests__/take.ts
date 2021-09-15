@@ -1,10 +1,10 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('take', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).take(2);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the first 2', () => {
@@ -34,7 +34,7 @@ describe('takeLast', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).takeLast(2);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the last 2', () => {
@@ -64,7 +64,7 @@ describe('takeEvery', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).takeEvery(2);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the every second', () => {
@@ -94,7 +94,7 @@ describe('takeWhile', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).takeWhile(x => true);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return elements until condition is false', () => {

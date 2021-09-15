@@ -15,5 +15,5 @@ export function applyRange(factory: IEnumerableFactory, start: number, count: nu
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

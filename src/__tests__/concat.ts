@@ -1,11 +1,11 @@
-import { Enumerable } from '..';
+import { BasicEnumerable } from '..';
 import { from } from '../functions/from';
 
 describe('concat', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).concat([4, 5, 6]);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it.each([

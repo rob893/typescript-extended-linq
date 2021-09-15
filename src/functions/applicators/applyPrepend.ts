@@ -13,5 +13,5 @@ export function applyPrepend<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

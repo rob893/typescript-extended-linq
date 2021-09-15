@@ -1,5 +1,6 @@
-import { Enumerable } from '../Enumerable';
-import { EnumerableFactory } from '../EnumerableFactory';
+import { BasicEnumerable } from '../enumerables/BasicEnumerable';
+import { Enumerable } from '../enumerables/Enumerable';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 
 describe('complex', () => {
   it('should allow for multiple statements', () => {
@@ -20,7 +21,7 @@ describe('complex', () => {
       }
     });
 
-    const query = new Enumerable(new EnumerableFactory(), mock)
+    const query = new BasicEnumerable(new EnumerableFactory(), mock)
       .where(item => item.id % 2 === 0)
       .orderBy(item => item.id)
       .thenBy(item => item.foo)
@@ -38,5 +39,48 @@ describe('complex', () => {
       { id: 2, foo: 'a', bar: new Date('2021-09-01T00:00:00.000Z') },
       { id: 2, foo: 'b', bar: new Date('2021-08-01T00:00:00.000Z') }
     ]);
+  });
+});
+
+describe('StaticEnumerable.from', () => {
+  it.each([
+    [
+      [1, 2, 3],
+      [1, 2, 3]
+    ],
+    ['123', ['1', '2', '3']],
+    [new Set([1, 2, 3]), [1, 2, 3]],
+    [new Map(), []]
+  ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
+    const result = Enumerable.from<unknown>(collection);
+
+    expect(result).toBeInstanceOf(BasicEnumerable);
+    expect(result.toArray()).toEqual(expected);
+  });
+
+  it.each([null, undefined, false, 123, NaN])('should throw', src => {
+    expect(() => Enumerable.from(src as any)).toThrow();
+  });
+});
+
+describe('StaticEnumerable.fromObject', () => {
+  it.each([
+    [{}, []],
+    [
+      { foo: 'bar', bar: 1 },
+      [
+        ['foo', 'bar'],
+        ['bar', 1]
+      ]
+    ]
+  ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
+    const result = Enumerable.fromObject<unknown>(collection);
+
+    expect(result).toBeInstanceOf(BasicEnumerable);
+    expect(result.toArray()).toEqual(expected);
+  });
+
+  it.each([null, undefined, false, 123, NaN])('should throw', src => {
+    expect(() => Enumerable.fromObject(src)).toThrow();
   });
 });

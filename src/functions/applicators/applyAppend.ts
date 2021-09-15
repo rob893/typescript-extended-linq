@@ -13,5 +13,5 @@ export function applyAppend<TSource>(
     yield item;
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

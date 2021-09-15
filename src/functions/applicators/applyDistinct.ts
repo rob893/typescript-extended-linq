@@ -40,5 +40,5 @@ export function applyDistinct<TSource, TKey>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

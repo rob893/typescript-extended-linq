@@ -1,10 +1,10 @@
-import { Enumerable, ofType, TypeOfMember } from '..';
+import { BasicEnumerable, ofType, TypeOfMember } from '..';
 
 describe('ofType', () => {
   it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
     const result = ofType<unknown, string>(src, 'string');
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it.each([

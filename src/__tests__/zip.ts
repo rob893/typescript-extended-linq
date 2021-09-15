@@ -1,4 +1,4 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('zip', () => {
   it('should return an Enumerable', () => {
@@ -13,7 +13,7 @@ describe('zip', () => {
 
     const result = from(items).zip([1, 2, 3]);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return zipped collection', () => {

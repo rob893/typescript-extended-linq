@@ -1,4 +1,4 @@
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { applyMin } from './applicators/applyMin';
 
 export function min<TSource>(src: Iterable<TSource>): TSource;

@@ -21,7 +21,7 @@ export function applySkip<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applySkipLast<TSource>(
@@ -41,7 +41,7 @@ export function applySkipLast<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applySkipWhile<TSource>(
@@ -68,5 +68,5 @@ export function applySkipWhile<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

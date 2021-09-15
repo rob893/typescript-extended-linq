@@ -1,4 +1,4 @@
-import { Enumerable } from '../Enumerable';
+import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { from } from '../functions/from';
 
 describe('leftJoinHeterogeneous', () => {
@@ -11,7 +11,7 @@ describe('leftJoinHeterogeneous', () => {
       (x, y) => null
     );
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should join the two sequences on the selected key', () => {
@@ -99,7 +99,7 @@ describe('leftJoinHomogeneous', () => {
       (x, y) => null
     );
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should join the two sequences on the selected key', () => {

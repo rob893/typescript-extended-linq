@@ -39,5 +39,5 @@ export function applyExcept<TSource, TKey>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

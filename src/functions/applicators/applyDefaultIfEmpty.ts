@@ -18,5 +18,5 @@ export function applyDefaultIfEmpty<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

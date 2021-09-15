@@ -14,7 +14,7 @@ export function applySelect<TSource, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applySelectMany<TSource, TResult>(
@@ -34,5 +34,5 @@ export function applySelectMany<TSource, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

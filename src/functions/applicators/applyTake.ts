@@ -23,7 +23,7 @@ export function applyTake<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applyTakeEvery<TSource>(
@@ -35,7 +35,7 @@ export function applyTakeEvery<TSource>(
     throw new Error('Count must be greater than 0');
   }
 
-  return factory.createEnumerable(getIterableGenerator(src)).where((_, i) => i % step === 0);
+  return factory.createBasicEnumerable(getIterableGenerator(src)).where((_, i) => i % step === 0);
 }
 
 export function applyTakeLast<TSource>(
@@ -55,7 +55,7 @@ export function applyTakeLast<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applyTakeWhile<TSource>(
@@ -76,5 +76,5 @@ export function applyTakeWhile<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

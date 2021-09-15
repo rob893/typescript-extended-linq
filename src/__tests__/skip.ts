@@ -1,10 +1,10 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('skip', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).skip(2);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the last 1', () => {
@@ -34,7 +34,7 @@ describe('skipLast', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).skipLast(2);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the first one', () => {
@@ -64,7 +64,7 @@ describe('skipWhile', () => {
   it('should return an Enumerable', () => {
     const result = from([1, 2, 3]).skipWhile(x => true);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return elements after condition is false', () => {

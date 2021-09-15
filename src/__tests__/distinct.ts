@@ -1,4 +1,4 @@
-import { Enumerable } from '..';
+import { BasicEnumerable } from '..';
 import { from } from '../functions/from';
 
 describe('distinct', () => {
@@ -7,7 +7,7 @@ describe('distinct', () => {
 
     const result = from(items).distinct();
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should not have duplicates', () => {
@@ -57,7 +57,7 @@ describe('distinctBy', () => {
 
     const result = from(items).distinctBy(x => x);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return distinct items by key', () => {

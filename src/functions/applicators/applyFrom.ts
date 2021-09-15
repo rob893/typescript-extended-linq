@@ -21,7 +21,7 @@ export function applyFrom<TSource>(
   }
 
   if (typeof (src as Iterable<TSource>)[Symbol.iterator] === 'function') {
-    return factory.createEnumerable(getIterableGenerator(src as Iterable<TSource>));
+    return factory.createBasicEnumerable(getIterableGenerator(src as Iterable<TSource>));
   }
 
   if (typeof src === 'object') {
@@ -31,7 +31,7 @@ export function applyFrom<TSource>(
       }
     };
 
-    return factory.createEnumerable(generator);
+    return factory.createBasicEnumerable(generator);
   }
 
   throw new Error('Cannot create Enumerable from src.');

@@ -1,4 +1,4 @@
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { IOrderedEnumerable } from '../types';
 import { Comparer } from '../types';
 import { applyThenBy } from './applicators/applyThenBy';

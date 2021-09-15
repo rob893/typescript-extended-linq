@@ -21,5 +21,5 @@ export function applyZip<TSource, TSecond, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

@@ -56,7 +56,7 @@ export function applyLeftJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applyLeftJoinHomogeneous<TFirst, TKey, TResult>(
@@ -114,5 +114,5 @@ export function applyLeftJoinHomogeneous<TFirst, TKey, TResult>(
     }
   }
 
-  return factory.createEnumerable(genrator);
+  return factory.createBasicEnumerable(genrator);
 }

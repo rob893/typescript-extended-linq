@@ -17,5 +17,5 @@ export function applyWhere<TSource>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

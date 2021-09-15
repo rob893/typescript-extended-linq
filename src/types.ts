@@ -5,7 +5,7 @@ export type Comparer<T> = (a: T, b: T) => number;
 export type TypeOfMember = 'string' | 'number' | 'boolean' | 'bigint' | 'function' | 'object' | 'symbol' | 'undefined';
 
 export interface IEnumerableFactory {
-  createEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource>;
+  createBasicEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource>;
 
   createOrderedEnumerable<TSource>(generator: () => Generator<TSource[]>): IOrderedEnumerable<TSource>;
 
@@ -56,13 +56,13 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    *   .aggregate((prev, curr) => prev + curr, 10); // sum will be 16
    * ```
    * @typeparam TAccumulate The type of the accumulator value.
-   * @param aggregator An accumulator function to be invoked on each element.
    * @param seed The initial accumulator value.
+   * @param aggregator An accumulator function to be invoked on each element.
    * @returns The final accumulator value.
    */
   aggregate<TAccumulate>(
-    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-    seed: TAccumulate
+    seed: TAccumulate,
+    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate
   ): TAccumulate;
 
   /**
@@ -76,14 +76,14 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * ```
    * @typeparam TAccumulate The type of the accumulator value.
    * @typeparam TResult The type of the resulting value.
-   * @param aggregator An accumulator function to be invoked on each element.
    * @param seed The initial accumulator value.
+   * @param aggregator An accumulator function to be invoked on each element.
    * @param resultSelector An accumulator function to be invoked on each element.
    * @returns The final accumulator value.
    */
   aggregate<TAccumulate, TResult>(
-    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
     seed: TAccumulate,
+    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
     resultSelector: (accumulated: TAccumulate) => TResult
   ): TResult;
 

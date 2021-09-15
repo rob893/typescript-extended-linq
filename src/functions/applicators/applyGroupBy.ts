@@ -4,7 +4,6 @@ import { toKeyMap } from '../shared/toKeyMap';
 
 export function applyGroupBy<TSource, TKey>(
   factory: IEnumerableFactory,
-  groupingCreator: (key: TKey, group: () => Generator<TSource>) => IGrouping<TKey, TSource>,
   src: Iterable<TSource>,
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
@@ -33,14 +32,14 @@ export function applyGroupBy<TSource, TKey>(
 
       for (let i = 0; i < groupings.length; i++) {
         const [groupKey, group] = groupings[i];
-        yield groupingCreator(groupKey, getIterableGenerator(group));
+        yield factory.createGroupedEnumerable(groupKey, getIterableGenerator(group));
       }
     } else {
       for (const [groupKey, group] of toKeyMap(src, keySelector)) {
-        yield groupingCreator(groupKey, getIterableGenerator(group));
+        yield factory.createGroupedEnumerable(groupKey, getIterableGenerator(group));
       }
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

@@ -21,8 +21,8 @@ export function aggregate<TSource>(
  */
 export function aggregate<TSource, TAccumulate>(
   src: Iterable<TSource>,
-  aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-  seed: TAccumulate
+  seed: TAccumulate,
+  aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate
 ): TAccumulate;
 
 /**
@@ -39,8 +39,8 @@ export function aggregate<TSource, TAccumulate>(
  */
 export function aggregate<TSource, TAccumulate, TResult>(
   src: Iterable<TSource>,
-  aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
   seed: TAccumulate,
+  aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
   resultSelector: (accumulated: TAccumulate) => TResult
 ): TResult;
 
@@ -58,25 +58,46 @@ export function aggregate<TSource, TAccumulate, TResult>(
  */
 export function aggregate<TSource, TAccumulate, TResult>(
   src: Iterable<TSource>,
-  aggregator: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
-  seed?: TAccumulate | TSource,
+  seedOrAggregator:
+    | (TAccumulate | TSource)
+    | ((prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource),
+  aggregator?: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
   resultSelector?: (accumulated: TAccumulate) => TResult
 ): TAccumulate | TSource | TResult;
 
 export function aggregate<TSource, TAccumulate, TResult>(
   src: Iterable<TSource>,
-  aggregator: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
-  seed?: TAccumulate | TSource,
+  seedOrAggregator:
+    | (TAccumulate | TSource)
+    | ((prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource),
+  aggregator?: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
   resultSelector?: (accumulated: TAccumulate | TSource) => TResult
 ): TAccumulate | TSource | TResult {
-  let aggregate = seed;
+  let aggregate: TAccumulate | TSource | undefined;
+  let aggregatorFn: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource;
+
+  if (typeof seedOrAggregator === 'function') {
+    aggregatorFn = seedOrAggregator as (
+      prev: TAccumulate | TSource,
+      curr: TSource,
+      index: number
+    ) => TAccumulate | TSource;
+  } else {
+    if (!aggregator) {
+      throw new Error('Invalid use of aggregate overloads.');
+    }
+
+    aggregatorFn = aggregator;
+    aggregate = seedOrAggregator;
+  }
+
   let i = 0;
 
   for (const item of src) {
     if (aggregate === undefined) {
       aggregate = item;
     } else {
-      aggregate = aggregator(aggregate, item, i);
+      aggregate = aggregatorFn(aggregate, item, i);
     }
 
     i++;

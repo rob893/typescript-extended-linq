@@ -1,5 +1,5 @@
 import { join } from '../functions/join';
-import { Enumerable } from '../Enumerable';
+import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { from } from '..';
 
 describe('join', () => {
@@ -12,7 +12,7 @@ describe('join', () => {
       (x, y) => null
     );
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should join the two sequences on the selected key', () => {

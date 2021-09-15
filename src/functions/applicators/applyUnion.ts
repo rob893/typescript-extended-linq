@@ -45,5 +45,5 @@ export function applyUnion<TSource, TKey>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

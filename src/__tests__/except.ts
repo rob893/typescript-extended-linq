@@ -1,4 +1,4 @@
-import { Enumerable } from '..';
+import { BasicEnumerable } from '..';
 import { from } from '../functions/from';
 
 describe('except', () => {
@@ -7,7 +7,7 @@ describe('except', () => {
 
     const result = from(items).except([1, 2, 3]);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the exception of two collections', () => {
@@ -77,7 +77,7 @@ describe('exceptBy', () => {
 
     const result = from(items).exceptBy([1, 2, 3], x => x);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the exception of two collections by id', () => {

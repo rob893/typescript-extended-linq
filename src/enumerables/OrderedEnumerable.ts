@@ -1,8 +1,8 @@
-import { Enumerable } from './Enumerable';
-import { applyThenBy } from './functions/applicators/applyThenBy';
-import { Comparer, IEnumerableFactory, IOrderedEnumerable } from './types';
+import { BasicEnumerable } from './BasicEnumerable';
+import { applyThenBy } from '../functions/applicators/applyThenBy';
+import { Comparer, IEnumerableFactory, IOrderedEnumerable } from '../types';
 
-export class OrderedEnumerable<TSource> extends Enumerable<TSource> implements IOrderedEnumerable<TSource> {
+export class OrderedEnumerable<TSource> extends BasicEnumerable<TSource> implements IOrderedEnumerable<TSource> {
   private readonly orderedPairs: () => Generator<TSource[]>;
 
   public constructor(factory: IEnumerableFactory, orderedPairs: () => Generator<TSource[]>) {

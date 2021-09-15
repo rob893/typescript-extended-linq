@@ -1,4 +1,4 @@
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { EqualityComparer } from '../types';
 import { IEnumerable } from '../types';
 import { applyGroupJoin } from './applicators/applyGroupJoin';

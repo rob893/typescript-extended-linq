@@ -1,10 +1,10 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('reverse', () => {
   it('should return an Enumberable', () => {
     const result = from([1, 2, 3]).reverse();
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should reverse the elements', () => {

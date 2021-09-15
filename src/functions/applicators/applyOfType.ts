@@ -19,5 +19,5 @@ export function applyOfType<TSource, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

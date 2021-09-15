@@ -1,4 +1,4 @@
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { applyMax } from './applicators/applyMax';
 
 export function max<TSource, TResult>(

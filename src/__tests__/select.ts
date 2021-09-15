@@ -1,11 +1,11 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('select', () => {
   it('should return an Enumerable', () => {
     const items = [{ foo: 'foo1' }, { foo: 'foo2' }];
     const result = from(items).select(x => x.foo);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the mapped collection', () => {
@@ -35,7 +35,7 @@ describe('selectMany', () => {
     ];
     const result = from(items).selectMany(x => x.bar);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the mapped collection', () => {

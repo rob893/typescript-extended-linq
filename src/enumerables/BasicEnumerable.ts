@@ -1,61 +1,61 @@
-import { aggregate } from './functions/aggregate';
-import { all } from './functions/all';
-import { any } from './functions/any';
-import { applyAppend } from './functions/applicators/applyAppend';
-import { applyAsEnumerable } from './functions/applicators/applyAsEnumerable';
-import { applyChunk } from './functions/applicators/applyChunk';
-import { applyConcat } from './functions/applicators/applyConcat';
-import { applyDefaultIfEmpty } from './functions/applicators/applyDefaultIfEmpty';
-import { applyDistinct } from './functions/applicators/applyDistinct';
-import { applyExcept } from './functions/applicators/applyExcept';
-import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from './functions/applicators/applyFullJoin';
-import { applyGroupBy } from './functions/applicators/applyGroupBy';
-import { applyGroupJoin } from './functions/applicators/applyGroupJoin';
-import { applyIntersect } from './functions/applicators/applyIntersect';
-import { applyJoin } from './functions/applicators/applyJoin';
-import { applyLeftJoinHeterogeneous, applyLeftJoinHomogeneous } from './functions/applicators/applyLeftJoin';
-import { applyMax } from './functions/applicators/applyMax';
-import { applyMin } from './functions/applicators/applyMin';
-import { applyOfType } from './functions/applicators/applyOfType';
-import { applyOrderBy } from './functions/applicators/applyOrderBy';
-import { applyPipe } from './functions/applicators/applyPipe';
-import { applyPrepend } from './functions/applicators/applyPrepend';
-import { applyQuantile } from './functions/applicators/applyQuantile';
-import { applyReverse } from './functions/applicators/applyReverse';
-import { applyRightJoinHeterogeneous, applyRightJoinHomogeneous } from './functions/applicators/applyRightJoin';
-import { applySelect, applySelectMany } from './functions/applicators/applySelect';
-import { applyShuffle } from './functions/applicators/applyShuffle';
-import { applySkip, applySkipLast, applySkipWhile } from './functions/applicators/applySkip';
-import { applyTake, applyTakeEvery, applyTakeLast, applyTakeWhile } from './functions/applicators/applyTake';
-import { applyUnion } from './functions/applicators/applyUnion';
-import { applyWhere } from './functions/applicators/applyWhere';
-import { applyZip } from './functions/applicators/applyZip';
-import { atLeast } from './functions/atLeast';
-import { atMost } from './functions/atMost';
-import { average } from './functions/average';
-import { contains } from './functions/contains';
-import { count } from './functions/count';
-import { elementAt, elementAtOrDefault } from './functions/elementAt';
-import { endsWith } from './functions/endsWith';
-import { first, firstOrDefault } from './functions/first';
-import { forEach } from './functions/forEach';
-import { last, lastOrDefault } from './functions/last';
-import { sequenceEqual } from './functions/sequenceEqual';
-import { single, singleOrDefault } from './functions/single';
-import { startsWith } from './functions/startsWith';
-import { sum } from './functions/sum';
-import { to } from './functions/to';
-import { toArray } from './functions/toArray';
-import { toMap } from './functions/toMap';
-import { toObject } from './functions/toObject';
-import { toSet } from './functions/toSet';
-import { Comparer, EqualityComparer, IEnumerable, IGrouping, IOrderedEnumerable, IEnumerableFactory } from './types';
+import { aggregate } from '../functions/aggregate';
+import { all } from '../functions/all';
+import { any } from '../functions/any';
+import { applyAppend } from '../functions/applicators/applyAppend';
+import { applyAsEnumerable } from '../functions/applicators/applyAsEnumerable';
+import { applyChunk } from '../functions/applicators/applyChunk';
+import { applyConcat } from '../functions/applicators/applyConcat';
+import { applyDefaultIfEmpty } from '../functions/applicators/applyDefaultIfEmpty';
+import { applyDistinct } from '../functions/applicators/applyDistinct';
+import { applyExcept } from '../functions/applicators/applyExcept';
+import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from '../functions/applicators/applyFullJoin';
+import { applyGroupBy } from '../functions/applicators/applyGroupBy';
+import { applyGroupJoin } from '../functions/applicators/applyGroupJoin';
+import { applyIntersect } from '../functions/applicators/applyIntersect';
+import { applyJoin } from '../functions/applicators/applyJoin';
+import { applyLeftJoinHeterogeneous, applyLeftJoinHomogeneous } from '../functions/applicators/applyLeftJoin';
+import { applyMax } from '../functions/applicators/applyMax';
+import { applyMin } from '../functions/applicators/applyMin';
+import { applyOfType } from '../functions/applicators/applyOfType';
+import { applyOrderBy } from '../functions/applicators/applyOrderBy';
+import { applyPipe } from '../functions/applicators/applyPipe';
+import { applyPrepend } from '../functions/applicators/applyPrepend';
+import { applyQuantile } from '../functions/applicators/applyQuantile';
+import { applyReverse } from '../functions/applicators/applyReverse';
+import { applyRightJoinHeterogeneous, applyRightJoinHomogeneous } from '../functions/applicators/applyRightJoin';
+import { applySelect, applySelectMany } from '../functions/applicators/applySelect';
+import { applyShuffle } from '../functions/applicators/applyShuffle';
+import { applySkip, applySkipLast, applySkipWhile } from '../functions/applicators/applySkip';
+import { applyTake, applyTakeEvery, applyTakeLast, applyTakeWhile } from '../functions/applicators/applyTake';
+import { applyUnion } from '../functions/applicators/applyUnion';
+import { applyWhere } from '../functions/applicators/applyWhere';
+import { applyZip } from '../functions/applicators/applyZip';
+import { atLeast } from '../functions/atLeast';
+import { atMost } from '../functions/atMost';
+import { average } from '../functions/average';
+import { contains } from '../functions/contains';
+import { count } from '../functions/count';
+import { elementAt, elementAtOrDefault } from '../functions/elementAt';
+import { endsWith } from '../functions/endsWith';
+import { first, firstOrDefault } from '../functions/first';
+import { forEach } from '../functions/forEach';
+import { last, lastOrDefault } from '../functions/last';
+import { sequenceEqual } from '../functions/sequenceEqual';
+import { single, singleOrDefault } from '../functions/single';
+import { startsWith } from '../functions/startsWith';
+import { sum } from '../functions/sum';
+import { to } from '../functions/to';
+import { toArray } from '../functions/toArray';
+import { toMap } from '../functions/toMap';
+import { toObject } from '../functions/toObject';
+import { toSet } from '../functions/toSet';
+import { Comparer, EqualityComparer, IEnumerable, IGrouping, IOrderedEnumerable, IEnumerableFactory } from '../types';
 
 /**
  * Class that exposes an iterator, which supports a simple iteration and various methods.
  * @typeparam TSource The type of elements in the Enumerable.
  */
-export class Enumerable<TSource> implements IEnumerable<TSource> {
+export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   protected readonly factory: IEnumerableFactory;
 
   private readonly srcGenerator: () => Generator<TSource>;
@@ -84,47 +84,49 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
     return this.srcGenerator();
   }
 
-  /**
-   * Applies an accumulator function over a sequence.
-   * @param aggregator An accumulator function to be invoked on each element.
-   * @returns The final accumulator value.
-   */
-  public aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
+  // /**
+  //  * Applies an accumulator function over a sequence.
+  //  * @param aggregator An accumulator function to be invoked on each element.
+  //  * @returns The final accumulator value.
+  //  */
+  // public aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
 
-  /**
-   * Applies an accumulator function over a sequence.
-   * The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
-   * @typeparam TAccumulate The type of the accumulator value.
-   * @typeparam TResult The type of the resulting value.
-   * @param aggregator An accumulator function to be invoked on each element.
-   * @param seed The initial accumulator value.
-   * @param resultSelector An accumulator function to be invoked on each element.
-   * @returns The final accumulator value.
-   */
+  // /**
+  //  * Applies an accumulator function over a sequence.
+  //  * The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
+  //  * @typeparam TAccumulate The type of the accumulator value.
+  //  * @typeparam TResult The type of the resulting value.
+  //  * @param aggregator An accumulator function to be invoked on each element.
+  //  * @param seed The initial accumulator value.
+  //  * @param resultSelector An accumulator function to be invoked on each element.
+  //  * @returns The final accumulator value.
+  //  */
+  // public aggregate<TAccumulate, TResult>(
+  //   aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
+  //   seed: TAccumulate,
+  //   resultSelector: (accumulated: TAccumulate) => TResult
+  // ): TResult;
+
+  // /**
+  //  * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
+  //  * @typeparam TAccumulate The type of the accumulator value.
+  //  * @param aggregator An accumulator function to be invoked on each element.
+  //  * @param seed The initial accumulator value.
+  //  * @returns The final accumulator value.
+  //  */
+  // public aggregate<TAccumulate>(
+  //   aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
+  //   seed: TAccumulate
+  // ): TAccumulate;
+
   public aggregate<TAccumulate, TResult>(
-    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-    seed: TAccumulate,
-    resultSelector: (accumulated: TAccumulate) => TResult
-  ): TResult;
-
-  /**
-   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
-   * @typeparam TAccumulate The type of the accumulator value.
-   * @param aggregator An accumulator function to be invoked on each element.
-   * @param seed The initial accumulator value.
-   * @returns The final accumulator value.
-   */
-  public aggregate<TAccumulate>(
-    aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-    seed: TAccumulate
-  ): TAccumulate;
-
-  public aggregate<TAccumulate, TResult>(
-    aggregator: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
-    seed?: TAccumulate | TSource,
+    seedOrAggregator:
+      | (TAccumulate | TSource)
+      | ((prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource),
+    aggregator?: (prev: TAccumulate | TSource, curr: TSource, index: number) => TAccumulate | TSource,
     resultSelector?: (accumulated: TAccumulate) => TResult
   ): TAccumulate | TSource | TResult {
-    return aggregate(this, aggregator, seed, resultSelector);
+    return aggregate(this, seedOrAggregator, aggregator, resultSelector);
   }
 
   /**
@@ -409,13 +411,7 @@ export class Enumerable<TSource> implements IEnumerable<TSource> {
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
   ): IEnumerable<IGrouping<TKey, TSource>> {
-    return applyGroupBy(
-      this.factory,
-      (key, groupGenerator) => this.factory.createGroupedEnumerable(key, groupGenerator),
-      this,
-      keySelector,
-      equalityComparer
-    );
+    return applyGroupBy(this.factory, this, keySelector, equalityComparer);
   }
 
   /**

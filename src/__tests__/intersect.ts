@@ -1,4 +1,4 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('intersect', () => {
   it('should return an Enumerable', () => {
@@ -6,7 +6,7 @@ describe('intersect', () => {
 
     const result = from(items).intersect([1, 2, 3]);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the intersection of two collections', () => {
@@ -79,7 +79,7 @@ describe('intersectBy', () => {
 
     const result = from(items).intersectBy([1, 2, 3], x => x);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the intersection of two collections by id', () => {

@@ -47,5 +47,5 @@ export function applyJoin<TOuter, TInner, TKey, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

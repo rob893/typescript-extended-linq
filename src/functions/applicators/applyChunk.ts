@@ -17,15 +17,15 @@ export function applyChunk<TSource>(
       chunk.push(item);
 
       if (chunk.length >= chunkSize) {
-        yield factory.createEnumerable(getIterableGenerator(chunk));
+        yield factory.createBasicEnumerable(getIterableGenerator(chunk));
         chunk = [];
       }
     }
 
     if (chunk.length > 0) {
-      yield factory.createEnumerable(getIterableGenerator(chunk));
+      yield factory.createBasicEnumerable(getIterableGenerator(chunk));
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

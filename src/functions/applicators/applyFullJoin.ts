@@ -85,7 +85,7 @@ export function applyFullJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }
 
 export function applyFullJoinHomogeneous<TFirst, TKey, TResult>(
@@ -172,5 +172,5 @@ export function applyFullJoinHomogeneous<TFirst, TKey, TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

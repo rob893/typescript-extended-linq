@@ -9,12 +9,12 @@ export function applyMax<TSource, TKey, TResult>(
 ): TSource | TResult {
   if (!selector) {
     return factory
-      .createEnumerable(getIterableGenerator(src))
+      .createBasicEnumerable(getIterableGenerator(src))
       .aggregate((prev, curr) => (keySelector(prev) >= keySelector(curr) ? prev : curr));
   }
 
   return factory
-    .createEnumerable(getIterableGenerator(src))
+    .createBasicEnumerable(getIterableGenerator(src))
     .select(selector)
     .aggregate((prev, curr) => (prev >= curr ? prev : curr));
 }

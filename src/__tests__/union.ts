@@ -1,4 +1,4 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('union', () => {
   it('should return an Enumerable', () => {
@@ -6,7 +6,7 @@ describe('union', () => {
 
     const result = from(items).union([1, 2, 3]);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the union of two collections', () => {
@@ -73,7 +73,7 @@ describe('unionBy', () => {
 
     const result = from(items).unionBy([1, 2, 3], x => x);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the union of two collections by id', () => {

@@ -15,5 +15,5 @@ export function applyRepeat<TResult>(
     }
   }
 
-  return factory.createEnumerable(generator);
+  return factory.createBasicEnumerable(generator);
 }

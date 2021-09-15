@@ -1,4 +1,4 @@
-import { from, Enumerable, fromObject } from '../index';
+import { from, fromObject, BasicEnumerable } from '../index';
 
 describe('from', () => {
   it.each([
@@ -12,7 +12,7 @@ describe('from', () => {
   ])('should return an Enumerable from the passed in iterable', (collection, expected) => {
     const result = from<unknown>(collection);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
     expect(result.toArray()).toEqual(expected);
   });
 
@@ -34,7 +34,7 @@ describe('fromObject', () => {
   ])('should return an Enumerable from the passed in object', (collection, expected) => {
     const result = fromObject(collection);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
     expect(result.toArray()).toEqual(expected);
   });
 

@@ -1,12 +1,12 @@
-import { ArrayEnumerable } from './ArrayEnumerable';
-import { Enumerable } from './Enumerable';
-import { Grouping } from './Grouping';
-import { OrderedEnumerable } from './OrderedEnumerable';
-import { IEnumerable, IOrderedEnumerable, IGrouping, IEnumerableFactory } from './types';
+import { ArrayEnumerable } from '../enumerables/ArrayEnumerable';
+import { BasicEnumerable } from '../enumerables/BasicEnumerable';
+import { Grouping } from '../enumerables/Grouping';
+import { OrderedEnumerable } from '../enumerables/OrderedEnumerable';
+import { IEnumerable, IOrderedEnumerable, IGrouping, IEnumerableFactory } from '../types';
 
 export class EnumerableFactory implements IEnumerableFactory {
-  public createEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource> {
-    return new Enumerable(this, generator);
+  public createBasicEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource> {
+    return new BasicEnumerable(this, generator);
   }
 
   public createOrderedEnumerable<TSource>(generator: () => Generator<TSource[]>): IOrderedEnumerable<TSource> {
@@ -25,6 +25,6 @@ export class EnumerableFactory implements IEnumerableFactory {
   }
 
   public isEnumerable(obj: unknown): obj is IEnumerable<unknown> {
-    return obj instanceof Enumerable;
+    return obj instanceof BasicEnumerable;
   }
 }

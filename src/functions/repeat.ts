@@ -1,4 +1,4 @@
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { IEnumerable } from '../types';
 import { applyRepeat } from './applicators/applyRepeat';
 

@@ -1,11 +1,11 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('groupBy', () => {
   it('should return an Enumerable', () => {
     const items = [{ id: 1, foo: 'asdf' }];
     const result = from(items).groupBy(x => x.id);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should group items based on selected key', () => {

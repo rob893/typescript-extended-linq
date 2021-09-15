@@ -1,4 +1,4 @@
-import { Enumerable, from } from '..';
+import { BasicEnumerable, from } from '..';
 
 describe('where', () => {
   it('should return an Enumerable', () => {
@@ -13,7 +13,7 @@ describe('where', () => {
 
     const result = from(items).where(x => x.id > 1);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should filter out items that match the condition', () => {

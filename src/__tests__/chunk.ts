@@ -1,5 +1,5 @@
 import { from } from '../functions/from';
-import { Enumerable } from '..';
+import { BasicEnumerable } from '..';
 
 describe('chunk', () => {
   it('should return an Enumerable', () => {
@@ -7,7 +7,7 @@ describe('chunk', () => {
 
     const result = from(items).chunk(5);
 
-    expect(result).toBeInstanceOf(Enumerable);
+    expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should chunk the collection into collections of chunk size', () => {

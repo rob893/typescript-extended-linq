@@ -1,7 +1,7 @@
 import { TypeOfMember } from '../types';
 import { IEnumerable } from '../types';
 import { applyOfType } from './applicators/applyOfType';
-import { EnumerableFactory } from '../EnumerableFactory';
+import { EnumerableFactory } from '../utilities/EnumerableFactory';
 
 export function ofType<TSource, TResult>(
   src: Iterable<TSource>,

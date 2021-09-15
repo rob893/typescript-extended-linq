@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
 import { applyExcept } from './applicators/applyExcept';
@@ -8,7 +8,7 @@ export function except<TSource>(
   second: Iterable<TSource>,
   equalityComparer?: EqualityComparer<TSource>
 ): IEnumerable<TSource> {
-  return applyExcept(Enumerable, src, second, x => x, equalityComparer);
+  return applyExcept(new EnumerableFactory(), src, second, x => x, equalityComparer);
 }
 
 export function exceptBy<TSource, TKey>(
@@ -17,5 +17,5 @@ export function exceptBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TSource> {
-  return applyExcept(Enumerable, src, second, keySelector, equalityComparer);
+  return applyExcept(new EnumerableFactory(), src, second, keySelector, equalityComparer);
 }

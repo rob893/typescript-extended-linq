@@ -1,33 +1,27 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
-export function applyFrom<TSource>(
-  enumerableCtor: IEnumerableConstructor<TSource>,
-  arrayEnumerableCtor: new (generator: () => Generator<TSource>, srcArr: TSource[]) => IEnumerable<TSource>,
-  src: Iterable<TSource>
-): IEnumerable<TSource>;
+export function applyFrom<TSource>(factory: IEnumerableFactory, src: Iterable<TSource>): IEnumerable<TSource>;
 
 export function applyFrom<TSource>(
-  enumerableCtor: IEnumerableConstructor<[keyof TSource, TSource[keyof TSource]]>,
-  arrayEnumerableCtor: new (generator: () => Generator<TSource>, srcArr: TSource[]) => IEnumerable<TSource>,
+  factory: IEnumerableFactory,
   src: TSource
 ): IEnumerable<[keyof TSource, TSource[keyof TSource]]>;
 
 export function applyFrom<TSource>(
-  enumerableCtor: IEnumerableConstructor<TSource | [keyof TSource, TSource[keyof TSource]]>,
-  arrayEnumerableCtor: new (generator: () => Generator<TSource>, srcArr: TSource[]) => IEnumerable<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource> | TSource
 ): IEnumerable<TSource | [keyof TSource, TSource[keyof TSource]]> {
-  if (src instanceof enumerableCtor) {
-    return src;
+  if (factory.isEnumerable(src)) {
+    return src as IEnumerable<TSource>;
   }
 
   if (Array.isArray(src)) {
-    return new arrayEnumerableCtor(getIterableGenerator(src), src);
+    return factory.createArrayEnumerable(getIterableGenerator(src), src);
   }
 
   if (typeof (src as Iterable<TSource>)[Symbol.iterator] === 'function') {
-    return new enumerableCtor(getIterableGenerator(src as Iterable<TSource>));
+    return factory.createEnumerable(getIterableGenerator(src as Iterable<TSource>));
   }
 
   if (typeof src === 'object') {
@@ -37,7 +31,7 @@ export function applyFrom<TSource>(
       }
     };
 
-    return new enumerableCtor(generator);
+    return factory.createEnumerable(generator);
   }
 
   throw new Error('Cannot create Enumerable from src.');

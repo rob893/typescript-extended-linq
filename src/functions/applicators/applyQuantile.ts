@@ -1,13 +1,14 @@
-import { IEnumerableConstructor } from '../../types';
+import { IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
 export function applyQuantile<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   selector: (item: TSource) => number,
   q: number
 ): number {
-  const sorted = new enumerableType(getIterableGenerator(src))
+  const sorted = factory
+    .createEnumerable(getIterableGenerator(src))
     .select(selector)
     .orderBy(x => x)
     .toArray();

@@ -1,6 +1,6 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
-export function applyEmpty<TSource>(enumerableType: IEnumerableConstructor<TSource>): IEnumerable<TSource> {
-  return new enumerableType(getIterableGenerator([]));
+export function applyEmpty<TSource>(factory: IEnumerableFactory): IEnumerable<TSource> {
+  return factory.createEnumerable(getIterableGenerator([]));
 }

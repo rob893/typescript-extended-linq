@@ -1,7 +1,7 @@
 import { IEnumerable } from '../types';
-import { Enumerable } from '../enumerables';
 import { applyAppend } from './applicators/applyAppend';
+import { EnumerableFactory } from '../EnumerableFactory';
 
 export function append<TSource>(src: Iterable<TSource>, item: TSource): IEnumerable<TSource> {
-  return applyAppend(Enumerable, src, item);
+  return applyAppend(new EnumerableFactory(), src, item);
 }

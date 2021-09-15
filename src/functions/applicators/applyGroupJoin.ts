@@ -1,8 +1,8 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
 export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
-  enumerableType: IEnumerableConstructor<TResult | TInner>,
+  factory: IEnumerableFactory,
   outer: Iterable<TOuter>,
   inner: Iterable<TInner>,
   outerKeySelector: (item: TOuter) => TKey,
@@ -15,9 +15,9 @@ export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
       for (const outerItem of outer) {
         const outerKey = outerKeySelector(outerItem);
 
-        const inners = (new enumerableType(getIterableGenerator(inner)) as IEnumerable<TInner>).where(innerItem =>
-          equalityComparer(outerKey, innerKeySelector(innerItem))
-        );
+        const inners = factory
+          .createEnumerable(getIterableGenerator(inner))
+          .where(innerItem => equalityComparer(outerKey, innerKeySelector(innerItem)));
         yield resultSelector(outerItem, inners);
       }
     } else {
@@ -38,13 +38,10 @@ export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
         const key = outerKeySelector(outerItem);
         const innersToJoin = innerMap.get(key);
 
-        yield resultSelector(
-          outerItem,
-          new enumerableType(getIterableGenerator(innersToJoin ?? [])) as IEnumerable<TInner>
-        );
+        yield resultSelector(outerItem, factory.createEnumerable(getIterableGenerator(innersToJoin ?? [])));
       }
     }
   }
 
-  return new enumerableType(generator) as IEnumerable<TResult>;
+  return factory.createEnumerable(generator);
 }

@@ -1,10 +1,6 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
-export function applyRange(
-  enumerableType: IEnumerableConstructor<number>,
-  start: number,
-  count: number
-): IEnumerable<number> {
+export function applyRange(factory: IEnumerableFactory, start: number, count: number): IEnumerable<number> {
   if (count < 0) {
     throw new Error('Count must be greater than or equal to 0');
   }
@@ -19,5 +15,5 @@ export function applyRange(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

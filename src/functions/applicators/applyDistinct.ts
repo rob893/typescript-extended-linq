@@ -1,7 +1,7 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyDistinct<TSource, TKey>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
@@ -40,5 +40,5 @@ export function applyDistinct<TSource, TKey>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { applyZip } from './applicators/applyZip';
 
@@ -24,5 +24,5 @@ export function zip<TSource, TSecond, TResult>(
   second: Iterable<TSecond>,
   resultSelector?: (first: TSource, second: TSecond) => TResult
 ): IEnumerable<[TSource, TSecond] | TResult> {
-  return applyZip(Enumerable, src, second, resultSelector);
+  return applyZip(new EnumerableFactory(), src, second, resultSelector);
 }

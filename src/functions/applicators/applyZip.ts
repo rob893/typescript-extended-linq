@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyZip<TSource, TSecond, TResult>(
-  enumerableType: IEnumerableConstructor<[TSource, TSecond] | TResult>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   second: Iterable<TSecond>,
   resultSelector?: (first: TSource, second: TSecond) => TResult
@@ -21,5 +21,5 @@ export function applyZip<TSource, TSecond, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

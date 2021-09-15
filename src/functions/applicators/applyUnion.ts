@@ -1,7 +1,7 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyUnion<TSource, TKey>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   second: Iterable<TSource>,
   keySelector: (item: TSource) => TKey,
@@ -45,5 +45,5 @@ export function applyUnion<TSource, TKey>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

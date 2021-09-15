@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
 import { applyDistinct } from './applicators/applyDistinct';
@@ -7,7 +7,7 @@ export function distinct<TSource>(
   src: Iterable<TSource>,
   equalityComparer?: EqualityComparer<TSource>
 ): IEnumerable<TSource> {
-  return applyDistinct(Enumerable, src, x => x, equalityComparer);
+  return applyDistinct(new EnumerableFactory(), src, x => x, equalityComparer);
 }
 
 export function distinctBy<TSource, TKey>(
@@ -15,5 +15,5 @@ export function distinctBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TSource> {
-  return applyDistinct(Enumerable, src, keySelector, equalityComparer);
+  return applyDistinct(new EnumerableFactory(), src, keySelector, equalityComparer);
 }

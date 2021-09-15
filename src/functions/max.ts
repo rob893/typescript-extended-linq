@@ -1,13 +1,13 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { applyMax } from './applicators/applyMax';
 
 export function max<TSource, TResult>(
   src: Iterable<TSource>,
   selector?: (item: TSource) => TResult
 ): TSource | TResult {
-  return applyMax(Enumerable, src, x => x, selector);
+  return applyMax(new EnumerableFactory(), src, x => x, selector);
 }
 
 export function maxBy<TSource, TKey>(src: Iterable<TSource>, keySelector: (item: TSource) => TKey): TSource {
-  return applyMax(Enumerable, src, keySelector);
+  return applyMax(new EnumerableFactory(), src, keySelector);
 }

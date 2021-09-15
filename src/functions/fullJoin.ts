@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
 import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from './applicators/applyFullJoin';
@@ -31,7 +31,7 @@ export function fullJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TResult> {
   return applyFullJoinHeterogeneous(
-    Enumerable,
+    new EnumerableFactory(),
     first,
     second,
     firstKeySelector,
@@ -68,7 +68,7 @@ export function fullJoinHomogeneous<TFirst, TKey, TResult>(
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TResult> {
   return applyFullJoinHomogeneous(
-    Enumerable,
+    new EnumerableFactory(),
     first,
     second,
     keySelector,

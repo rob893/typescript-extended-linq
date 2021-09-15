@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applySkip<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   count: number
 ): IEnumerable<TSource> {
@@ -21,11 +21,11 @@ export function applySkip<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applySkipLast<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   count: number
 ): IEnumerable<TSource> {
@@ -41,11 +41,11 @@ export function applySkipLast<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applySkipWhile<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   predicate: (item: TSource, index: number) => boolean
 ): IEnumerable<TSource> {
@@ -68,5 +68,5 @@ export function applySkipWhile<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
 import { applyIntersect } from './applicators/applyIntersect';
@@ -8,7 +8,7 @@ export function intersect<TSource>(
   second: Iterable<TSource>,
   equalityComparer?: EqualityComparer<TSource>
 ): IEnumerable<TSource> {
-  return applyIntersect(Enumerable, src, second, x => x, equalityComparer);
+  return applyIntersect(new EnumerableFactory(), src, second, x => x, equalityComparer);
 }
 
 export function intersectBy<TSource, TKey>(
@@ -17,5 +17,5 @@ export function intersectBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TSource> {
-  return applyIntersect(Enumerable, src, second, keySelector, equalityComparer);
+  return applyIntersect(new EnumerableFactory(), src, second, keySelector, equalityComparer);
 }

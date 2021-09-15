@@ -1,9 +1,9 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor, IGrouping } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory, IGrouping } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 import { toKeyMap } from '../shared/toKeyMap';
 
 export function applyGroupBy<TSource, TKey>(
-  enumerableType: IEnumerableConstructor<IGrouping<TKey, TSource>>,
+  factory: IEnumerableFactory,
   groupingCreator: (key: TKey, group: () => Generator<TSource>) => IGrouping<TKey, TSource>,
   src: Iterable<TSource>,
   keySelector: (item: TSource) => TKey,
@@ -42,5 +42,5 @@ export function applyGroupBy<TSource, TKey>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

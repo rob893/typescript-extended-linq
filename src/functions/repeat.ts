@@ -1,7 +1,7 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { applyRepeat } from './applicators/applyRepeat';
 
 export function repeat<TResult>(element: TResult, count: number): IEnumerable<TResult> {
-  return applyRepeat(Enumerable, element, count);
+  return applyRepeat(new EnumerableFactory(), element, count);
 }

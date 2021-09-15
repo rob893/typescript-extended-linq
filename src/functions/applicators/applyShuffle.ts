@@ -1,9 +1,6 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
-export function applyShuffle<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
-  src: Iterable<TSource>
-): IEnumerable<TSource> {
+export function applyShuffle<TSource>(factory: IEnumerableFactory, src: Iterable<TSource>): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
     const array = [...src];
     let currentIndex = array.length,
@@ -25,5 +22,5 @@ export function applyShuffle<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

@@ -1,7 +1,7 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyFullJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   first: Iterable<TFirst>,
   second: Iterable<TSecond>,
   firstKeySelector: (item: TFirst) => TKey,
@@ -85,11 +85,11 @@ export function applyFullJoinHeterogeneous<TFirst, TSecond, TKey, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applyFullJoinHomogeneous<TFirst, TKey, TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   first: Iterable<TFirst>,
   second: Iterable<TFirst>,
   keySelector: (item: TFirst) => TKey,
@@ -172,5 +172,5 @@ export function applyFullJoinHomogeneous<TFirst, TKey, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

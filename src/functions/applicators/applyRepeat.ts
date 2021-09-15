@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyRepeat<TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   element: TResult,
   count: number
 ): IEnumerable<TResult> {
@@ -15,5 +15,5 @@ export function applyRepeat<TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

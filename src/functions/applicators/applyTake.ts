@@ -1,8 +1,8 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
 export function applyTake<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   count: number
 ): IEnumerable<TSource> {
@@ -23,11 +23,11 @@ export function applyTake<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applyTakeEvery<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   step: number
 ): IEnumerable<TSource> {
@@ -35,11 +35,11 @@ export function applyTakeEvery<TSource>(
     throw new Error('Count must be greater than 0');
   }
 
-  return new enumerableType(getIterableGenerator(src)).where((_, i) => i % step === 0);
+  return factory.createEnumerable(getIterableGenerator(src)).where((_, i) => i % step === 0);
 }
 
 export function applyTakeLast<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   count: number
 ): IEnumerable<TSource> {
@@ -55,11 +55,11 @@ export function applyTakeLast<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applyTakeWhile<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   predicate: (item: TSource, index: number) => boolean
 ): IEnumerable<TSource> {
@@ -76,5 +76,5 @@ export function applyTakeWhile<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

@@ -1,7 +1,7 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { applyAsEnumerable } from './applicators/applyAsEnumerable';
 
 export function asEnumerable<TSource>(src: Iterable<TSource>): IEnumerable<TSource> {
-  return applyAsEnumerable(Enumerable, src);
+  return applyAsEnumerable(new EnumerableFactory(), src);
 }

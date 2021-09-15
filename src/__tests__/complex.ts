@@ -1,4 +1,5 @@
-import { Enumerable } from '../enumerables';
+import { Enumerable } from '../Enumerable';
+import { EnumerableFactory } from '../EnumerableFactory';
 
 describe('complex', () => {
   it('should allow for multiple statements', () => {
@@ -19,7 +20,7 @@ describe('complex', () => {
       }
     });
 
-    const query = new Enumerable(mock)
+    const query = new Enumerable(new EnumerableFactory(), mock)
       .where(item => item.id % 2 === 0)
       .orderBy(item => item.id)
       .thenBy(item => item.foo)

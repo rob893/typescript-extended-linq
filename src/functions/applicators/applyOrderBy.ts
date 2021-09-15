@@ -1,12 +1,12 @@
-import { Comparer, IEnumerableConstructor, IOrderedEnumerable } from '../../types';
+import { Comparer, IEnumerableFactory, IOrderedEnumerable } from '../../types';
 import { orderByGenerator } from '../shared/orderByGenerator';
 
 export function applyOrderBy<TSource, TKey>(
-  enumerableType: IEnumerableConstructor<TSource[], TSource, IOrderedEnumerable<TSource>>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   ascending: boolean,
   selector: (item: TSource) => TKey,
   comparer?: Comparer<TKey>
 ): IOrderedEnumerable<TSource> {
-  return new enumerableType(() => orderByGenerator(src, ascending, selector, comparer));
+  return factory.createOrderedEnumerable(() => orderByGenerator(src, ascending, selector, comparer));
 }

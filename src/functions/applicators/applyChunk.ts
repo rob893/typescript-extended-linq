@@ -1,8 +1,8 @@
-import { IEnumerableConstructor, IEnumerable } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
 export function applyChunk<TSource>(
-  enumerableType: IEnumerableConstructor<IEnumerable<TSource> | TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   chunkSize: number
 ): IEnumerable<IEnumerable<TSource>> {
@@ -17,15 +17,15 @@ export function applyChunk<TSource>(
       chunk.push(item);
 
       if (chunk.length >= chunkSize) {
-        yield new enumerableType(getIterableGenerator(chunk)) as IEnumerable<TSource>;
+        yield factory.createEnumerable(getIterableGenerator(chunk));
         chunk = [];
       }
     }
 
     if (chunk.length > 0) {
-      yield new enumerableType(getIterableGenerator(chunk)) as IEnumerable<TSource>;
+      yield factory.createEnumerable(getIterableGenerator(chunk));
     }
   }
 
-  return new enumerableType(generator) as IEnumerable<IEnumerable<TSource>>;
+  return factory.createEnumerable(generator);
 }

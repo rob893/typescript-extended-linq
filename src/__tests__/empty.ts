@@ -1,8 +1,8 @@
-import { Enumerable } from '..';
+import { Enumerable, empty } from '..';
 
 describe('empty', () => {
   it('should return an empty Enumerable', () => {
-    const result = Enumerable.empty();
+    const result = empty();
 
     let count = 0;
 

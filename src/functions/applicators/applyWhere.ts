@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyWhere<TSource>(
-  enumerableType: IEnumerableConstructor<TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   exp: (item: TSource, index: number) => boolean
 ): IEnumerable<TSource> {
@@ -17,5 +17,5 @@ export function applyWhere<TSource>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

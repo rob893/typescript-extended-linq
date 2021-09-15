@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { EqualityComparer } from '../types';
 import { IEnumerable } from '../types';
 import { applyGroupJoin } from './applicators/applyGroupJoin';
@@ -56,5 +56,13 @@ export function groupJoin<TOuter, TInner, TKey, TResult>(
   resultSelector: (item: TOuter, inner: IEnumerable<TInner>) => TResult,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TResult> {
-  return applyGroupJoin(Enumerable, outer, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
+  return applyGroupJoin(
+    new EnumerableFactory(),
+    outer,
+    inner,
+    outerKeySelector,
+    innerKeySelector,
+    resultSelector,
+    equalityComparer
+  );
 }

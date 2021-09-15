@@ -1,8 +1,8 @@
-import { Comparer, IEnumerableConstructor, IOrderedEnumerable } from '../../types';
+import { Comparer, IEnumerableFactory, IOrderedEnumerable } from '../../types';
 import { orderByGenerator } from '../shared/orderByGenerator';
 
 export function applyThenBy<TSource, TKey>(
-  enumerableType: IEnumerableConstructor<TSource[], TSource, IOrderedEnumerable<TSource>>,
+  factory: IEnumerableFactory,
   src: () => Generator<TSource[]>,
   ascending: boolean,
   selector: (item: TSource) => TKey,
@@ -14,5 +14,5 @@ export function applyThenBy<TSource, TKey>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createOrderedEnumerable(generator);
 }

@@ -4,11 +4,17 @@ export type Comparer<T> = (a: T, b: T) => number;
 
 export type TypeOfMember = 'string' | 'number' | 'boolean' | 'bigint' | 'function' | 'object' | 'symbol' | 'undefined';
 
-export type IEnumerableConstructor<
-  TGeneratorOutput,
-  TEnumerable = TGeneratorOutput,
-  TEnumerableType extends IEnumerable<TEnumerable> = IEnumerable<TEnumerable>
-> = new (generator: () => Generator<TGeneratorOutput>) => TEnumerableType;
+export interface IEnumerableFactory {
+  createEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource>;
+
+  createOrderedEnumerable<TSource>(generator: () => Generator<TSource[]>): IOrderedEnumerable<TSource>;
+
+  createGroupedEnumerable<TKey, TSource>(key: TKey, generator: () => Generator<TSource>): IGrouping<TKey, TSource>;
+
+  createArrayEnumerable<TSource>(generator: () => Generator<TSource>, srcArr: TSource[]): IEnumerable<TSource>;
+
+  isEnumerable(obj: unknown): obj is IEnumerable<unknown>;
+}
 
 /**
  * Interface that exposes an iterator, which supports a simple iteration and various methods.

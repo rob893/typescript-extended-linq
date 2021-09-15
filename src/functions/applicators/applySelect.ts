@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor } from '../../types';
+import { IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applySelect<TSource, TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   exp: (item: TSource, index: number) => TResult
 ): IEnumerable<TResult> {
@@ -14,11 +14,11 @@ export function applySelect<TSource, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }
 
 export function applySelectMany<TSource, TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   exp: (item: TSource, index: number) => Iterable<TResult>
 ): IEnumerable<TResult> {
@@ -34,5 +34,5 @@ export function applySelectMany<TSource, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

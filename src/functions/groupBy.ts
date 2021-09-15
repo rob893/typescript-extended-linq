@@ -1,4 +1,4 @@
-import { Enumerable, Grouping } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { IGrouping } from '../types';
 import { EqualityComparer } from '../types';
@@ -9,9 +9,10 @@ export function groupBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<IGrouping<TKey, TSource>> {
+  const factory = new EnumerableFactory();
   return applyGroupBy(
-    Enumerable,
-    (key, groupGenerator) => new Grouping(key, groupGenerator),
+    factory,
+    (key, groupGenerator) => factory.createGroupedEnumerable(key, groupGenerator),
     src,
     keySelector,
     equalityComparer

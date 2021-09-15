@@ -1,4 +1,4 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
 import { applyJoin } from './applicators/applyJoin';
@@ -57,5 +57,13 @@ export function join<TOuter, TInner, TKey, TResult>(
   resultSelector: (item: TOuter, inner: TInner) => TResult,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TResult> {
-  return applyJoin(Enumerable, outer, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
+  return applyJoin(
+    new EnumerableFactory(),
+    outer,
+    inner,
+    outerKeySelector,
+    innerKeySelector,
+    resultSelector,
+    equalityComparer
+  );
 }

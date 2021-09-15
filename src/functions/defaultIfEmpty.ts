@@ -1,7 +1,7 @@
-import { Enumerable } from '../enumerables';
+import { EnumerableFactory } from '../EnumerableFactory';
 import { IEnumerable } from '../types';
 import { applyDefaultIfEmpty } from './applicators/applyDefaultIfEmpty';
 
 export function defaultIfEmpty<TSource>(src: Iterable<TSource>, defaultItem: TSource): IEnumerable<TSource> {
-  return applyDefaultIfEmpty(Enumerable, src, defaultItem);
+  return applyDefaultIfEmpty(new EnumerableFactory(), src, defaultItem);
 }

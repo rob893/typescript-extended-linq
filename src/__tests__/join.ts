@@ -1,5 +1,5 @@
 import { join } from '../functions/join';
-import { Enumerable } from '../enumerables';
+import { Enumerable } from '../Enumerable';
 import { from } from '..';
 
 describe('join', () => {

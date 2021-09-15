@@ -1,7 +1,7 @@
 import { TypeOfMember } from '../types';
-import { Enumerable } from '../enumerables';
 import { IEnumerable } from '../types';
 import { applyOfType } from './applicators/applyOfType';
+import { EnumerableFactory } from '../EnumerableFactory';
 
 export function ofType<TSource, TResult>(
   src: Iterable<TSource>,
@@ -14,5 +14,5 @@ export function ofType<TSource, TResult>(
   src: Iterable<TSource>,
   type: (new (...params: unknown[]) => TResult) | TypeOfMember
 ): IEnumerable<TResult | TSource> {
-  return applyOfType(Enumerable, src, type);
+  return applyOfType(new EnumerableFactory(), src, type);
 }

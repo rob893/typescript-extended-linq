@@ -1,7 +1,7 @@
-import { IEnumerable, IEnumerableConstructor, TypeOfMember } from '../../types';
+import { IEnumerable, IEnumerableFactory, TypeOfMember } from '../../types';
 
 export function applyOfType<TSource, TResult>(
-  enumerableType: IEnumerableConstructor<TResult | TSource>,
+  factory: IEnumerableFactory,
   src: Iterable<TSource>,
   type: (new (...params: unknown[]) => TResult) | TypeOfMember
 ): IEnumerable<TResult | TSource> {
@@ -19,5 +19,5 @@ export function applyOfType<TSource, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

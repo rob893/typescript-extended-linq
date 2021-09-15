@@ -1,7 +1,7 @@
-import { EqualityComparer, IEnumerable, IEnumerableConstructor } from '../../types';
+import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyJoin<TOuter, TInner, TKey, TResult>(
-  enumerableType: IEnumerableConstructor<TResult>,
+  factory: IEnumerableFactory,
   outer: Iterable<TOuter>,
   inner: Iterable<TInner>,
   outerKeySelector: (item: TOuter) => TKey,
@@ -47,5 +47,5 @@ export function applyJoin<TOuter, TInner, TKey, TResult>(
     }
   }
 
-  return new enumerableType(generator);
+  return factory.createEnumerable(generator);
 }

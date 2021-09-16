@@ -1,6 +1,6 @@
 /**
  * Determines whether all elements of a sequence satisfy a condition.
- * @see {@link Enumerable.all} for fluent syntax.
+ * @see {@link IEnumerable.all} for fluent syntax.
  * @example
  * ```typescript
  * const numbers = [1, 2, 3, 4];

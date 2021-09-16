@@ -53,6 +53,8 @@ import { Comparer, EqualityComparer, IEnumerable, IGrouping, IOrderedEnumerable,
 
 /**
  * Class that exposes an iterator, which supports a simple iteration and various methods.
+ * This class will not include documentation or overloads (the interface has those).
+ * @see {@link IEnumerable} For function documentation and overloads.
  * @typeparam TSource The type of elements in the Enumerable.
  */
 export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
@@ -60,64 +62,14 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   private readonly srcGenerator: () => Generator<TSource>;
 
-  /**
-   * Creates a new Enumerable.
-   * @param srcGenerator The source Iterable or a Generator function.
-   */
   public constructor(factory: IEnumerableFactory, srcGenerator: () => Generator<TSource>) {
     this.factory = factory;
     this.srcGenerator = srcGenerator;
   }
 
-  /**
-   * Exposes an iterator that can be used for iteration.
-   * @example
-   * ```typescript
-   * const numbers = from([1, 2, 3]);
-   * for (const number of numbers) {
-   *   // Iteration is allowed because of the iterator.
-   * }
-   * ```
-   * @returns The iterator for the Enumerable.
-   */
   public [Symbol.iterator](): Generator<TSource> {
     return this.srcGenerator();
   }
-
-  // /**
-  //  * Applies an accumulator function over a sequence.
-  //  * @param aggregator An accumulator function to be invoked on each element.
-  //  * @returns The final accumulator value.
-  //  */
-  // public aggregate(aggregator: (prev: TSource, curr: TSource, index: number) => TSource): TSource;
-
-  // /**
-  //  * Applies an accumulator function over a sequence.
-  //  * The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
-  //  * @typeparam TAccumulate The type of the accumulator value.
-  //  * @typeparam TResult The type of the resulting value.
-  //  * @param aggregator An accumulator function to be invoked on each element.
-  //  * @param seed The initial accumulator value.
-  //  * @param resultSelector An accumulator function to be invoked on each element.
-  //  * @returns The final accumulator value.
-  //  */
-  // public aggregate<TAccumulate, TResult>(
-  //   aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-  //   seed: TAccumulate,
-  //   resultSelector: (accumulated: TAccumulate) => TResult
-  // ): TResult;
-
-  // /**
-  //  * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value.
-  //  * @typeparam TAccumulate The type of the accumulator value.
-  //  * @param aggregator An accumulator function to be invoked on each element.
-  //  * @param seed The initial accumulator value.
-  //  * @returns The final accumulator value.
-  //  */
-  // public aggregate<TAccumulate>(
-  //   aggregator: (prev: TAccumulate, curr: TSource, index: number) => TAccumulate,
-  //   seed: TAccumulate
-  // ): TAccumulate;
 
   public aggregate<TAccumulate, TResult>(
     seedOrAggregator:
@@ -129,82 +81,21 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return aggregate(this, seedOrAggregator, aggregator, resultSelector);
   }
 
-  /**
-   * Determines whether all elements of a sequence satisfy a condition.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3, 4];
-   * const areAllNumbersEven = from(numbers).all(x => x % 2 === 0); // false
-   * ```
-   * @param condition A function to test each element for a condition.
-   * @returns true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
-   */
   public all(condition: (item: TSource, index: number) => boolean): boolean {
     return all(this, condition);
   }
 
-  /**
-   * Determines whether any element of a sequence exists or satisfies a condition.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3, 4];
-   * const areAnyNumbersEven = from(numbers).any(x => x % 2 === 0); // true
-   * ```
-   * @param condition A function to test each element for a condition.
-   * @returns true if the source sequence contains any elements (or if at least one matches condition if condition is passed); otherwise, false.
-   */
   public any(condition?: (item: TSource, index: number) => boolean): boolean {
     return any(this, condition);
   }
 
-  /**
-   * Appends a value to the end of the sequence.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3, 4];
-   * const withFive = from(numbers).append(5); // [1, 2, 3, 4, 5]
-   * ```
-   * @param item The value to append.
-   * @returns A new sequence that ends with element.
-   */
   public append(item: TSource): IEnumerable<TSource> {
     return applyAppend(this.factory, this, item);
   }
 
-  /**
-   * Returns the input as an Enumerable.
-   * @returns The input sequence as Enumerable.
-   */
   public asEnumerable(): IEnumerable<TSource> {
     return applyAsEnumerable(this.factory, this);
   }
-
-  /**
-   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
-   * @example
-   * ```typescript
-   * const items = [1, 2, 3];
-   * const atLeastThree = from(items).atLeast(3); // true
-   * const atLeastFour = from(items).atLeast(4); // false
-   * ```
-   * @param count The minimum number of items a sequence must have for this function to return true
-   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
-   */
-  public atLeast(count: number): boolean;
-
-  /**
-   * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
-   * @example
-   * ```typescript
-   * const items = [1, 2, 3];
-   * const atLeastOneEven = from(items).atLeast(1, x => x % 2 === 0); // true
-   * const atLeastTwoEven = from(items).atLeast(2, x => x % 2 === 0); // false
-   * ```
-   * @param count The minimum number of items a sequence must have for this function to return true
-   * @param predicate A function to test each element for a condition.
-   * @returns true if the number of elements in the sequence is greater than or equal to the given integer or false otherwise.
-   */
-  public atLeast(count: number, predicate: (item: TSource, index: number) => boolean): boolean;
 
   public atLeast(count: number, predicate?: (item: TSource, index: number) => boolean): boolean {
     return atLeast(this, count, predicate);
@@ -214,74 +105,22 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return atMost(this, count, predicate);
   }
 
-  /**
-   * Computes the average of a sequence of numeric values.
-   * @example
-   * ```typescript
-   * const numbers = [2, 2, 1, 3];
-   * const average = from(numbers).average(); // 2
-   * ```
-   * @param selector A transform function to apply to each element.
-   * @returns The average of the sequence of values.
-   */
   public average(selector?: (item: TSource) => number): number {
     return average(this, selector);
   }
 
-  /**
-   * Split the elements of a sequence into chunks of size at most chunkSize.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3, 4, 5];
-   * const chunks = from(numbers).chunk(2); // [[1, 2], [3, 4], [5]]
-   * ```
-   * @param chunkSize The maximum size of each chunk.
-   * @returns An Enumerable<TSource> that contains the elements the input sequence split into chunks of size chunkSize.
-   */
   public chunk(chunkSize: number): IEnumerable<IEnumerable<TSource>> {
     return applyChunk(this.factory, this, chunkSize);
   }
 
-  /**
-   * Concatenates two sequences.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2];
-   * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
-   * ```
-   * @param second The sequence to concatenate to the first sequence.
-   * @returns An Enumerable<TSource> that contains the concatenated elements of the two input sequences.
-   */
   public concat(second: Iterable<TSource>): IEnumerable<TSource> {
     return applyConcat(this.factory, this, second);
   }
 
-  /**
-   * Determines whether a sequence contains a specified element.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3];
-   * const hasThree = from(numbers).contains(3); // true
-   * ```
-   * @param value The value to locate in the sequence.
-   * @param equalityComparer An equality comparer to compare values.
-   * @returns true if the source sequence contains an element that has the specified value; otherwise, false.
-   */
   public contains(value: TSource, equalityComparer?: EqualityComparer<TSource>): boolean {
     return contains(this, value, equalityComparer);
   }
 
-  /**
-   * Returns the number of elements in a sequence.
-   * @example
-   * ```typescript
-   * const numbers = [1, 2, 3];
-   * const numCount = from(numbers).count(); // 3
-   * const evenNumCount = from(numbers).count(x => x % 2 === 0); // 1
-   * ```
-   * @param condition A function to test each element for a condition.
-   * @returns The number of elements in the input sequence.
-   */
   public count(condition?: (item: TSource, index: number) => boolean): number {
     return count(this, condition);
   }
@@ -337,21 +176,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     forEach(this, callback);
   }
 
-  /**
-   * Performs a full outer join on two heterogeneous sequences.
-   * Additional arguments specify key selection functions, result projection functions and a key comparer.
-   * @typeparam TSecond The type of elements in the second sequence.
-   * @typeparam TKey The type of the key returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param second The second sequence of the join operation.
-   * @param firstKeySelector Function that projects the key given an element from first.
-   * @param secondKeySelector Function that projects the key given an element from second.
-   * @param firstSelector: Function that projects the result given just an element from first where there is no corresponding element in second.
-   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a right outer join of the two input sequences.
-   */
   public fullJoinHeterogeneous<TSecond, TKey, TResult>(
     second: Iterable<TSecond>,
     firstKeySelector: (item: TSource) => TKey,
@@ -374,19 +198,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
-  /**
-   * Performs a full outer join on two homogeneous sequences.
-   * Additional arguments specify key selection functions and result projection functions.
-   * @typeparam TKey The type of the key returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param second The second sequence of the join operation.
-   * @param keySelector Function that projects the key given an element of one of the sequences to join.
-   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
-   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a full outer join of the two input sequences.
-   */
   public fullJoinHomogeneous<TKey, TResult>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
@@ -414,49 +225,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyGroupBy(this.factory, this, keySelector, equalityComparer);
   }
 
-  /**
-   * Correlates the elements of two sequences based on key equality, and groups the results.
-   * @example
-   * ```typescript
-   * const magnus = { name: 'Magnus' };
-   * const terry = { name: 'Terry' };
-   * const adam = { name: 'Adam' };
-   * const john = { name: 'John' };
-   *
-   * const barley = { name: 'Barley', owner: terry };
-   * const boots = { name: 'Boots', owner: terry };
-   * const whiskers = { name: 'Whiskers', owner: adam };
-   * const daisy = { name: 'Daisy', owner: magnus };
-   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
-   *
-   * const people = from([magnus, terry, adam, john]);
-   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
-   *
-   * const result = people
-   *   .groupJoin(
-   *     pets,
-   *     person => person,
-   *     pet => pet.owner,
-   *     (person, petCollection) => ({ ownerName: person.name, pets: petCollection.select(p => p.name).toArray() })
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { ownerName: 'Magnus', pets: ['Daisy'] },
-   *   { ownerName: 'Terry', pets: ['Barley', 'Boots'] },
-   *   { ownerName: 'Adam', pets: ['Whiskers'] },
-   *   { ownerName: 'John', pets: [] }
-   * ]);
-   * ```
-   * @typeparam TInner The type of the elements of the second sequence.
-   * @typeparam TKey The type of the keys returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param inner The sequence to join to the first sequence.
-   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
-   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
-   * @param resultSelector A function to create a result element from an element from the first sequence and a collection of matching elements from the second sequence.
-   * @param equalityComparer An Enumerable<TResult> that contains elements of type TResult that are obtained by performing a grouped join on two sequences.
-   */
   public groupJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
@@ -487,49 +255,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyIntersect(this.factory, this, second, keySelector, equalityComparer);
   }
 
-  /**
-   * Performs an inner join by correlating the elements of two sequences based on matching keys.
-   * @example
-   * ```typescript
-   * const magnus = { name: 'Magnus' };
-   * const terry = { name: 'Terry' };
-   * const adam = { name: 'Adam' };
-   * const john = { name: 'John' };
-   *
-   * const barley = { name: 'Barley', owner: terry };
-   * const boots = { name: 'Boots', owner: terry };
-   * const whiskers = { name: 'Whiskers', owner: adam };
-   * const daisy = { name: 'Daisy', owner: magnus };
-   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
-   *
-   * const people = from([magnus, terry, adam, john]);
-   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
-   *
-   * const result = people.join(
-   *     pets,
-   *     person => person,
-   *     pet => pet.owner,
-   *     (person, pet) => ({ ownerName: person.name, pet: pet.name })
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { ownerName: 'Magnus', pet: 'Daisy' },
-   *   { ownerName: 'Terry', pet: 'Barley' },
-   *   { ownerName: 'Terry', pet: 'Boots' },
-   *   { ownerName: 'Adam', pet: 'Whiskers' }
-   * ]);
-   * ```
-   * @typeparam TInner The type of the elements of the second sequence.
-   * @typeparam TKey The type of the keys returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param inner The second sequence to join to the first.
-   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
-   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
-   * @param resultSelector A function to create a result element from two matching elements.
-   * @param equalityComparer A function to compare keys.
-   * @returns An Enumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
-   */
   public join<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
@@ -548,16 +273,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return lastOrDefault(this, predicate);
   }
 
-  /**
-   * Performs a left outer join on two heterogeneous sequences. Additional arguments specify key selection functions and result projection functions.
-   * @param second The second sequence of the join operation.
-   * @param firstKeySelector Function that projects the key given an element from first.
-   * @param secondKeySelector Function that projects the key given an element from second.
-   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a left outer join of the two input sequences.
-   */
   public leftJoinHeterogeneous<TSecond, TKey, TResult>(
     second: Iterable<TSecond>,
     firstKeySelector: (item: TSource) => TKey,
@@ -578,15 +293,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
-  /**
-   * Performs a left outer join on two homogeneous sequences. Additional arguments specify key selection functions and result projection functions.
-   * @param second The second sequence of the join operation.
-   * @param keySelector Function that projects the key given an element of one of the sequences to join.
-   * @param firstSelector Function that projects the result given just an element from first where there is no corresponding element in second.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a left outer join of the two input sequences.
-   */
   public leftJoinHomogeneous<TKey, TResult>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
@@ -605,10 +311,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
-  public max(): TSource;
-
-  public max<TResult>(selector: (item: TSource) => TResult): TResult;
-
   public max<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
     return applyMax(this.factory, this, x => x, selector);
   }
@@ -616,10 +318,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   public maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
     return applyMax(this.factory, this, keySelector);
   }
-
-  public min(): TSource;
-
-  public min<TResult>(selector: (item: TSource) => TResult): TResult;
 
   public min<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
     return applyMin(this.factory, this, x => x, selector);
@@ -660,60 +358,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyReverse(this.factory, this);
   }
 
-  /**
-   * Performs a right outer join on two heterogeneous sequences.
-   * @example
-   * ```typescript
-   * const right = 'right';
-   * const both = 'both';
-   * const missing = null;
-   *
-   * type Side = typeof right | typeof both;
-   * type Person = { name: string };
-   * type Pet = { name: string; owner: Person };
-   *
-   * const magnus: Person = { name: 'Magnus' };
-   * const terry: Person = { name: 'Terry' };
-   * const adam: Person = { name: 'Adam' };
-   * const john: Person = { name: 'John' };
-   *
-   * const barley: Pet = { name: 'Barley', owner: terry };
-   * const boots: Pet = { name: 'Boots', owner: terry };
-   * const whiskers: Pet = { name: 'Whiskers', owner: adam };
-   * const daisy: Pet = { name: 'Daisy', owner: magnus };
-   * const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
-   *
-   * const people = from([magnus, terry, adam, john]);
-   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
-   *
-   * const result = people.rightJoinHeterogeneous<Pet, Person, { side: Side; left: Person | null; right: Pet }>(
-   *     pets,
-   *     person => person,
-   *     pet => pet.owner,
-   *     pet => ({ side: right, left: missing, right: pet }),
-   *     (person, pet) => ({ side: both, left: person, right: pet })
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { side: both, left: terry, right: barley },
-   *   { side: both, left: terry, right: boots },
-   *   { side: both, left: adam, right: whiskers },
-   *   { side: both, left: magnus, right: daisy },
-   *   { side: right, left: missing, right: scratchy } // Scratchy has an owner, Bob, but Bob is not in the calling collection, hence the 'missing'.
-   * ]);
-   * ```
-   * @typeparam TSecond The type of elements in the second sequence.
-   * @typeparam TKey The type of the key returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param second The second sequence of the join operation.
-   * @param firstKeySelector Function that projects the key given an element from first.
-   * @param secondKeySelector Function that projects the key given an element from second.
-   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a right outer join of the two input sequences.
-   */
   public rightJoinHeterogeneous<TSecond, TKey, TResult>(
     second: Iterable<TSecond>,
     firstKeySelector: (item: TSource) => TKey,
@@ -734,58 +378,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
-  /**
-   * Performs a right outer join on two homogeneous sequences.
-   * @example
-   * ```typescript
-   * const right = 'right';
-   * const both = 'both';
-   * const missing = null;
-   *
-   * type Side = typeof right | typeof both;
-   * type Person = { id: number; name: string };
-   *
-   * const magnus: Person = { id: 1, name: 'Magnus' };
-   * const terry1: Person = { id: 2, name: 'Terry' };
-   * const adam: Person = { id: 3, name: 'Adam' };
-   * const john1: Person = { id: 4, name: 'John' };
-   * const john4: Person = { id: 9, name: 'John' };
-   *
-   * const john2: Person = { id: 5, name: 'John' };
-   * const jane: Person = { id: 6, name: 'Jane' };
-   * const terry2: Person = { id: 7, name: 'Terry' };
-   * const john3: Person = { id: 8, name: 'John' };
-   *
-   * const people1 = from([magnus, terry1, adam, john1, john4]);
-   * const people2 = from([john2, jane, terry2, john3]);
-   *
-   * const result = people1.rightJoinHomogeneous<string, { side: Side; left: Person | null; right: Person }>(
-   *     people2,
-   *     person => person.name,
-   *     person => ({ side: right, left: missing, right: person }),
-   *     (personLeft, personRight) => ({ side: both, left: personLeft, right: personRight })
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { side: both, left: john1, right: john2 },
-   *   { side: both, left: john4, right: john2 },
-   *   { side: right, left: missing, right: jane },
-   *   { side: both, left: terry1, right: terry2 },
-   *   { side: both, left: john1, right: john3 },
-   *   { side: both, left: john4, right: john3 }
-   * ]);
-   * ```
-   * @typeparam TSecond The type of elements in the second sequence.
-   * @typeparam TKey The type of the key returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param second The second sequence of the join operation.
-   * @param keySelector Function that projects the key given an element of one of the sequences to join.
-   * @param secondSelector Function that projects the result given just an element from second where there is no corresponding element in first.
-   * @param bothSelector Function that projects the result given an element from first and an element from second that match on a common key.
-   * @param equalityComparer A function to compare keys.
-   * @returns A sequence containing results projected from a right outer join of the two input sequences.
-   */
   public rightJoinHomogeneous<TKey, TResult>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
@@ -820,11 +412,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyShuffle(this.factory, this);
   }
 
-  /**
-   * Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.
-   * @param predicate A function to test an element for a condition.
-   * @returns The single element of the input sequence that satisfies a condition.
-   */
   public single(predicate?: (item: TSource, index: number) => boolean): TSource {
     return single(this, predicate);
   }
@@ -884,26 +471,12 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     throw new Error('Not yet implemented');
   }
 
-  public toMap<TKey>(keySelector: (item: TSource) => TKey): Map<TKey, TSource>;
-
-  public toMap<TKey, TValue>(
-    keySelector: (item: TSource) => TKey,
-    valueSelector: (item: TSource) => TValue
-  ): Map<TKey, TValue>;
-
   public toMap<TKey, TValue>(
     keySelector: (item: TSource) => TKey,
     valueSelector?: (item: TSource) => TValue
   ): Map<TKey, TSource | TValue> {
     return toMap(this, keySelector, valueSelector);
   }
-
-  public toObject(keySelector: (item: TSource) => string): Record<string, TSource>;
-
-  public toObject<TValue>(
-    keySelector: (item: TSource) => string,
-    valueSelector: (item: TSource) => TValue
-  ): Record<string, TValue>;
 
   public toObject<TValue>(
     keySelector: (item: TSource) => string,
@@ -931,13 +504,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   public where(exp: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
     return applyWhere(this.factory, this, exp);
   }
-
-  public zip<TSecond>(second: Iterable<TSecond>): IEnumerable<[TSource, TSecond]>;
-
-  public zip<TSecond, TResult>(
-    second: Iterable<TSecond>,
-    resultSelector: (first: TSource, second: TSecond) => TResult
-  ): IEnumerable<TResult>;
 
   public zip<TSecond, TResult>(
     second: Iterable<TSecond>,

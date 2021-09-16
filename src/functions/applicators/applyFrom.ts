@@ -1,4 +1,5 @@
 import { IEnumerable, IEnumerableFactory } from '../../types';
+import { isEnumerable } from '../isEnumerable';
 import { getIterableGenerator } from '../shared/getIterableGenerator';
 
 export function applyFrom<TSource>(factory: IEnumerableFactory, src: Iterable<TSource>): IEnumerable<TSource>;
@@ -12,7 +13,7 @@ export function applyFrom<TSource>(
   factory: IEnumerableFactory,
   src: Iterable<TSource> | TSource
 ): IEnumerable<TSource | [keyof TSource, TSource[keyof TSource]]> {
-  if (factory.isEnumerable(src)) {
+  if (isEnumerable(src)) {
     return src as IEnumerable<TSource>;
   }
 

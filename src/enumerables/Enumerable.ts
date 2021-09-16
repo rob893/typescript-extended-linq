@@ -4,6 +4,7 @@ import { applyFrom } from '../functions/applicators/applyFrom';
 import { applyRange } from '../functions/applicators/applyRange';
 import { applyRepeat } from '../functions/applicators/applyRepeat';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
+import { isEnumerable } from '../functions/isEnumerable';
 
 /**
  * Provides a set of static methods for IEnumerable.
@@ -58,5 +59,9 @@ export class Enumerable {
 
   public static repeat<TResult>(element: TResult, count: number): IEnumerable<TResult> {
     return applyRepeat(new EnumerableFactory(), element, count);
+  }
+
+  public static isEnumerable(obj: unknown): obj is IEnumerable<unknown> {
+    return isEnumerable(obj);
   }
 }

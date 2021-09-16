@@ -13,7 +13,7 @@ export interface IEnumerableFactory {
 
   createArrayEnumerable<TSource>(generator: () => Generator<TSource>, srcArr: TSource[]): IEnumerable<TSource>;
 
-  isEnumerable(obj: unknown): obj is IEnumerable<unknown>;
+  createList<TSource>(generator: () => Generator<TSource>): IList<TSource>;
 }
 
 /**
@@ -1123,6 +1123,8 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   toArray(): TSource[];
 
+  toList(): IList<TSource>;
+
   /**
    * @deprecated Not yet implemented. Do not use.
    */
@@ -1188,4 +1190,16 @@ export interface IOrderedEnumerable<TSource> extends IEnumerable<TSource> {
 
 export interface IGrouping<TKey, TSource> extends IEnumerable<TSource> {
   readonly key: TKey;
+}
+
+export interface IList<TSource> extends IEnumerable<TSource> {
+  get length(): number;
+
+  add(item: TSource): void;
+
+  addRange(collection: Iterable<TSource>): void;
+
+  clear(): void;
+
+  remove(item: TSource): boolean;
 }

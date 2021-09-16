@@ -1,8 +1,9 @@
+import { List } from '../collections/List';
 import { ArrayEnumerable } from '../enumerables/ArrayEnumerable';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { Grouping } from '../enumerables/Grouping';
 import { OrderedEnumerable } from '../enumerables/OrderedEnumerable';
-import { IEnumerable, IOrderedEnumerable, IGrouping, IEnumerableFactory } from '../types';
+import { IEnumerable, IOrderedEnumerable, IGrouping, IEnumerableFactory, IList } from '../types';
 
 export class EnumerableFactory implements IEnumerableFactory {
   public createBasicEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource> {
@@ -24,7 +25,7 @@ export class EnumerableFactory implements IEnumerableFactory {
     return new ArrayEnumerable(this, generator, srcArr);
   }
 
-  public isEnumerable(obj: unknown): obj is IEnumerable<unknown> {
-    return obj instanceof BasicEnumerable;
+  public createList<TSource>(generator: () => Generator<TSource>): IList<TSource> {
+    return new List(generator());
   }
 }

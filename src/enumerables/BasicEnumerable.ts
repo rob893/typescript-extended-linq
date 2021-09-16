@@ -49,7 +49,15 @@ import { toArray } from '../functions/toArray';
 import { toMap } from '../functions/toMap';
 import { toObject } from '../functions/toObject';
 import { toSet } from '../functions/toSet';
-import { Comparer, EqualityComparer, IEnumerable, IGrouping, IOrderedEnumerable, IEnumerableFactory } from '../types';
+import {
+  Comparer,
+  EqualityComparer,
+  IEnumerable,
+  IGrouping,
+  IOrderedEnumerable,
+  IEnumerableFactory,
+  IList
+} from '../types';
 
 /**
  * Class that exposes an iterator, which supports a simple iteration and various methods.
@@ -487,6 +495,10 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   public toSet(): Set<TSource> {
     return toSet(this);
+  }
+
+  public toList(): IList<TSource> {
+    return this.factory.createList(this.srcGenerator);
   }
 
   public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {

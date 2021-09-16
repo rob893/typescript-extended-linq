@@ -1,9 +1,13 @@
 export * from './types';
+
 export * from './enumerables/BasicEnumerable';
 export * from './enumerables/OrderedEnumerable';
 export * from './enumerables/Grouping';
 export * from './enumerables/ArrayEnumerable';
 export * from './enumerables/Enumerable';
+
+export * from './collections/List';
+
 export * from './functions/aggregate';
 export * from './functions/all';
 export * from './functions/any';
@@ -29,6 +33,7 @@ export * from './functions/fullJoin';
 export * from './functions/groupBy';
 export * from './functions/groupJoin';
 export * from './functions/intersect';
+export * from './functions/isEnumerable';
 export * from './functions/join';
 export * from './functions/last';
 export * from './functions/leftJoin';

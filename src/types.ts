@@ -53,7 +53,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * ```typescript
    * const items = [1, 2, 3];
    * const sum = from(items)
-   *   .aggregate((prev, curr) => prev + curr, 10); // sum will be 16
+   *   .aggregate(10, (prev, curr) => prev + curr); // sum will be 16
    * ```
    * @typeparam TAccumulate The type of the accumulator value.
    * @param seed The initial accumulator value.
@@ -72,7 +72,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * ```typescript
    * const items = [1, 2, 3];
    * const sum = from(items)
-   *   .aggregate((prev, curr) => prev + curr, 10, result => ({ result })); // sum will be { result: 16 }
+   *   .aggregate(10, (prev, curr) => prev + curr, result => ({ result })); // sum will be { result: 16 }
    * ```
    * @typeparam TAccumulate The type of the accumulator value.
    * @typeparam TResult The type of the resulting value.

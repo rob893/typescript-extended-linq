@@ -57,6 +57,104 @@ export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSo
     this.srcArr.length = 0;
   }
 
+  public copyTo(array: TSource[]): void;
+
+  public copyTo(array: TSource[], arrayIndex: number): void;
+
+  public copyTo(index: number, array: TSource[], arrayIndex: number, count: number): void;
+
+  public copyTo(
+    indexOrArray: number | TSource[],
+    arrayOrArrayIndex?: number | TSource[],
+    arrayIndex?: number,
+    count?: number
+  ): void {
+    throw new Error('Method not implemented.');
+  }
+
+  public findIndex(predicate: (item: TSource, index: number) => boolean): number;
+
+  public findIndex(startIndex: number, predicate: (item: TSource, index: number) => boolean): number;
+
+  public findIndex(startIndex: number, count: number, predicate: (item: TSource, index: number) => boolean): number;
+
+  public findIndex(
+    startIndexOrPredicate: number | ((item: TSource, index: number) => boolean),
+    countOrPredicate?: number | ((item: TSource, index: number) => boolean),
+    predicate?: (item: TSource, index: number) => boolean
+  ): number {
+    let predicateFn;
+    let start = 0;
+    let end = this.srcArr.length;
+
+    if (typeof startIndexOrPredicate === 'function') {
+      predicateFn = startIndexOrPredicate;
+    } else if (typeof countOrPredicate === 'function') {
+      predicateFn = countOrPredicate;
+      start = startIndexOrPredicate;
+    } else {
+      if (typeof countOrPredicate !== 'number') {
+        throw new Error('Invalid use of overloads.');
+      }
+
+      predicateFn = predicate;
+      start = startIndexOrPredicate;
+      end = Math.min(start + countOrPredicate, this.srcArr.length);
+    }
+
+    if (predicateFn === undefined) {
+      throw new Error('Invalid use of overloads.');
+    }
+
+    for (let i = start; i < end; i++) {
+      if (predicateFn(this.srcArr[i], i)) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  public indexOf(item: TSource): number;
+
+  public indexOf(item: TSource, index: number): number;
+
+  public indexOf(item: TSource, index: number, count: number): number;
+
+  public indexOf(item: TSource, index?: number, count?: number): number {
+    const start = index ?? 0;
+    const end = count !== undefined ? Math.min(start + count, this.srcArr.length) : this.srcArr.length;
+
+    for (let i = start; i < end; i++) {
+      if (this.srcArr[i] === item) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  public insert(index: number, item: TSource): void {
+    if (index < 0 || index >= this.srcArr.length) {
+      throw new Error('Index out of bounds.');
+    }
+
+    this.srcArr.splice(index, 0, item);
+  }
+
+  public insertRange(index: number, collection: Iterable<TSource>): void {
+    if (index < 0 || index >= this.srcArr.length) {
+      throw new Error('Index out of bounds.');
+    }
+
+    let i = index;
+
+    for (const item of collection) {
+      this.insert(i, item);
+      i++;
+    }
+  }
+
   public remove(item: TSource): boolean {
     const index = this.srcArr.indexOf(item);
 
@@ -67,5 +165,62 @@ export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSo
     this.srcArr.splice(index, 1);
 
     return true;
+  }
+
+  public removeAll(predicate: (item: TSource, index: number) => boolean): number {
+    let removed = 0;
+    const itemIndexesToRemove = [];
+
+    for (let i = 0; i < this.srcArr.length; i++) {
+      if (predicate(this.srcArr[i], i)) {
+        itemIndexesToRemove.push(i);
+      }
+    }
+
+    for (let i = itemIndexesToRemove.length - 1; i >= 0; i--) {
+      this.removeAt(itemIndexesToRemove[i]);
+      removed++;
+    }
+
+    return removed;
+  }
+
+  public removeAt(index: number): void {
+    if (index < 0 || index >= this.srcArr.length) {
+      throw new Error('Index out of bounds.');
+    }
+
+    this.srcArr.splice(index, 1);
+  }
+
+  public removeRange(index: number, count: number): void {
+    if (index < 0 || index >= this.srcArr.length) {
+      throw new Error('Index out of bounds.');
+    }
+
+    this.srcArr.splice(index, count);
+  }
+
+  public reverseInPlace(): void;
+
+  public reverseInPlace(index: number, count: number): void;
+
+  public reverseInPlace(index?: number, count?: number): void {
+    const start = index ?? 0;
+    const end = count !== undefined ? Math.min(start + count, this.srcArr.length) : this.srcArr.length;
+
+    if (start > this.srcArr.length || start < 0) {
+      throw new Error('Index out of bounds.');
+    }
+
+    for (let i = start, j = end; i < j; i++, j--) {
+      const temp = this.srcArr[i];
+      this.srcArr[i] = this.srcArr[j];
+      this.srcArr[j] = temp;
+    }
+  }
+
+  public sort(): void {
+    this.srcArr.sort();
   }
 }

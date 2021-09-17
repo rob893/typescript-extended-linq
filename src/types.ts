@@ -1201,5 +1201,39 @@ export interface IList<TSource> extends IEnumerable<TSource> {
 
   clear(): void;
 
+  copyTo(array: TSource[]): void;
+
+  copyTo(array: TSource[], arrayIndex: number): void;
+
+  copyTo(index: number, array: TSource[], arrayIndex: number, count: number): void;
+
+  findIndex(predicate: (item: TSource, index: number) => boolean): number;
+
+  findIndex(startIndex: number, predicate: (item: TSource, index: number) => boolean): number;
+
+  findIndex(startIndex: number, count: number, predicate: (item: TSource, index: number) => boolean): number;
+
+  indexOf(item: TSource): number;
+
+  indexOf(item: TSource, index: number): number;
+
+  indexOf(item: TSource, index: number, count: number): number;
+
+  insert(index: number, item: TSource): void;
+
+  insertRange(index: number, collection: Iterable<TSource>): void;
+
   remove(item: TSource): boolean;
+
+  removeAll(predicate: (item: TSource, index: number) => boolean): number;
+
+  removeAt(index: number): void;
+
+  removeRange(index: number, count: number): void;
+
+  reverseInPlace(): void;
+
+  reverseInPlace(index: number, count: number): void;
+
+  sort(): void;
 }

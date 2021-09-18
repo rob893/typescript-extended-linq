@@ -1,4 +1,4 @@
-import { from, aggregate } from '../..';
+import { from, aggregate } from '..';
 
 describe('aggregate', () => {
   it('should aggregate the numbers', () => {

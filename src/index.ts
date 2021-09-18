@@ -7,6 +7,9 @@ export * from './enumerables/ArrayEnumerable';
 export * from './enumerables/Enumerable';
 
 export * from './collections/List';
+export * from './collections/Stack';
+export * from './collections/LinkedListNode';
+export * from './collections/LinkedList';
 
 export * from './functions/aggregate';
 export * from './functions/all';

@@ -69,7 +69,38 @@ export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSo
     arrayIndex?: number,
     count?: number
   ): void {
-    throw new Error('Method not implemented.');
+    let arr: TSource[];
+    let startArrayIndex = 0;
+    let startSrcIndex = 0;
+    let endSrcIndex = this.srcArr.length;
+
+    if (Array.isArray(indexOrArray)) {
+      arr = indexOrArray;
+
+      if (arrayOrArrayIndex !== undefined) {
+        if (typeof arrayOrArrayIndex === 'number') {
+          startArrayIndex = arrayOrArrayIndex;
+        } else {
+          throw new Error('Invalid use of overloads.');
+        }
+      }
+    } else if (Array.isArray(arrayOrArrayIndex)) {
+      arr = arrayOrArrayIndex;
+      startSrcIndex = indexOrArray;
+
+      if (arrayIndex === undefined || count === undefined) {
+        throw new Error('Invalid use of overloads.');
+      }
+
+      startArrayIndex = arrayIndex;
+      endSrcIndex = Math.min(startSrcIndex + count, this.srcArr.length);
+    } else {
+      throw new Error('Invalid use of overloads.');
+    }
+
+    for (let i = startSrcIndex, j = startArrayIndex; i < endSrcIndex; i++, j++) {
+      arr[j] = this.srcArr[i];
+    }
   }
 
   public findIndex(predicate: (item: TSource, index: number) => boolean): number;
@@ -207,7 +238,7 @@ export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSo
 
   public reverseInPlace(index?: number, count?: number): void {
     const start = index ?? 0;
-    const end = count !== undefined ? Math.min(start + count, this.srcArr.length) : this.srcArr.length;
+    const end = count !== undefined ? Math.min(start + count, this.srcArr.length - 1) : this.srcArr.length - 1;
 
     if (start > this.srcArr.length || start < 0) {
       throw new Error('Index out of bounds.');

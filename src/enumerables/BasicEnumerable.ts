@@ -68,7 +68,7 @@ import {
 export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   protected readonly factory: IEnumerableFactory;
 
-  private readonly srcGenerator: () => Generator<TSource>;
+  protected readonly srcGenerator: () => Generator<TSource>;
 
   public constructor(factory: IEnumerableFactory, srcGenerator: () => Generator<TSource>) {
     this.factory = factory;

@@ -1,32 +1,33 @@
-import { BasicEnumerable, from } from '..';
+import { BasicEnumerable } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('where', () => {
+describe.each([...getEnumerables()])('where', (src, enumerable, addSrc) => {
   it('should return an Enumerable', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 4, foo: 'asdf' }
-    ];
+    ]);
 
-    const result = from(items).where(x => x.id > 1);
+    const result = enumerable(items).where(x => x.id > 1);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should filter out items that match the condition', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 4, foo: 'asdf' }
-    ];
+    ]);
 
-    const result = from(items)
+    const result = enumerable(items)
       .where(x => x.id % 2 === 0)
       .toArray();
 
@@ -38,9 +39,9 @@ describe('where', () => {
   });
 
   it('should filter no items from empty collection', () => {
-    const items: { id: number }[] = [];
+    const items: Iterable<{ id: number }> = src([]);
 
-    const result = from(items)
+    const result = enumerable(items)
       .where(x => x.id % 2 === 0)
       .toArray();
 
@@ -48,13 +49,13 @@ describe('where', () => {
   });
 
   it('should have deferred execution', () => {
-    const items: { id: number }[] = [];
+    const items: Iterable<{ id: number }> = src([]);
 
-    const result = from(items).where(x => x.id % 2 === 0);
+    const result = enumerable(items).where(x => x.id % 2 === 0);
 
     expect(result.toArray()).toEqual([]);
 
-    items.push({ id: 2 });
+    addSrc(items, { id: 2 });
 
     expect(result.toArray()).toEqual([{ id: 2 }]);
   });

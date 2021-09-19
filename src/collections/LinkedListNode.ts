@@ -1,14 +1,13 @@
 export class LinkedListNode<TSource> {
-  public readonly list: Iterable<TSource>;
-
   public readonly value: TSource;
+
+  public list: Iterable<TSource> | null = null;
 
   public next: LinkedListNode<TSource> | null = null;
 
   public previous: LinkedListNode<TSource> | null = null;
 
-  public constructor(list: Iterable<TSource>, value: TSource) {
-    this.list = list;
+  public constructor(value: TSource) {
     this.value = value;
   }
 }

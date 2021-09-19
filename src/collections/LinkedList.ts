@@ -36,13 +36,31 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICo
     return this.listLength;
   }
 
-  public addAfter(node: LinkedListNode<TSource>, item: TSource): LinkedListNode<TSource> {
+  public addAfter(node: LinkedListNode<TSource>, newNode: LinkedListNode<TSource>): LinkedListNode<TSource>;
+
+  public addAfter(node: LinkedListNode<TSource>, item: TSource): LinkedListNode<TSource>;
+
+  public addAfter(
+    node: LinkedListNode<TSource>,
+    newNodeOrItem: LinkedListNode<TSource> | TSource
+  ): LinkedListNode<TSource> {
     if (node.list !== this) {
       throw new Error('Node must belong to the list.');
     }
 
-    const newNode = new LinkedListNode(this, item);
+    let newNode;
 
+    if (newNodeOrItem instanceof LinkedListNode) {
+      if (newNodeOrItem.list !== null) {
+        throw new Error('newNode cannot belong to a list.');
+      }
+
+      newNode = newNodeOrItem;
+    } else {
+      newNode = new LinkedListNode(newNodeOrItem);
+    }
+
+    newNode.list = this;
     newNode.previous = node;
     newNode.next = node.next;
 
@@ -57,13 +75,31 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICo
     return newNode;
   }
 
-  public addBefore(node: LinkedListNode<TSource>, item: TSource): LinkedListNode<TSource> {
+  public addBefore(node: LinkedListNode<TSource>, newNode: LinkedListNode<TSource>): LinkedListNode<TSource>;
+
+  public addBefore(node: LinkedListNode<TSource>, item: TSource): LinkedListNode<TSource>;
+
+  public addBefore(
+    node: LinkedListNode<TSource>,
+    newNodeOrItem: LinkedListNode<TSource> | TSource
+  ): LinkedListNode<TSource> {
     if (node.list !== this) {
       throw new Error('Node must belong to the list.');
     }
 
-    const newNode = new LinkedListNode(this, item);
+    let newNode;
 
+    if (newNodeOrItem instanceof LinkedListNode) {
+      if (newNodeOrItem.list !== null) {
+        throw new Error('newNode cannot belong to a list.');
+      }
+
+      newNode = newNodeOrItem;
+    } else {
+      newNode = new LinkedListNode(newNodeOrItem);
+    }
+
+    newNode.list = this;
     newNode.previous = node.previous;
     newNode.next = node;
 
@@ -78,44 +114,76 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICo
     return newNode;
   }
 
-  public addFirst(item: TSource): LinkedListNode<TSource> {
-    const node = new LinkedListNode(this, item);
+  public addFirst(newNode: LinkedListNode<TSource>): LinkedListNode<TSource>;
+
+  public addFirst(item: TSource): LinkedListNode<TSource>;
+
+  public addFirst(newNodeOrItem: LinkedListNode<TSource> | TSource): LinkedListNode<TSource> {
+    let newNode;
+
+    if (newNodeOrItem instanceof LinkedListNode) {
+      if (newNodeOrItem.list !== null) {
+        throw new Error('newNode cannot belong to a list.');
+      }
+
+      newNode = newNodeOrItem;
+    } else {
+      newNode = new LinkedListNode(newNodeOrItem);
+    }
+
+    newNode.list = this;
 
     if (!this.firstNode) {
-      this.firstNode = node;
+      this.firstNode = newNode;
     } else {
-      node.next = this.firstNode;
-      this.firstNode.previous = node;
-      this.firstNode = node;
+      newNode.next = this.firstNode;
+      this.firstNode.previous = newNode;
+      this.firstNode = newNode;
     }
 
     if (!this.lastNode) {
-      this.lastNode = node;
+      this.lastNode = newNode;
     }
 
     this.listLength++;
 
-    return node;
+    return newNode;
   }
 
-  public addLast(item: TSource): LinkedListNode<TSource> {
-    const node = new LinkedListNode(this, item);
+  public addLast(newNode: LinkedListNode<TSource>): LinkedListNode<TSource>;
+
+  public addLast(item: TSource): LinkedListNode<TSource>;
+
+  public addLast(newNodeOrItem: LinkedListNode<TSource> | TSource): LinkedListNode<TSource> {
+    let newNode;
+
+    if (newNodeOrItem instanceof LinkedListNode) {
+      if (newNodeOrItem.list !== null) {
+        throw new Error('newNode cannot belong to a list.');
+      }
+
+      newNode = newNodeOrItem;
+    } else {
+      newNode = new LinkedListNode(newNodeOrItem);
+    }
+
+    newNode.list = this;
 
     if (!this.firstNode) {
-      this.firstNode = node;
+      this.firstNode = newNode;
     }
 
     if (!this.lastNode) {
-      this.lastNode = node;
+      this.lastNode = newNode;
     } else {
-      node.previous = this.lastNode;
-      this.lastNode.next = node;
-      this.lastNode = node;
+      newNode.previous = this.lastNode;
+      this.lastNode.next = newNode;
+      this.lastNode = newNode;
     }
 
     this.listLength++;
 
-    return node;
+    return newNode;
   }
 
   public clear(): void {
@@ -137,11 +205,19 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICo
     throw new Error('Method not implemented.');
   }
 
-  public remove(item: TSource): boolean {
+  public remove(newNode: LinkedListNode<TSource>): boolean;
+
+  public remove(item: TSource): boolean;
+
+  public remove(newNodeOrItem: LinkedListNode<TSource> | TSource): boolean {
+    if (newNodeOrItem instanceof LinkedListNode && newNodeOrItem.list !== this) {
+      return false;
+    }
+
     let node = this.firstNode;
 
     while (node) {
-      if (node.value === item) {
+      if (node === newNodeOrItem || node.value === newNodeOrItem) {
         if (node.previous) {
           node.previous.next = node.next;
         }

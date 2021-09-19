@@ -1,9 +1,10 @@
+import { ICollection } from '../types';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { LinkedListNode } from './LinkedListNode';
 
-export class LinkedList<TSource> extends BasicEnumerable<TSource> {
+export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICollection<TSource> {
   private firstNode: LinkedListNode<TSource> | null = null;
 
   private lastNode: LinkedListNode<TSource> | null = null;
@@ -19,7 +20,7 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> {
     (this as unknown as { srcGenerator: () => Generator<TSource> }).srcGenerator = this.generator;
 
     for (const item of collection ?? []) {
-      this.addFirst(item);
+      this.addLast(item);
     }
   }
 
@@ -130,6 +131,10 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> {
     this.firstNode = null;
     this.lastNode = null;
     this.listLength = 0;
+  }
+
+  public copyTo(array: TSource[], arrayIndex: number): void {
+    throw new Error('Method not implemented.');
   }
 
   public remove(item: TSource): boolean {

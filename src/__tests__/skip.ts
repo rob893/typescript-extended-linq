@@ -1,74 +1,87 @@
-import { BasicEnumerable, from } from '..';
+import { BasicEnumerable } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('skip', () => {
+describe.each([...getEnumerables()])('skip', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const result = from([1, 2, 3]).skip(2);
+    const result = enumerable(src([1, 2, 3])).skip(2);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the last 1', () => {
-    const result = from([1, 2, 3]).skip(2).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skip(2)
+      .toArray();
 
     expect(result).toEqual([3]);
   });
 
   it('should return the first 1', () => {
-    const result = from([1, 2, 3]).skip(1).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skip(1)
+      .toArray();
 
     expect(result).toEqual([2, 3]);
   });
 
   it('should return none', () => {
-    const result = from([1, 2, 3]).skip(100).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skip(100)
+      .toArray();
 
     expect(result).toEqual([]);
   });
 
   it.each([-1, 0])('should throw', count => {
-    expect(() => from([1, 2, 3]).skip(count)).toThrow();
+    expect(() => enumerable(src([1, 2, 3])).skip(count)).toThrow();
   });
 });
 
-describe('skipLast', () => {
+describe.each([...getEnumerables()])('skipLast', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const result = from([1, 2, 3]).skipLast(2);
+    const result = enumerable(src([1, 2, 3])).skipLast(2);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return the first one', () => {
-    const result = from([1, 2, 3]).skipLast(2).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skipLast(2)
+      .toArray();
 
     expect(result).toEqual([1]);
   });
 
   it('should return the first 2', () => {
-    const result = from([1, 2, 3]).skipLast(1).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skipLast(1)
+      .toArray();
 
     expect(result).toEqual([1, 2]);
   });
 
   it('should return none', () => {
-    const result = from([1, 2, 3]).skipLast(100).toArray();
+    const result = enumerable(src([1, 2, 3]))
+      .skipLast(100)
+      .toArray();
 
     expect(result).toEqual([]);
   });
 
   it.each([-1, 0])('should throw', count => {
-    expect(() => from([1, 2, 3]).skipLast(count)).toThrow();
+    expect(() => enumerable(src([1, 2, 3])).skipLast(count)).toThrow();
   });
 });
 
-describe('skipWhile', () => {
+describe.each([...getEnumerables()])('skipWhile', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const result = from([1, 2, 3]).skipWhile(x => true);
+    const result = enumerable(src([1, 2, 3])).skipWhile(x => true);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return elements after condition is false', () => {
-    const result = from([1, 2, 3])
+    const result = enumerable(src([1, 2, 3]))
       .skipWhile(x => x % 2 === 1)
       .toArray();
 
@@ -76,7 +89,7 @@ describe('skipWhile', () => {
   });
 
   it('should return all', () => {
-    const result = from([1, 2, 3])
+    const result = enumerable(src([1, 2, 3]))
       .skipWhile(_ => false)
       .toArray();
 
@@ -84,7 +97,7 @@ describe('skipWhile', () => {
   });
 
   it('should return none', () => {
-    const result = from([1, 2, 3])
+    const result = enumerable(src([1, 2, 3]))
       .skipWhile(_ => true)
       .toArray();
 

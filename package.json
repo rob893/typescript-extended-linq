@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "benchmark": "ts-node ./src/benchmark/index.ts",
+    "benchmark": "ts-node ./src/__benchmarks__/index.ts",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",

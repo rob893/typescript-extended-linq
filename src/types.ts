@@ -1192,7 +1192,7 @@ export interface IGrouping<TKey, TSource> extends IEnumerable<TSource> {
   readonly key: TKey;
 }
 
-export interface IList<TSource> extends IEnumerable<TSource> {
+export interface IList<TSource> extends ICollection<TSource> {
   get length(): number;
 
   add(item: TSource): void;
@@ -1236,4 +1236,10 @@ export interface IList<TSource> extends IEnumerable<TSource> {
   reverseInPlace(index: number, count: number): void;
 
   sort(): void;
+}
+
+export interface ICollection<TSource> extends IEnumerable<TSource> {
+  get length(): number;
+
+  copyTo(array: TSource[], arrayIndex: number): void;
 }

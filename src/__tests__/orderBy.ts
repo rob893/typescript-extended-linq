@@ -1,28 +1,29 @@
-import { from, OrderedEnumerable } from '..';
+import { OrderedEnumerable } from '../enumerables/OrderedEnumerable';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('orderBy', () => {
+describe.each([...getEnumerables()])('orderBy', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderBy(x => x.id);
+    const result = enumerable(objects).orderBy(x => x.id);
 
     expect(result).toBeInstanceOf(OrderedEnumerable);
   });
 
   it('should return an Enumerable ordered by id', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderBy(x => x.id);
+    const result = enumerable(objects).orderBy(x => x.id);
 
     expect(result.toArray()).toEqual([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
@@ -33,14 +34,14 @@ describe('orderBy', () => {
   });
 
   it('should return an Enumerable ordered by date', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderBy(x => x.bar);
+    const result = enumerable(objects).orderBy(x => x.bar);
 
     expect(result.toArray()).toEqual([
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') },
@@ -51,29 +52,29 @@ describe('orderBy', () => {
   });
 });
 
-describe('orderByDescending', () => {
+describe.each([...getEnumerables()])('orderByDescending', (src, enumerable) => {
   it('should return an OrderedEnumerable', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderByDescending(x => x.id);
+    const result = enumerable(objects).orderByDescending(x => x.id);
 
     expect(result).toBeInstanceOf(OrderedEnumerable);
   });
 
   it('should return an Enumerable ordered by id', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderByDescending(x => x.id);
+    const result = enumerable(objects).orderByDescending(x => x.id);
 
     expect(result.toArray()).toEqual([
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') },
@@ -84,14 +85,14 @@ describe('orderByDescending', () => {
   });
 
   it('should return an Enumerable ordered by date', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
       { id: 3, foo: 'ffoo', bar: new Date('6/1/2021') },
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects).orderByDescending(x => x.bar);
+    const result = enumerable(objects).orderByDescending(x => x.bar);
 
     expect(result.toArray()).toEqual([
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
@@ -102,16 +103,16 @@ describe('orderByDescending', () => {
   });
 });
 
-describe('thenBy', () => {
+describe.each([...getEnumerables()])('thenBy', (src, enumerable) => {
   it('should return an OrderedEnumerable', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo' },
       { id: 3, foo: 'ffoo' },
       { id: 2, foo: 'afoo' },
       { id: 4, foo: 'foo' }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenBy(x => x.foo);
 
@@ -119,7 +120,7 @@ describe('thenBy', () => {
   });
 
   it('should return an Enumerable ordered by id then by foo', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'zfoo' },
       { id: 1, foo: 'sfoo' },
       { id: 1, foo: 'afoo' },
@@ -127,9 +128,9 @@ describe('thenBy', () => {
       { id: 2, foo: 'afoo' },
       { id: 4, foo: 'fooz' },
       { id: 4, foo: 'foo' }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenBy(x => x.foo)
       .toArray();
@@ -146,7 +147,7 @@ describe('thenBy', () => {
   });
 
   it('should return an Enumerable ordered by id then by foo then by bar', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'zfoo', bar: new Date('8/1/2021') },
       { id: 1, foo: 'sfoo', bar: new Date('9/1/2021') },
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
@@ -154,9 +155,9 @@ describe('thenBy', () => {
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') },
       { id: 4, foo: 'foo', bar: new Date('1/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenBy(x => x.foo)
       .thenBy(x => x.bar)
@@ -174,16 +175,16 @@ describe('thenBy', () => {
   });
 });
 
-describe('thenByDescending', () => {
+describe.each([...getEnumerables()])('thenByDescending', (src, enumerable) => {
   it('should return an OrderedEnumerable', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'sfoo' },
       { id: 3, foo: 'ffoo' },
       { id: 2, foo: 'afoo' },
       { id: 4, foo: 'foo' }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenByDescending(x => x.foo);
 
@@ -191,7 +192,7 @@ describe('thenByDescending', () => {
   });
 
   it('should return an Enumerable ordered by id then by foo', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'zfoo' },
       { id: 1, foo: 'sfoo' },
       { id: 1, foo: 'afoo' },
@@ -199,9 +200,9 @@ describe('thenByDescending', () => {
       { id: 2, foo: 'afoo' },
       { id: 4, foo: 'fooz' },
       { id: 4, foo: 'foo' }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenByDescending(x => x.foo)
       .toArray();
@@ -218,7 +219,7 @@ describe('thenByDescending', () => {
   });
 
   it('should return an Enumerable ordered by id then by foo then by bar', () => {
-    const objects = [
+    const objects = src([
       { id: 1, foo: 'zfoo', bar: new Date('8/1/2021') },
       { id: 1, foo: 'sfoo', bar: new Date('9/1/2021') },
       { id: 1, foo: 'sfoo', bar: new Date('8/1/2021') },
@@ -226,9 +227,9 @@ describe('thenByDescending', () => {
       { id: 2, foo: 'afoo', bar: new Date('8/1/2051') },
       { id: 4, foo: 'foo', bar: new Date('8/1/2000') },
       { id: 4, foo: 'foo', bar: new Date('1/1/2000') }
-    ];
+    ]);
 
-    const result = from(objects)
+    const result = enumerable(objects)
       .orderBy(x => x.id)
       .thenByDescending(x => x.foo)
       .thenByDescending(x => x.bar)

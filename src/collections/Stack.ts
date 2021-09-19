@@ -1,8 +1,9 @@
+import { ICollection } from '../types';
 import { ArrayEnumerable } from '../enumerables/ArrayEnumerable';
 import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
 
-export class Stack<TSource> extends ArrayEnumerable<TSource> {
+export class Stack<TSource> extends ArrayEnumerable<TSource> implements ICollection<TSource> {
   public constructor();
 
   public constructor(collection: Iterable<TSource>);

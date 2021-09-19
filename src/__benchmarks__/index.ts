@@ -5,6 +5,7 @@ import { complexBenchmark } from './complex';
 import { countBenchmark } from './count';
 import { selectBenchmark } from './select';
 import { sumBenchmark } from './sum';
+import { listBenchmark } from './list';
 
 const args = process.argv.slice(2);
 
@@ -35,6 +36,9 @@ switch (benchmark.toLowerCase()) {
     break;
   case 'sum':
     sumBenchmark();
+    break;
+  case 'list':
+    listBenchmark();
     break;
   default:
     throw new Error(`${benchmark} is not a valid benchmark name.`);

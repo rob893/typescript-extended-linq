@@ -1,10 +1,10 @@
-import { from } from '../functions/from';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('append', () => {
-  it.each([[], new Set([1, 2]), [1, 2]])('should append a new element', src => {
+describe.each([...getEnumerables()])('append', (src, enumerable) => {
+  it.each([[], new Set([1, 2]), [1, 2]])('should append a new element', collection => {
     const last = 3;
 
-    const res = from(src).append(last).toArray();
+    const res = enumerable(src(collection)).append(last).toArray();
 
     expect(res[res.length - 1]).toBe(last);
   });

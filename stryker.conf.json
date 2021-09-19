@@ -2,7 +2,12 @@
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "packageManager": "npm",
   "reporters": ["html", "clear-text", "progress"],
-  "mutate": ["src/**/*.ts", "!src/**/__tests__/**/*.ts", "!src/**/benchmark/**/*.ts"],
+  "mutate": [
+    "src/**/*.ts",
+    "!src/**/__tests__/**/*.ts",
+    "!src/**/__benchmarks__/**/*.ts",
+    "!src/**/__test-utilities__/**/*.ts"
+  ],
   "tempDirName": "_stryker-tmp",
   "testRunner": "jest",
   "coverageAnalysis": "perTest",

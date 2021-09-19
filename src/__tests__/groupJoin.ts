@@ -1,10 +1,11 @@
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
-import { from, groupJoin } from '..';
+import { groupJoin } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('groupJoin', () => {
-  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
+describe.each([...getEnumerables()])('groupJoin', (src, enumerable) => {
+  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', collection => {
     const result = groupJoin<unknown, unknown, unknown, unknown>(
-      src,
+      src<unknown>(collection),
       [],
       x => x,
       x => x,
@@ -29,8 +30,8 @@ describe('groupJoin', () => {
     const daisy: Pet = { name: 'Daisy', owner: magnus };
     const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam, john]);
-    const pets = from([barley, boots, whiskers, daisy, scratchy]);
+    const people = enumerable(src([magnus, terry, adam, john]));
+    const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
       .groupJoin(
@@ -64,8 +65,8 @@ describe('groupJoin', () => {
     const daisy: Pet = { name: 'Daisy', owner: magnus };
     const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam, john]);
-    const pets = from([barley, boots, whiskers, daisy, scratchy]);
+    const people = enumerable(src([magnus, terry, adam, john]));
+    const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
       .groupJoin(

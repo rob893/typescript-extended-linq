@@ -2,4 +2,5 @@
 !src/**/*
 !dist/**/*
 src/__tests__
-src/benchmark
+src/__test-utilities__
+src/__benchmarks__

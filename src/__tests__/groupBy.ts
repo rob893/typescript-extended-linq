@@ -1,22 +1,23 @@
-import { BasicEnumerable, from } from '..';
+import { BasicEnumerable } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('groupBy', () => {
+describe.each([...getEnumerables()])('groupBy', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const items = [{ id: 1, foo: 'asdf' }];
-    const result = from(items).groupBy(x => x.id);
+    const items = src([{ id: 1, foo: 'asdf' }]);
+    const result = enumerable(items).groupBy(x => x.id);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should group items based on selected key', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' }
-    ];
-    const result = from(items)
+    ]);
+    const result = enumerable(items)
       .groupBy(x => x.id)
       .select(group => ({ key: group.key, group: group.toArray() }))
       .toArray();
@@ -44,14 +45,14 @@ describe('groupBy', () => {
   });
 
   it('should group items based on selected key and passed comparer', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 1, foo: 'asdfz' },
       { id: 2, foo: 'asqf' },
       { id: 2, foo: 'asdfv' },
       { id: 3, foo: 'asd' }
-    ];
-    const result = from(items)
+    ]);
+    const result = enumerable(items)
       .groupBy(
         x => x.foo,
         (a, b) => a.length === b.length

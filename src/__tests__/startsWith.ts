@@ -1,6 +1,6 @@
-import { from } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('startsWith', () => {
+describe.each([...getEnumerables()])('startsWith', (src, enumerable) => {
   it.each([
     [
       [1, 2, 3, 4],
@@ -9,7 +9,7 @@ describe('startsWith', () => {
     ['abc', ['a', 'b']],
     [[1, 2, 3], []]
   ])('should return true when sequence starts with another sequence', (sequence, starts) => {
-    expect(from<unknown>(sequence).startsWith(starts)).toBe(true);
+    expect(enumerable(src<unknown>(sequence)).startsWith(starts)).toBe(true);
   });
 
   it.each([
@@ -20,7 +20,7 @@ describe('startsWith', () => {
     ['abc', ['a', 'b']],
     [[1, 2, 3], []]
   ])('should return true when sequence starts with another sequence using comparer', (sequence, starts) => {
-    expect(from<unknown>(sequence).startsWith(starts, (a, b) => a === b)).toBe(true);
+    expect(enumerable(src<unknown>(sequence)).startsWith(starts, (a, b) => a === b)).toBe(true);
   });
 
   it.each([
@@ -34,7 +34,7 @@ describe('startsWith', () => {
     ],
     ['abc', ['b']]
   ])('should return false when sequence does not start with another sequence', (sequence, starts) => {
-    expect(from<unknown>(sequence).startsWith(starts)).toBe(false);
+    expect(enumerable(src<unknown>(sequence)).startsWith(starts)).toBe(false);
   });
 
   it.each([
@@ -48,6 +48,6 @@ describe('startsWith', () => {
     ],
     ['abc', ['b']]
   ])('should return false when sequence does not start with another sequence using comparer', (sequence, starts) => {
-    expect(from<unknown>(sequence).startsWith(starts, (a, b) => a === b)).toBe(false);
+    expect(enumerable(src<unknown>(sequence)).startsWith(starts, (a, b) => a === b)).toBe(false);
   });
 });

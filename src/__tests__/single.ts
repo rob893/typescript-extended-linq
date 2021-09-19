@@ -1,69 +1,69 @@
-import { from } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('single', () => {
+describe.each([...getEnumerables()])('single', (src, enumerable) => {
   it('should return the first element and ensure that exactly one exists', () => {
-    const items = [1];
+    const items = src([1]);
 
-    const first = from(items).single();
+    const first = enumerable(items).single();
 
     expect(first).toEqual(1);
   });
 
   it('should return the first element that matches the condition and ensure that exactly one exists', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const first = from(items).single(x => x === 2);
+    const first = enumerable(items).single(x => x === 2);
 
     expect(first).toEqual(2);
   });
 
   it('should should throw when empty', () => {
-    expect(() => from([]).single()).toThrow();
+    expect(() => enumerable(src([])).single()).toThrow();
   });
 
   it('should should throw when more than one element in sequence', () => {
-    const items = [1, 2];
+    const items = src([1, 2]);
 
-    expect(() => from(items).single()).toThrow();
+    expect(() => enumerable(items).single()).toThrow();
   });
 
   it('should should throw when more than one element matches sequence in sequence', () => {
-    const items = [1, 2, 3, 2];
+    const items = src([1, 2, 3, 2]);
 
-    expect(() => from(items).single(x => x === 2)).toThrow();
+    expect(() => enumerable(items).single(x => x === 2)).toThrow();
   });
 });
 
-describe('singleOrDefault', () => {
+describe.each([...getEnumerables()])('singleOrDefault', (src, enumerable) => {
   it('should return the first element and ensure that exactly one exists', () => {
-    const items = [1];
+    const items = src([1]);
 
-    const first = from(items).singleOrDefault();
+    const first = enumerable(items).singleOrDefault();
 
     expect(first).toEqual(1);
   });
 
   it('should return the first element that matches the condition and ensure that exactly one exists', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const first = from(items).singleOrDefault(x => x === 2);
+    const first = enumerable(items).singleOrDefault(x => x === 2);
 
     expect(first).toEqual(2);
   });
 
   it('should return null when empty', () => {
-    expect(from([]).singleOrDefault()).toBeNull();
+    expect(enumerable(src([])).singleOrDefault()).toBeNull();
   });
 
   it('should should throw when more than one element in sequence', () => {
-    const items = [1, 2];
+    const items = src([1, 2]);
 
-    expect(() => from(items).singleOrDefault()).toThrow();
+    expect(() => enumerable(items).singleOrDefault()).toThrow();
   });
 
   it('should should throw when more than one element matches sequence in sequence', () => {
-    const items = [1, 2, 3, 2];
+    const items = src([1, 2, 3, 2]);
 
-    expect(() => from(items).singleOrDefault(x => x === 2)).toThrow();
+    expect(() => enumerable(items).singleOrDefault(x => x === 2)).toThrow();
   });
 });

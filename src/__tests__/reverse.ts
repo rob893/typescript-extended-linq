@@ -1,34 +1,35 @@
-import { BasicEnumerable, from } from '..';
+import { BasicEnumerable } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('reverse', () => {
+describe.each([...getEnumerables()])('reverse', (src, enumerable, addSrc) => {
   it('should return an Enumberable', () => {
-    const result = from([1, 2, 3]).reverse();
+    const result = enumerable(src([1, 2, 3])).reverse();
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should reverse the elements', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const result = from(items).reverse().toArray();
+    const result = enumerable(items).reverse().toArray();
 
     expect(result).toEqual([3, 2, 1]);
   });
 
   it('should not mutate src', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const _ = from(items).reverse().toArray();
+    const _ = enumerable(items).reverse().toArray();
 
-    expect(items).toEqual([1, 2, 3]);
+    expect([...items]).toEqual([1, 2, 3]);
   });
 
   it('should have deferred execution', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const result = from(items).reverse();
+    const result = enumerable(items).reverse();
 
-    items.push(4, 5);
+    addSrc(items, 4, 5);
 
     expect(result.toArray()).toEqual([5, 4, 3, 2, 1]);
   });

@@ -1,26 +1,26 @@
-import { from } from '../functions/from';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('all', () => {
+describe.each([...getEnumerables()])('all', (src, enumerable) => {
   it('should return true when all elements match predicate', () => {
-    const items = [2, 4, 6, 8, 10];
+    const items = src([2, 4, 6, 8, 10]);
 
-    const result = from(items).all(x => x % 2 === 0);
+    const result = enumerable(items).all(x => x % 2 === 0);
 
     expect(result).toBe(true);
   });
 
   it('should return true for empty collection', () => {
-    const items: number[] = [];
+    const items = src<number>([]);
 
-    const result = from(items).all(x => x % 2 === 0);
+    const result = enumerable(items).all(x => x % 2 === 0);
 
     expect(result).toBe(true);
   });
 
   it('should return false when any element does not match', () => {
-    const items = [2, 4, 6, 8, 10];
+    const items = src([2, 4, 6, 8, 10]);
 
-    const result = from(items).all(x => x % 2 === 1);
+    const result = enumerable(items).all(x => x % 2 === 1);
 
     expect(result).toBe(false);
   });

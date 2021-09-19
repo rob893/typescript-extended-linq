@@ -1,9 +1,9 @@
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
-import { from } from '../functions/from';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('rightJoinHeterogeneous', () => {
-  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
-    const result = from<unknown>(src).rightJoinHeterogeneous<unknown, unknown, unknown>(
+describe.each([...getEnumerables()])('rightJoinHeterogeneous', (src, enumerable) => {
+  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', collection => {
+    const result = enumerable(src<unknown>(collection)).rightJoinHeterogeneous<unknown, unknown, unknown>(
       [],
       x => x,
       x => x,
@@ -34,8 +34,8 @@ describe('rightJoinHeterogeneous', () => {
     const daisy: Pet = { name: 'Daisy', owner: magnus };
     const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam, john]);
-    const pets = from([barley, boots, whiskers, daisy, scratchy]);
+    const people = enumerable(src([magnus, terry, adam, john]));
+    const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
       .rightJoinHeterogeneous<Pet, Person, { side: Side; left: Person | null; right: Pet }>(
@@ -76,8 +76,8 @@ describe('rightJoinHeterogeneous', () => {
     const daisy: Pet = { name: 'Daisy', owner: magnus };
     const scratchy: Pet = { name: 'Scratchy', owner: { name: 'Bob' } };
 
-    const people = from([magnus, terry, adam, john]);
-    const pets = from([barley, boots, whiskers, daisy, scratchy]);
+    const people = enumerable(src([magnus, terry, adam, john]));
+    const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
       .rightJoinHeterogeneous<Pet, Person, { side: Side; left: Person | null; right: Pet }>(
@@ -100,9 +100,9 @@ describe('rightJoinHeterogeneous', () => {
   });
 });
 
-describe('rightJoinHomogeneous', () => {
-  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', src => {
-    const result = from<unknown>(src).rightJoinHomogeneous<unknown, unknown>(
+describe.each([...getEnumerables()])('rightJoinHomogeneous', (src, enumerable) => {
+  it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', collection => {
+    const result = enumerable(src<unknown>(collection)).rightJoinHomogeneous<unknown, unknown>(
       [],
       x => x,
       x => x,
@@ -131,8 +131,8 @@ describe('rightJoinHomogeneous', () => {
     const terry2: Person = { id: 7, name: 'Terry' };
     const john3: Person = { id: 8, name: 'John' };
 
-    const people1 = from([magnus, terry1, adam, john1, john4]);
-    const people2 = from([john2, jane, terry2, john3]);
+    const people1 = enumerable(src([magnus, terry1, adam, john1, john4]));
+    const people2 = enumerable(src([john2, jane, terry2, john3]));
 
     const result = people1
       .rightJoinHomogeneous<string, { side: Side; left: Person | null; right: Person }>(
@@ -172,8 +172,8 @@ describe('rightJoinHomogeneous', () => {
     const terry2: Person = { id: 7, name: 'Terry' };
     const john3: Person = { id: 8, name: 'John' };
 
-    const people1 = from([magnus, terry1, adam, john1, john4]);
-    const people2 = from([john2, jane, terry2, john3]);
+    const people1 = enumerable(src([magnus, terry1, adam, john1, john4]));
+    const people2 = enumerable(src([john2, jane, terry2, john3]));
 
     const result = people1
       .rightJoinHomogeneous<string, { side: Side; left: Person | null; right: Person }>(

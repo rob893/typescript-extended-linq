@@ -1,44 +1,44 @@
 import { BasicEnumerable } from '..';
-import { from } from '../functions/from';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('distinct', () => {
+describe.each([...getEnumerables()])('distinct', (src, enumerable, srcAdd) => {
   it('should return an Enumerable', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const result = from(items).distinct();
+    const result = enumerable(items).distinct();
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should not have duplicates', () => {
-    const items = [1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3];
+    const items = src([1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3]);
 
-    const result = from(items).distinct().toArray();
+    const result = enumerable(items).distinct().toArray();
 
     expect(result).toEqual([1, 2, 3]);
   });
 
   it('should have deferred execution', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const result = from(items).distinct();
+    const result = enumerable(items).distinct();
 
-    items.push(4, 4);
+    srcAdd(items, 4, 4);
 
     expect(result.toArray()).toEqual([1, 2, 3, 4]);
   });
 
   it('should return the union of two collections using passed comparer', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 4, foo: 'asdf' }
-    ];
+    ]);
 
-    const result = from(items)
+    const result = enumerable(items)
       .distinct((a, b) => a.id === b.id)
       .toArray();
 
@@ -51,26 +51,26 @@ describe('distinct', () => {
   });
 });
 
-describe('distinctBy', () => {
+describe.each([...getEnumerables()])('distinctBy', (src, enumerable, srcAdd) => {
   it('should return an Enumerable', () => {
-    const items = [1, 2, 3];
+    const items = src([1, 2, 3]);
 
-    const result = from(items).distinctBy(x => x);
+    const result = enumerable(items).distinctBy(x => x);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
 
   it('should return distinct items by key', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' },
       { id: 4, foo: 'asdf' }
-    ];
+    ]);
 
-    const result = from(items)
+    const result = enumerable(items)
       .distinctBy(x => x.id)
       .toArray();
 
@@ -83,15 +83,15 @@ describe('distinctBy', () => {
   });
 
   it('should deferred execution', () => {
-    const items = [
+    const items = src([
       { id: 1, foo: 'asdf' },
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' }
-    ];
+    ]);
 
-    const result = from(items).distinctBy(x => x.id);
+    const result = enumerable(items).distinctBy(x => x.id);
 
-    items.push({ id: 4, foo: 'asdf' });
+    srcAdd(items, { id: 4, foo: 'asdf' });
 
     expect(result.toArray()).toEqual([
       { id: 1, foo: 'asdf' },

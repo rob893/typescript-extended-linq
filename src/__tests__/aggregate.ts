@@ -1,10 +1,11 @@
-import { from, aggregate } from '..';
+import { aggregate } from '..';
+import { getEnumerables } from '../__test-utilities__/utilities';
 
-describe('aggregate', () => {
+describe.each([...getEnumerables()])('aggregate', (src, enumerable) => {
   it('should aggregate the numbers', () => {
-    const nums = [1, 2, 3];
+    const nums = src([1, 2, 3]);
 
-    const aggregate = from(nums).aggregate(0, (prev, curr) => prev + curr);
+    const aggregate = enumerable(nums).aggregate(0, (prev, curr) => prev + curr);
 
     expect(aggregate).toEqual(6);
   });

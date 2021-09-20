@@ -22,10 +22,25 @@ describe('PriorityQueue', () => {
 
       expect(q.length).toBe(4);
 
-      const result = q.dequeue();
+      let result = q.dequeue();
 
       expect(result).toBe(4);
       expect(q.length).toBe(3);
+
+      result = q.dequeue();
+
+      expect(result).toBe(0);
+      expect(q.length).toBe(2);
+
+      result = q.dequeue();
+
+      expect(result).toBe(3);
+      expect(q.length).toBe(1);
+
+      result = q.dequeue();
+
+      expect(result).toBe(5);
+      expect(q.length).toBe(0);
     });
 
     it('should throw if queue is empty', () => {
@@ -45,10 +60,25 @@ describe('PriorityQueue', () => {
 
       expect(q.length).toBe(4);
 
-      const result = q.tryDequeue();
+      let result = q.tryDequeue();
 
       expect(result).toBe(4);
       expect(q.length).toBe(3);
+
+      result = q.tryDequeue();
+
+      expect(result).toBe(0);
+      expect(q.length).toBe(2);
+
+      result = q.tryDequeue();
+
+      expect(result).toBe(3);
+      expect(q.length).toBe(1);
+
+      result = q.tryDequeue();
+
+      expect(result).toBe(5);
+      expect(q.length).toBe(0);
     });
 
     it('should return null if queue is empty', () => {

@@ -1,3 +1,6 @@
 {
-  "name": "TypeScript Extended Linq"
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "TypeScript Extended Linq",
+  "excludePrivate": true,
+  "excludeProtected": true
 }

@@ -10,6 +10,8 @@ export * from './collections/List';
 export * from './collections/Stack';
 export * from './collections/LinkedListNode';
 export * from './collections/LinkedList';
+export * from './collections/Queue';
+export * from './collections/PriorityQueue';
 
 export * from './functions/aggregate';
 export * from './functions/all';

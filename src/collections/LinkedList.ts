@@ -201,13 +201,13 @@ export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICo
     this.listLength = 0;
   }
 
-  /**
-   * @deprecated Not yet implemented.
-   * @param array
-   * @param arrayIndex
-   */
   public copyTo(array: TSource[], arrayIndex: number): void {
-    throw new Error('Method not implemented.');
+    let i = arrayIndex;
+
+    for (const item of this) {
+      array[i] = item;
+      i++;
+    }
   }
 
   public remove(newNode: LinkedListNode<TSource>): boolean;

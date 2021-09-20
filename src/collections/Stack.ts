@@ -36,7 +36,7 @@ export class Stack<TSource> extends ArrayEnumerable<TSource> implements ICollect
   public peek(): TSource {
     const item = this.tryPeek();
 
-    if (item === undefined) {
+    if (item === null) {
       throw new Error('Stack is empty.');
     }
 
@@ -46,7 +46,7 @@ export class Stack<TSource> extends ArrayEnumerable<TSource> implements ICollect
   public pop(): TSource {
     const item = this.tryPop();
 
-    if (item === undefined) {
+    if (item === null) {
       throw new Error('Stack is empty.');
     }
 
@@ -57,15 +57,15 @@ export class Stack<TSource> extends ArrayEnumerable<TSource> implements ICollect
     this.srcArr.push(item);
   }
 
-  public tryPeek(): TSource | undefined {
+  public tryPeek(): TSource | null {
     if (this.srcArr.length === 0) {
-      return undefined;
+      return null;
     }
 
     return this.srcArr[this.srcArr.length - 1];
   }
 
-  public tryPop(): TSource | undefined {
-    return this.srcArr.pop();
+  public tryPop(): TSource | null {
+    return this.srcArr.pop() ?? null;
   }
 }

@@ -1,6 +1,8 @@
 import { LinkedList } from '../collections/LinkedList';
 import { List } from '../collections/List';
 import { Stack } from '../collections/Stack';
+import { Queue } from '../collections/Queue';
+import { PriorityQueue } from '../collections/PriorityQueue';
 import { from } from '../functions/from';
 import { IEnumerable } from '../types';
 
@@ -73,6 +75,25 @@ export function getEnumerables(): [
 
         for (const item of items) {
           src.addLast(item);
+        }
+      }
+    ],
+    [
+      <T>(src: Iterable<T>) => new Queue(src),
+      <T>(src: Iterable<T>) => {
+        if (!(src instanceof Queue)) {
+          throw new Error();
+        }
+
+        return src;
+      },
+      (src, ...items) => {
+        if (!(src instanceof Queue)) {
+          throw new Error();
+        }
+
+        for (const item of items) {
+          src.enqueue(item);
         }
       }
     ]

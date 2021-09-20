@@ -48,9 +48,7 @@ export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSo
   }
 
   public addRange(collection: Iterable<TSource>): void {
-    for (const item of collection) {
-      this.add(item);
-    }
+    this.srcArr.push(...collection);
   }
 
   public clear(): void {

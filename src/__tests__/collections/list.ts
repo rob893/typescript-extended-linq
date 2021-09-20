@@ -72,6 +72,24 @@ describe('List', () => {
         expect(arrToCopyTo[i]).toBe(list.elementAt(i));
       }
     });
+
+    it('should copy the list to the destination array at array index', () => {
+      const list = new List([1, 2, 3]);
+      const arrToCopyTo: number[] = [];
+
+      list.copyTo(arrToCopyTo, 2);
+
+      expect(arrToCopyTo).toEqual([undefined, undefined, 1, 2, 3]);
+    });
+
+    it('should copy the list to the destination array at array index starting at index', () => {
+      const list = new List([1, 2, 3, 4]);
+      const arrToCopyTo: number[] = [];
+
+      list.copyTo(1, arrToCopyTo, 2, 2);
+
+      expect(arrToCopyTo).toEqual([undefined, undefined, 2, 3]);
+    });
   });
 
   describe('findIndex', () => {
@@ -173,6 +191,38 @@ describe('List', () => {
 
       expect(result).toBe(2);
       expect(list).toEqual(new List([1, 2, 3]));
+    });
+  });
+
+  describe('removeAt', () => {
+    it('should remove the item at index', () => {
+      const list = new List([1, 2, 3, 4, 5]);
+
+      list.removeAt(1);
+
+      expect(list).toEqual(new List([1, 3, 4, 5]));
+    });
+
+    it.each([-1, 5, 6])('should throw for index out of bounds', index => {
+      const list = new List([1, 2, 3, 4, 5]);
+
+      expect(() => list.removeAt(index)).toThrow();
+    });
+  });
+
+  describe('removeRange', () => {
+    it('should remove the range at index', () => {
+      const list = new List([1, 2, 3, 4, 5]);
+
+      list.removeRange(1, 2);
+
+      expect(list).toEqual(new List([1, 4, 5]));
+    });
+
+    it.each([-1, 5, 6])('should throw for index out of bounds', index => {
+      const list = new List([1, 2, 3, 4, 5]);
+
+      expect(() => list.removeRange(index, 1)).toThrow();
     });
   });
 

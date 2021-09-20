@@ -1,12 +1,6 @@
 import { Suite } from 'benchmark';
-import { from, List } from '../index';
-import { getTestObjects } from './benchmarkHelpers';
-
-interface TestType {
-  id: number;
-  foo: string;
-  bar: number[];
-}
+import { List } from '../index';
+import { getTestObjects, TestType } from './benchmarkHelpers';
 
 export function listBenchmark(): void {
   const suite = new Suite();

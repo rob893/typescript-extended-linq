@@ -2,13 +2,7 @@ import { Suite } from 'benchmark';
 import { List } from 'linq-typescript';
 import { from as fromLTT } from 'linq-to-typescript';
 import { from } from '../index';
-import { getTestObjects } from './benchmarkHelpers';
-
-interface TestType {
-  id: number;
-  foo: string;
-  bar: number[];
-}
+import { getTestObjects, TestType } from './benchmarkHelpers';
 
 export function allBenchmark(): void {
   const suite = new Suite();

@@ -172,8 +172,31 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   atLeast(count: number, predicate: (item: TSource, index: number) => boolean): boolean;
 
+  /**
+   * Determines whether or not the number of elements in the sequence is lesser than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atMostTwo = from(items).atMost(2); // false
+   * const atMostFour = from(items).atMost(4); // true
+   * ```
+   * @param count The maximun number of items a sequence must have for this function to return true.
+   * @returns true if the number of elements in the sequence is lesser than or equal to the given integer or false otherwise.
+   */
   atMost(count: number): boolean;
 
+  /**
+   * Determines whether or not the number of elements that match the predicate in the sequence is lesser than or equal to the given integer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const atMostTwo = from(items).atMost(2, x => x > 0); // false
+   * const atMostFour = from(items).atMost(4, x => x > 2); // true
+   * ```
+   * @param count The maximun number of items a sequence must have for this function to return true.
+   * @param predicate The condition to match the elements by.
+   * @returns true if the number of elements that match the predicate in the sequence is lesser than or equal to the given integer or false otherwise.
+   */
   atMost(count: number, predicate: (item: TSource, index: number) => boolean): boolean;
 
   /**
@@ -364,30 +387,111 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   elementAtOrDefault(index: number): TSource | null;
 
+  /**
+   * Determines whether the end of the first sequence is equivalent to the second sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const endsWith = from(items).endsWith([2, 3]); // true
+   * const doesNotEndWith = from(items).endsWith([3, 2]); // false
+   * ```
+   * @param second The sequence to compare to.
+   * @returns true if first ends with elements equivalent to second.
+   */
   endsWith(second: Iterable<TSource>): boolean;
 
+  /**
+   * Determines whether the end of the first sequence is equivalent to the second sequence, using the specified element equality comparer.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const endsWith = from(items).endsWith([2, 3], (a, b) => a === b); // true
+   * const doesNotEndWith = from(items).endsWith([3, 2], (a, b) => a === b); // false
+   * ```
+   * @param second The sequence to compare to.
+   * @param equalityComparer Equality comparer to use.
+   * @returns true if first ends with elements equivalent to second.
+   */
   endsWith(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): boolean;
 
+  /**
+   * Produces the set difference of two sequences.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4];
+   * const exceptItems = from(items).except([2, 4]); // [1, 3]
+   * ```
+   * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
   except(second: Iterable<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set difference of two sequences.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4];
+   * const exceptItems = from(items).except([2, 4], (a, b) => a === b); // [1, 3]
+   * ```
+   * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
   except(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
   exceptBy<TKey>(second: Iterable<TKey>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
   exceptBy<TKey>(
     second: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TSource>;
 
+  /**
+   * Returns the first element in a sequence. Throws if sequence contains no elements.
+   * @returns The first element in the sequence.
+   */
   first(): TSource;
 
+  /**
+   * Returns the first element in a sequence that satisfies a specified condition. Throws if sequence contains no elements that matches condition.
+   * @param predicate A function to test each element for a condition.
+   * @returns The first element in the sequence that passes the test in the specified predicate function.
+   */
   first(predicate: (item: TSource, index: number) => boolean): TSource;
 
+  /**
+   * Returns the first element in a sequence. Returns null if sequence contains no elements.
+   * @returns The first element in the sequence or null.
+   */
   firstOrDefault(): TSource | null;
 
+  /**
+   * Returns the first element in a sequence that satisfies a specified condition. Returns null if sequence contains no elements that matches condition.
+   * @param predicate A function to test each element for a condition.
+   * @returns The first element in the sequence that passes the test in the specified predicate function or null.
+   */
   firstOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
+  /**
+   * Iterates the sequence and calls an action on each element.
+   * @param action The action to perform on each item in the sequence.
+   */
   forEach(action: (item: TSource, index: number) => void): void;
 
   /**
@@ -480,8 +584,21 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
+  /**
+   * Groups the elements of a sequence according to a specified key selector function.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<IGrouping<TKey, TSource>> where each IGrouping<TKey, TSource> object contains a sequence of objects and a key.
+   */
   groupBy<TKey>(keySelector: (item: TSource) => TKey): IEnumerable<IGrouping<TKey, TSource>>;
 
+  /**
+   * Groups the elements of a sequence according to a specified key selector function.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer A function to compare keys.
+   * @returns An IEnumerable<IGrouping<TKey, TSource>> where each IGrouping<TKey, TSource> object contains a sequence of objects and a key.
+   */
   groupBy<TKey>(
     keySelector: (item: TSource) => TKey,
     equalityComparer: EqualityComparer<TKey>

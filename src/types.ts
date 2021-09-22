@@ -695,7 +695,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @param outerKeySelector A function to extract the join key from each element of the first sequence.
    * @param innerKeySelector A function to extract the join key from each element of the second sequence.
    * @param resultSelector A function to create a result element from an element from the first sequence and a collection of matching elements from the second sequence.
-   * @param equalityComparer An IEnumerable<TResult> that contains elements of type TResult that are obtained by performing a grouped join on two sequences.
+   * @param equalityComparer A function to compare keys.
    */
   groupJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
@@ -705,12 +705,38 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   intersect(second: Iterable<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   intersect(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   intersectBy<TKey>(second: Iterable<TKey>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   intersectBy<TKey>(
     second: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
@@ -818,12 +844,30 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
+  /**
+   * Returns the last element of a sequence. Throws if sequence is empty.
+   * @returns The value at the last position in the source sequence.
+   */
   last(): TSource;
 
+  /**
+   * Returns the last element of a sequence that satisfies a specified condition.
+   * @param predicate A function to test each element for a condition.
+   * @returns The last element in the sequence that passes the test in the specified predicate function.
+   */
   last(predicate: (item: TSource, index: number) => boolean): TSource;
 
+  /**
+   * Returns the last element of a sequence, or null if the sequence contains no elements.
+   * @returns null if the source sequence is empty; otherwise, the last element in the IEnumerable<T>
+   */
   lastOrDefault(): TSource | null;
 
+  /**
+   * Returns the last element of a sequence that satisfies a condition or null if no such element is found.
+   * @param predicate A function to test each element for a condition.
+   * @returns null if the sequence is empty or if no elements pass the test in the predicate function; otherwise, the last element that passes the test in the predicate function.
+   */
   lastOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
   /**
@@ -894,8 +938,18 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
+  /**
+   * Returns the maximum value in a sequence of values.
+   * @returns The max value in the sequence.
+   */
   max(): TSource;
 
+  /**
+   * Invokes a transform function on each element of a generic sequence and returns the maximum resulting value.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns The maximum value in the sequence.
+   */
   max<TResult>(selector: (item: TSource) => TResult): TResult;
 
   maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource;

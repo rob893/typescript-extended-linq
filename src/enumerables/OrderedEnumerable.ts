@@ -15,9 +15,20 @@ export class OrderedEnumerable<TSource> extends BasicEnumerable<TSource> impleme
     this.orderedPairs = orderedPairs;
   }
 
+  public thenBy<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+
+  public thenBy<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+
   public thenBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
     return applyThenBy(this.factory, this.orderedPairs, true, selector, comparer);
   }
+
+  public thenByDescending<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+
+  public thenByDescending<TKey>(
+    selector: (item: TSource) => TKey,
+    comparer: Comparer<TKey>
+  ): IOrderedEnumerable<TSource>;
 
   public thenByDescending<TKey>(
     selector: (item: TSource) => TKey,

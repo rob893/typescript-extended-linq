@@ -143,6 +143,8 @@ Determines whether or not the number of elements in the sequence is greater than
 
 ### [atMost](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atMost)
 
+Determines whether or not the number of elements in the sequence is lesser than or equal to the given integer.
+
 ### [average](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#average)
 
 Computes the average of a sequence of numeric values.
@@ -185,15 +187,27 @@ Returns the element at a specified index in a sequence or null if the index is o
 
 ### [endsWith](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#endsWith)
 
+Determines whether the end of the first sequence is equivalent to the second sequence.
+
 ### [except](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#except)
+
+Produces the set difference of two sequences.
 
 ### [exceptBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#exceptBy)
 
+Produces the set difference of two sequences according to a specified key selector function.
+
 ### [first](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#first)
+
+Returns the first element in a sequence. Throws if sequence contains no elements.
 
 ### [firstOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#firstOrDefault)
 
+Returns the first element in a sequence. Returns null if sequence contains no elements
+
 ### [forEach](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#forEach)
+
+Iterates the sequence and calls an action on each element.
 
 ### [fullJoinHeterogeneous](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#fullJoinHeterogeneous)
 
@@ -205,13 +219,19 @@ Performs a full outer join on two homogeneous sequences.
 
 ### [groupBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#groupBy)
 
+Groups the elements of a sequence according to a specified key selector function.
+
 ### [groupJoin](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#groupJoin)
 
 Correlates the elements of two sequences based on key equality, and groups the results.
 
 ### [intersect](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#intersect)
 
+Produces the set intersection of two sequences.
+
 ### [intersectBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#intersectBy)
+
+Produces the set intersection of two sequences according to a specified key selector function.
 
 ### [join](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#join)
 
@@ -219,7 +239,11 @@ Performs an inner join by correlating the elements of two sequences based on mat
 
 ### [last](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#last)
 
+Returns the last element of a sequence.
+
 ### [lastOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#lastOrDefault)
+
+Returns the last element of a sequence, or null if the sequence contains no elements.
 
 ### [leftJoinHeterogeneous](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#leftJoinHeterogeneous)
 
@@ -230,6 +254,8 @@ Performs a left outer join on two heterogeneous sequences. Additional arguments 
 Performs a left outer join on two homogeneous sequences. Additional arguments specify key selection functions and result projection functions.
 
 ### [max](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#max)
+
+Returns the maximum value in a sequence of values.
 
 ### [maxBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#maxBy)
 

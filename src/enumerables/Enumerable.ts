@@ -53,14 +53,32 @@ export class Enumerable {
     return applyEmpty(new EnumerableFactory());
   }
 
+  /**
+   * Generates a sequence of integral numbers within a specified range.
+   * @param start The value of the first integer in the sequence.
+   * @param count The number of sequential integers to generate.
+   * @returns An IEnumerable<number> that contains a range of sequential integral numbers.
+   */
   public static range(start: number, count: number): IEnumerable<number> {
     return applyRange(new EnumerableFactory(), start, count);
   }
 
+  /**
+   * Generates a sequence that contains one repeated value.
+   * @typeparam TResult The type of the value to be repeated in the result sequence.
+   * @param element The value to be repeated.
+   * @param count The number of times to repeat the value in the generated sequence.
+   * @returns An IEnumerable<T> that contains a repeated value.
+   */
   public static repeat<TResult>(element: TResult, count: number): IEnumerable<TResult> {
     return applyRepeat(new EnumerableFactory(), element, count);
   }
 
+  /**
+   * Determines if the passed in object is an Enumerable.
+   * @param obj The item to test if it is an Enumerable or not.
+   * @returns True if the obj is an Enumerable. False if not.
+   */
   public static isEnumerable(obj: unknown): obj is IEnumerable<unknown> {
     return isEnumerable(obj);
   }

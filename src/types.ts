@@ -240,11 +240,12 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * ```typescript
    * const numbers = [1, 2];
    * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * const evenMoreNumbers = from(numbers).concat([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
    * ```
-   * @param second The sequence to concatenate to the first sequence.
+   * @param collections The sequences to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
    */
-  concat(second: Iterable<TSource>): IEnumerable<TSource>;
+  concat(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Determines whether a sequence contains a specified element.
@@ -952,30 +953,104 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   max<TResult>(selector: (item: TSource) => TResult): TResult;
 
+  /**
+   * Returns the maximum value in a generic sequence according to a specified key selector function.
+   * @typeparam TKey The type of key to compare elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @returns The value with the maximum key in the sequence.
+   */
   maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource;
 
+  /**
+   * Returns the min value in a sequence of values.
+   * @returns The min value in the sequence.
+   */
   min(): TSource;
 
+  /**
+   * Invokes a transform function on each element of a generic sequence and returns the min resulting value.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns The min value in the sequence.
+   */
   min<TResult>(selector: (item: TSource) => TResult): TResult;
 
+  /**
+   * Returns the min value in a generic sequence according to a specified key selector function.
+   * @typeparam TKey The type of key to compare elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @returns The value with the min key in the sequence.
+   */
   minBy<TKey>(keySelector: (item: TSource) => TKey): TSource;
 
+  /**
+   * Filters the elements of an IEnumerable based on a specified type.
+   * @typeparam TResult The type to filter the elements of the sequence on.
+   * @param type The type to filter the elements of the sequence on.
+   * @returns An IEnumerable<T> that contains elements from the input sequence of type TResult.
+   */
   ofType<TResult>(type: new (...params: unknown[]) => TResult): IEnumerable<TResult>;
 
-  orderBy<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  orderBy<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
-  orderBy<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  orderBy<TKey>(keySelector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 
-  orderByDescending<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  orderByDescending<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
-  orderByDescending<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  orderByDescending<TKey>(keySelector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 
+  /**
+   * Executes the given action on each element in the source sequence and yields it.
+   * @param action The action to execute on each element.
+   * @returns A sequence with source elements in their original order.
+   */
   pipe(action: (item: TSource, index: number) => void): IEnumerable<TSource>;
 
+  /**
+   * Adds a value to the beginning of the sequence.
+   * @param item The value to prepend to source.
+   * @returns A new sequence that begins with item.
+   */
   prepend(item: TSource): IEnumerable<TSource>;
 
+  /**
+   * Computes the quantile of a sequence.
+   * @param selector A function to extract a value from each element.
+   * @param q The percentile to compute (25, 50, etc.)
+   * @returns The percentile of the sequence.
+   */
   quantile(selector: (item: TSource) => number, q: number): number;
 
+  /**
+   * Inverts the order of the elements in a sequence.
+   * @returns A sequence whose elements correspond to those of the input sequence in reverse order.
+   */
   reverse(): IEnumerable<TSource>;
 
   /**
@@ -1222,8 +1297,20 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
+  /**
+   * Projects each element of a sequence into a new form.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns An IEnumerable<T> whose elements are the result of invoking the transform function on each element of source.
+   */
   select<TResult>(selector: (item: TSource, index: number) => TResult): IEnumerable<TResult>;
 
+  /**
+   * Projects each element of a sequence to an IEnumerable<T> and flattens the resulting sequences into one sequence.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> whose elements are the result of invoking the one-to-many transform function on each element of an input sequence.
+   */
   selectMany<TResult>(selector: (item: TSource, index: number) => TResult[]): IEnumerable<TResult>;
 
   sequenceEqual(second: Iterable<TSource>): boolean;
@@ -1254,6 +1341,13 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   skipLast(count: number): IEnumerable<TSource>;
 
   skipWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
+
+  /**
+   * Splits the source sequence by a separator.
+   * @param separator Separator element.
+   * @returns A sequence of splits of elements.
+   */
+  split(separator: TSource): IEnumerable<IEnumerable<TSource>>;
 
   startsWith(second: Iterable<TSource>): boolean;
 
@@ -1349,17 +1443,55 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   ): IEnumerable<TResult>;
 }
 
+/**
+ * Represents a sorted sequence.
+ * @typeparam TSource The type of the elements of the sequence.
+ */
 export interface IOrderedEnumerable<TSource> extends IEnumerable<TSource> {
-  thenBy<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  /**
+   * Performs a subsequent ordering of the elements in a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  thenBy<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
-  thenBy<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+  /**
+   * Performs a subsequent ordering of the elements in a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  thenBy<TKey>(keySelector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 
-  thenByDescending<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  /**
+   * Performs a subsequent ordering of the elements in a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  thenByDescending<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
-  thenByDescending<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+  /**
+   * Performs a subsequent ordering of the elements in a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  thenByDescending<TKey>(keySelector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 }
 
+/**
+ * Represents a collection of objects that have a common key.
+ * @typeparam TKey The type of the key.
+ * @typeparam TSource The type of the values.
+ */
 export interface IGrouping<TKey, TSource> extends IEnumerable<TSource> {
+  /**
+   * Gets the key of the IGrouping<TKey, TSource>.
+   */
   readonly key: TKey;
 }
 

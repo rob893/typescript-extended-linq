@@ -26,6 +26,7 @@ import { applyRightJoinHeterogeneous, applyRightJoinHomogeneous } from '../funct
 import { applySelect, applySelectMany } from '../functions/applicators/applySelect';
 import { applyShuffle } from '../functions/applicators/applyShuffle';
 import { applySkip, applySkipLast, applySkipWhile } from '../functions/applicators/applySkip';
+import { applySplit } from '../functions/applicators/applySplit';
 import { applyTake, applyTakeEvery, applyTakeLast, applyTakeWhile } from '../functions/applicators/applyTake';
 import { applyUnion } from '../functions/applicators/applyUnion';
 import { applyWhere } from '../functions/applicators/applyWhere';
@@ -328,12 +329,13 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * ```typescript
    * const numbers = [1, 2];
    * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * const evenMoreNumbers = from(numbers).concat([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
    * ```
-   * @param second The sequence to concatenate to the first sequence.
+   * @param collections The sequences to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
    */
-  public concat(second: Iterable<TSource>): IEnumerable<TSource> {
-    return applyConcat(this.factory, this, second);
+  public concat(...collections: Iterable<TSource>[]): IEnumerable<TSource> {
+    return applyConcat(this.factory, this, collections);
   }
 
   /**
@@ -1573,6 +1575,15 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   public skipWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
     return applySkipWhile(this.factory, this, predicate);
+  }
+
+  /**
+   * Splits the source sequence by a separator.
+   * @param separator Separator element.
+   * @returns A sequence of splits of elements.
+   */
+  public split(separator: TSource): IEnumerable<IEnumerable<TSource>> {
+    return applySplit(this.factory, this, separator);
   }
 
   public startsWith(second: Iterable<TSource>): boolean;

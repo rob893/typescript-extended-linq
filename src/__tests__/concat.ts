@@ -1,4 +1,4 @@
-import { BasicEnumerable } from '..';
+import { BasicEnumerable, from } from '..';
 import { getEnumerables } from '../__test-utilities__/utilities';
 
 describe.each([...getEnumerables()])('concat', (src, enumerable) => {
@@ -23,5 +23,13 @@ describe.each([...getEnumerables()])('concat', (src, enumerable) => {
     const result = enumerable(src<unknown>(first)).concat(src<unknown>(second)).toArray();
 
     expect(result).toEqual(expected);
+  });
+
+  it('should concat several collections', () => {
+    const items = [1, 2, 3];
+
+    const result = from(items).concat([4, 5], [], [6], [7, 8, 9]).toArray();
+
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 });

@@ -58,6 +58,7 @@ export * from './functions/sequenceEqual';
 export * from './functions/shuffle';
 export * from './functions/single';
 export * from './functions/skip';
+export * from './functions/split';
 export * from './functions/startsWith';
 export * from './functions/sum';
 export * from './functions/take';

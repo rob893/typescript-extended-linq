@@ -1582,8 +1582,19 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @param separator Separator element.
    * @returns A sequence of splits of elements.
    */
-  public split(separator: TSource): IEnumerable<IEnumerable<TSource>> {
-    return applySplit(this.factory, this, separator);
+  public split(separator: TSource): IEnumerable<IEnumerable<TSource>>;
+
+  /**
+   * Splits the source sequence by a predicate.
+   * @param predicate A function to test an element for a condition.
+   * @returns A sequence of splits of elements.
+   */
+  public split(predicate: (item: TSource, index: number) => boolean): IEnumerable<IEnumerable<TSource>>;
+
+  public split(
+    separatorOrPredicate: TSource | ((item: TSource, index: number) => boolean)
+  ): IEnumerable<IEnumerable<TSource>> {
+    return applySplit(this.factory, this, separatorOrPredicate);
   }
 
   public startsWith(second: Iterable<TSource>): boolean;

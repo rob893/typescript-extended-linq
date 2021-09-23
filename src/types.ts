@@ -1313,10 +1313,25 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   selectMany<TResult>(selector: (item: TSource, index: number) => TResult[]): IEnumerable<TResult>;
 
+  /**
+   * Determines whether two sequences are equal by comparing the elements.
+   * @param second An IEnumerable<T> to compare to the first sequence.
+   * @returns true if the two source sequences are of equal length and their corresponding elements are equal; otherwise, false.
+   */
   sequenceEqual(second: Iterable<TSource>): boolean;
 
+  /**
+   * Determines whether two sequences are equal by comparing their elements by using a specified EqualityComparer<T>.
+   * @param second An IEnumerable<T> to compare to the first sequence.
+   * @param equalityComparer An EqualityComparer<T> to use to compare elements.
+   * @returns true if the two source sequences are of equal length and their corresponding elements compare equal according to equalityComparer; otherwise, false.
+   */
   sequenceEqual(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): boolean;
 
+  /**
+   * Returns a new IEnumerable<TSource> of the input sequence in random order.
+   * @returns A new IEnumerable<TSource> of the input sequence in random order.
+   */
   shuffle(): IEnumerable<TSource>;
 
   /**
@@ -1332,14 +1347,38 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   single(predicate: (item: TSource, index: number) => boolean): TSource;
 
+  /**
+   * Returns a single, specific element of a sequence, or null if that element is not found.
+   * @returns The single element of the input sequence, or null if the sequence contains no elements.
+   */
   singleOrDefault(): TSource | null;
 
+  /**
+   * Returns the only element of a sequence that satisfies a specified condition or null if no such element exists; this method throws an exception if more than one element satisfies the condition.
+   * @param predicate A function to test an element for a condition.
+   * @returns The single element of the input sequence that satisfies the condition, or null if no such element is found.
+   */
   singleOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
+  /**
+   * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+   * @param count The number of elements to skip before returning the remaining elements.
+   * @returns An IEnumerable<T> that contains the elements that occur after the specified index in the input sequence.
+   */
   skip(count: number): IEnumerable<TSource>;
 
+  /**
+   * Returns a new enumerable collection that contains the elements from source with the last count elements of the source collection omitted.
+   * @param count The number of elements to omit from the end of the collection.
+   * @returns A new enumerable collection that contains the elements from source minus count elements from the end of the collection.
+   */
   skipLast(count: number): IEnumerable<TSource>;
 
+  /**
+   * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+   * @param predicate A function to test each source element for a condition; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+   */
   skipWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
 
   /**
@@ -1349,12 +1388,39 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   split(separator: TSource): IEnumerable<IEnumerable<TSource>>;
 
+  /**
+   * Splits the source sequence by a predicate.
+   * @param predicate A function to test an element for a condition.
+   * @returns A sequence of splits of elements.
+   */
+  split(predicate: (item: TSource, index: number) => boolean): IEnumerable<IEnumerable<TSource>>;
+
+  /**
+   * Determines whether the beginning of the first sequence is equivalent to the second sequence.
+   * @param second The sequence to compare to.
+   * @returns true if first begins with elements equivalent to second.
+   */
   startsWith(second: Iterable<TSource>): boolean;
 
+  /**
+   * Determines whether the beginning of the first sequence is equivalent to the second sequence, using the specified element equality comparer.
+   * @param second The sequence to compare to.
+   * @param equalityComparer Equality comparer to use.
+   * @returns true if first begins with elements equivalent to second.
+   */
   startsWith(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): boolean;
 
+  /**
+   * Computes the sum of a sequence of numeric values.
+   * @returns The sum of the values in the sequence.
+   */
   sum(): number;
 
+  /**
+   * Computes the sum of the sequence of values that are obtained by invoking a transform function on each element of the input sequence.
+   * @param selector A transform function to apply to each element.
+   * @returns The sum of the projected values.
+   */
   sum(selector: (item: TSource) => number): number;
 
   take(count: number): IEnumerable<TSource>;

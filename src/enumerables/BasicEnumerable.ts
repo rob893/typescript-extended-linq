@@ -401,7 +401,6 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * const defaultNum = 0;
    * const items = [];
    * const itemsWithDefault = from(items).defaultIfEmpty(defaultNum); // [0];
-   * const
    * ```
    * @param defaultItem The value to return if the sequence is empty.
    * @returns An IEnumerable<TSource> that contains defaultValue if source is empty; otherwise, source.
@@ -915,16 +914,42 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   public intersect(second: Iterable<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   public intersect(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
   public intersect(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
     return applyIntersect(this.factory, this, second, x => x, equalityComparer);
   }
 
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   public intersectBy<TKey>(second: Iterable<TKey>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   public intersectBy<TKey>(
     second: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
@@ -1050,16 +1075,34 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyJoin(this.factory, this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
   }
 
+  /**
+   * Returns the last element of a sequence. Throws if sequence is empty.
+   * @returns The value at the last position in the source sequence.
+   */
   public last(): TSource;
 
+  /**
+   * Returns the last element of a sequence that satisfies a specified condition.
+   * @param predicate A function to test each element for a condition.
+   * @returns The last element in the sequence that passes the test in the specified predicate function.
+   */
   public last(predicate: (item: TSource, index: number) => boolean): TSource;
 
   public last(predicate?: (item: TSource, index: number) => boolean): TSource {
     return last(this, predicate);
   }
 
+  /**
+   * Returns the last element of a sequence, or null if the sequence contains no elements.
+   * @returns null if the source sequence is empty; otherwise, the last element in the IEnumerable<T>
+   */
   public lastOrDefault(): TSource | null;
 
+  /**
+   * Returns the last element of a sequence that satisfies a condition or null if no such element is found.
+   * @param predicate A function to test each element for a condition.
+   * @returns null if the sequence is empty or if no elements pass the test in the predicate function; otherwise, the last element that passes the test in the predicate function.
+   */
   public lastOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
   public lastOrDefault(predicate?: (item: TSource, index: number) => boolean): TSource | null {
@@ -1172,68 +1215,152 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
+  /**
+   * Returns the maximum value in a sequence of values.
+   * @returns The max value in the sequence.
+   */
   public max(): TSource;
 
+  /**
+   * Invokes a transform function on each element of a generic sequence and returns the maximum resulting value.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns The maximum value in the sequence.
+   */
   public max<TResult>(selector: (item: TSource) => TResult): TResult;
 
   public max<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
     return applyMax(this.factory, this, x => x, selector);
   }
 
+  /**
+   * Returns the maximum value in a generic sequence according to a specified key selector function.
+   * @typeparam TKey The type of key to compare elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @returns The value with the maximum key in the sequence.
+   */
   public maxBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
     return applyMax(this.factory, this, keySelector);
   }
 
+  /**
+   * Returns the min value in a sequence of values.
+   * @returns The min value in the sequence.
+   */
   public min(): TSource;
 
+  /**
+   * Invokes a transform function on each element of a generic sequence and returns the min resulting value.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns The min value in the sequence.
+   */
   public min<TResult>(selector: (item: TSource) => TResult): TResult;
 
   public min<TResult>(selector?: (item: TSource) => TResult): TSource | TResult {
     return applyMin(this.factory, this, x => x, selector);
   }
 
+  /**
+   * Returns the min value in a generic sequence according to a specified key selector function.
+   * @typeparam TKey The type of key to compare elements by.
+   * @param keySelector A function to extract the key for each element.
+   * @returns The value with the min key in the sequence.
+   */
   public minBy<TKey>(keySelector: (item: TSource) => TKey): TSource {
     return applyMin(this.factory, this, keySelector);
   }
 
+  /**
+   * Filters the elements of an IEnumerable based on a specified type.
+   * @typeparam TResult The type to filter the elements of the sequence on.
+   * @param type The type to filter the elements of the sequence on.
+   * @returns An IEnumerable<T> that contains elements from the input sequence of type TResult.
+   */
   public ofType<TResult>(type: new (...params: unknown[]) => TResult): IEnumerable<TResult> {
     return applyOfType(this.factory, this, type) as IEnumerable<TResult>;
   }
 
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
   public orderBy<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
   public orderBy<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 
   public orderBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
     return applyOrderBy(this.factory, this, true, selector, comparer);
   }
 
-  public orderByDescending<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
+  public orderByDescending<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract the key for each element.
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
+   */
   public orderByDescending<TKey>(
-    selector: (item: TSource) => TKey,
+    keySelector: (item: TSource) => TKey,
     comparer: Comparer<TKey>
   ): IOrderedEnumerable<TSource>;
 
   public orderByDescending<TKey>(
-    selector: (item: TSource) => TKey,
+    keySelector: (item: TSource) => TKey,
     comparer?: Comparer<TKey>
   ): IOrderedEnumerable<TSource> {
-    return applyOrderBy(this.factory, this, false, selector, comparer);
+    return applyOrderBy(this.factory, this, false, keySelector, comparer);
   }
 
+  /**
+   * Executes the given action on each element in the source sequence and yields it.
+   * @param action The action to execute on each element.
+   * @returns A sequence with source elements in their original order.
+   */
   public pipe(action: (item: TSource, index: number) => void): IEnumerable<TSource> {
     return applyPipe(this.factory, this, action);
   }
 
+  /**
+   * Adds a value to the beginning of the sequence.
+   * @param item The value to prepend to source.
+   * @returns A new sequence that begins with item.
+   */
   public prepend(item: TSource): IEnumerable<TSource> {
     return applyPrepend(this.factory, this, item);
   }
 
+  /**
+   * Computes the quantile of a sequence.
+   * @param selector A function to extract a value from each element.
+   * @param q The percentile to compute (25, 50, etc.)
+   * @returns The percentile of the sequence.
+   */
   public quantile(selector: (item: TSource) => number, q: number): number {
     return applyQuantile(this.factory, this, selector, q);
   }
 
+  /**
+   * Inverts the order of the elements in a sequence.
+   * @returns A sequence whose elements correspond to those of the input sequence in reverse order.
+   */
   public reverse(): IEnumerable<TSource> {
     return applyReverse(this.factory, this);
   }
@@ -1520,22 +1647,49 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     );
   }
 
-  public select<TResult>(exp: (item: TSource, index: number) => TResult): IEnumerable<TResult> {
-    return applySelect(this.factory, this, exp);
+  /**
+   * Projects each element of a sequence into a new form.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each element.
+   * @returns An IEnumerable<T> whose elements are the result of invoking the transform function on each element of source.
+   */
+  public select<TResult>(selector: (item: TSource, index: number) => TResult): IEnumerable<TResult> {
+    return applySelect(this.factory, this, selector);
   }
 
-  public selectMany<TResult>(exp: (item: TSource, index: number) => Iterable<TResult>): IEnumerable<TResult> {
-    return applySelectMany(this.factory, this, exp);
+  /**
+   * Projects each element of a sequence to an IEnumerable<T> and flattens the resulting sequences into one sequence.
+   * @typeparam TResult The type of the value returned by selector.
+   * @param selector A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> whose elements are the result of invoking the one-to-many transform function on each element of an input sequence.
+   */
+  public selectMany<TResult>(selector: (item: TSource, index: number) => Iterable<TResult>): IEnumerable<TResult> {
+    return applySelectMany(this.factory, this, selector);
   }
 
+  /**
+   * Determines whether two sequences are equal by comparing the elements.
+   * @param second An IEnumerable<T> to compare to the first sequence.
+   * @returns true if the two source sequences are of equal length and their corresponding elements are equal; otherwise, false.
+   */
   public sequenceEqual(second: Iterable<TSource>): boolean;
 
+  /**
+   * Determines whether two sequences are equal by comparing their elements by using a specified EqualityComparer<T>.
+   * @param second An IEnumerable<T> to compare to the first sequence.
+   * @param equalityComparer An EqualityComparer<T> to use to compare elements.
+   * @returns true if the two source sequences are of equal length and their corresponding elements compare equal according to equalityComparer; otherwise, false.
+   */
   public sequenceEqual(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): boolean;
 
   public sequenceEqual(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
     return sequenceEqual(this, second, equalityComparer);
   }
 
+  /**
+   * Returns a new IEnumerable<TSource> of the input sequence in random order.
+   * @returns A new IEnumerable<TSource> of the input sequence in random order.
+   */
   public shuffle(): IEnumerable<TSource> {
     return applyShuffle(this.factory, this);
   }
@@ -1557,22 +1711,46 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return single(this, predicate);
   }
 
+  /**
+   * Returns a single, specific element of a sequence, or null if that element is not found.
+   * @returns The single element of the input sequence, or null if the sequence contains no elements.
+   */
   public singleOrDefault(): TSource | null;
 
+  /**
+   * Returns the only element of a sequence that satisfies a specified condition or null if no such element exists; this method throws an exception if more than one element satisfies the condition.
+   * @param predicate A function to test an element for a condition.
+   * @returns The single element of the input sequence that satisfies the condition, or null if no such element is found.
+   */
   public singleOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
   public singleOrDefault(predicate?: (item: TSource, index: number) => boolean): TSource | null {
     return singleOrDefault(this, predicate);
   }
 
+  /**
+   * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+   * @param count The number of elements to skip before returning the remaining elements.
+   * @returns An IEnumerable<T> that contains the elements that occur after the specified index in the input sequence.
+   */
   public skip(count: number): IEnumerable<TSource> {
     return applySkip(this.factory, this, count);
   }
 
+  /**
+   * Returns a new enumerable collection that contains the elements from source with the last count elements of the source collection omitted.
+   * @param count The number of elements to omit from the end of the collection.
+   * @returns A new enumerable collection that contains the elements from source minus count elements from the end of the collection.
+   */
   public skipLast(count: number): IEnumerable<TSource> {
     return applySkipLast(this.factory, this, count);
   }
 
+  /**
+   * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+   * @param predicate A function to test each source element for a condition; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+   */
   public skipWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
     return applySkipWhile(this.factory, this, predicate);
   }
@@ -1597,34 +1775,73 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applySplit(this.factory, this, separatorOrPredicate);
   }
 
+  /**
+   * Determines whether the beginning of the first sequence is equivalent to the second sequence.
+   * @param second The sequence to compare to.
+   * @returns true if first begins with elements equivalent to second.
+   */
   public startsWith(second: Iterable<TSource>): boolean;
 
+  /**
+   * Determines whether the beginning of the first sequence is equivalent to the second sequence, using the specified element equality comparer.
+   * @param second The sequence to compare to.
+   * @param equalityComparer Equality comparer to use.
+   * @returns true if first begins with elements equivalent to second.
+   */
   public startsWith(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): boolean;
 
   public startsWith(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): boolean {
     return startsWith(this, second, equalityComparer);
   }
 
+  /**
+   * Computes the sum of a sequence of numeric values.
+   * @returns The sum of the values in the sequence.
+   */
   public sum(): number;
 
+  /**
+   * Computes the sum of the sequence of values that are obtained by invoking a transform function on each element of the input sequence.
+   * @param selector A transform function to apply to each element.
+   * @returns The sum of the projected values.
+   */
   public sum(selector: (item: TSource) => number): number;
 
   public sum(selector?: (item: TSource) => number): number {
     return sum(this, selector);
   }
 
+  /**
+   * Returns a specified number of contiguous elements from the start of a sequence.
+   * @returns An IEnumerable<T> that contains the specified number of elements from the start of the input sequence.
+   */
   public take(count: number): IEnumerable<TSource> {
     return applyTake(this.factory, this, count);
   }
 
+  /**
+   * Returns every N-th element of a sequence.
+   * @param step Number of elements to bypass before returning the next element.
+   * @returns A sequence with every N-th element of the input sequence.
+   */
   public takeEvery(step: number): IEnumerable<TSource> {
     return applyTakeEvery(this.factory, this, step);
   }
 
+  /**
+   * Returns a new enumerable collection that contains the last count elements from source.
+   * @param count The number of elements to take from the end of the collection.
+   * @returns A new enumerable collection that contains the last count elements from source.
+   */
   public takeLast(count: number): IEnumerable<TSource> {
     return applyTakeLast(this.factory, this, count);
   }
 
+  /**
+   * Returns elements from a sequence as long as a specified condition is true, and then skips the remaining elements.
+   * @param predicate A function to test each source element for a condition; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> that contains elements from the input sequence that occur before the element at which the test no longer passes.
+   */
   public takeWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
     return applyTakeWhile(this.factory, this, predicate);
   }
@@ -1652,10 +1869,18 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return to(this, ctor);
   }
 
+  /**
+   * Converts the source sequence into an array.
+   * @returns A new array containing the elements of the source sequence.
+   */
   public toArray(): TSource[] {
     return toArray(this);
   }
 
+  /**
+   * Converts the source sequence into list.
+   * @returns A new list containing the elements of the source sequence.
+   */
   public toList(): IList<TSource> {
     return this.factory.createList(this.srcGenerator);
   }
@@ -1667,8 +1892,22 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     throw new Error('Not yet implemented');
   }
 
+  /**
+   * Creates a Map<TKey, TValue> from an IEnumerable<T> according to specified key selector.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @returns A Map<TKey, TSource> that contains keys and values.
+   */
   public toMap<TKey>(keySelector: (item: TSource) => TKey): Map<TKey, TSource>;
 
+  /**
+   * Creates a Map<TKey, TValue> from an IEnumerable<T> according to specified key selector and element selector functions.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @typeparam TValue The type of the value returned by valueSelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param valueSelector A transform function to produce a result element value from each element.
+   * @returns A Map<TKey, TValue> that contains keys and values.
+   */
   public toMap<TKey, TValue>(
     keySelector: (item: TSource) => TKey,
     valueSelector: (item: TSource) => TValue
@@ -1681,8 +1920,20 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return toMap(this, keySelector, valueSelector);
   }
 
+  /**
+   * Returns an object with keys selected by keySelector and values of TSource.
+   * @param keySelector A function to extract a key from each element.
+   * @returns An object with keys selected by keySelector and values of TSource
+   */
   public toObject(keySelector: (item: TSource) => string): Record<string, TSource>;
 
+  /**
+   * Returns an object with keys selected by keySelector and values of TSource.
+   * @typeparam TValue The type of the value returned by valueSelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param valueSelector A transform function to produce a result element value from each element.
+   * @returns An object with keys selected by keySelector and values of TSource
+   */
   public toObject<TValue>(
     keySelector: (item: TSource) => string,
     valueSelector: (item: TSource) => TValue
@@ -1695,20 +1946,50 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return toObject(this, keySelector, valueSelector);
   }
 
+  /**
+   * Creates a Set<T> from an IEnumerable<T>.
+   * @returns A Set<T> that contains values of type TSource selected from the input sequence.
+   */
   public toSet(): Set<TSource> {
     return toSet(this);
   }
 
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   public union(second: Iterable<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   public union(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
   public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
     return applyUnion(this.factory, this, second, x => x, equalityComparer);
   }
 
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   public unionBy<TKey>(second: Iterable<TSource>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   public unionBy<TKey>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
@@ -1737,8 +2018,22 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     return applyWhere(this.factory, this, predicate);
   }
 
+  /**
+   * Produces a sequence of tuples with elements from the two specified sequences.
+   * @typeparam TSecond The type of the elements of the second input sequence.
+   * @param second The second sequence to merge.
+   * @returns An IEnumerable<[TSource, TSecond]> that contains merged elements of two input sequences.
+   */
   public zip<TSecond>(second: Iterable<TSecond>): IEnumerable<[TSource, TSecond]>;
 
+  /**
+   * Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
+   * @typeparam TSecond The type of the elements of the second input sequence.
+   * @typeparam TResult The type of the elements of the result sequence.
+   * @param second The second sequence to merge.
+   * @param resultSelector A function that specifies how to merge the elements from the two sequences.
+   * @returns An IEnumerable<TResult> that contains merged elements of two input sequences.
+   */
   public zip<TSecond, TResult>(
     second: Iterable<TSecond>,
     resultSelector: (first: TSource, second: TSecond) => TResult

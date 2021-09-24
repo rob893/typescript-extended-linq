@@ -1423,12 +1423,31 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   sum(selector: (item: TSource) => number): number;
 
+  /**
+   * Returns a specified number of contiguous elements from the start of a sequence.
+   * @returns An IEnumerable<T> that contains the specified number of elements from the start of the input sequence.
+   */
   take(count: number): IEnumerable<TSource>;
 
+  /**
+   * Returns every N-th element of a sequence.
+   * @param step Number of elements to bypass before returning the next element.
+   * @returns A sequence with every N-th element of the input sequence.
+   */
   takeEvery(step: number): IEnumerable<TSource>;
 
+  /**
+   * Returns a new enumerable collection that contains the last count elements from source.
+   * @param count The number of elements to take from the end of the collection.
+   * @returns A new enumerable collection that contains the last count elements from source.
+   */
   takeLast(count: number): IEnumerable<TSource>;
 
+  /**
+   * Returns elements from a sequence as long as a specified condition is true, and then skips the remaining elements.
+   * @param predicate A function to test each source element for a condition; the second parameter of the function represents the index of the source element.
+   * @returns An IEnumerable<T> that contains elements from the input sequence that occur before the element at which the test no longer passes.
+   */
   takeWhile(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
 
   /**
@@ -1452,8 +1471,16 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   to<TResult>(ctor: new (src: Iterable<TSource>) => TResult): TResult;
 
+  /**
+   * Converts the source sequence into an array.
+   * @returns A new array containing the elements of the source sequence.
+   */
   toArray(): TSource[];
 
+  /**
+   * Converts the source sequence into list.
+   * @returns A new list containing the elements of the source sequence.
+   */
   toList(): IList<TSource>;
 
   /**
@@ -1461,28 +1488,84 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   toLookup(): unknown;
 
+  /**
+   * Creates a Map<TKey, TValue> from an IEnumerable<T> according to specified key selector.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @param keySelector A function to extract a key from each element.
+   * @returns A Map<TKey, TSource> that contains keys and values.
+   */
   toMap<TKey>(keySelector: (item: TSource) => TKey): Map<TKey, TSource>;
 
+  /**
+   * Creates a Map<TKey, TValue> from an IEnumerable<T> according to specified key selector and element selector functions.
+   * @typeparam TKey The type of the key returned by keySelector.
+   * @typeparam TValue The type of the value returned by valueSelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param valueSelector A transform function to produce a result element value from each element.
+   * @returns A Map<TKey, TValue> that contains keys and values.
+   */
   toMap<TKey, TValue>(
     keySelector: (item: TSource) => TKey,
     valueSelector: (item: TSource) => TValue
   ): Map<TKey, TValue>;
 
+  /**
+   * Returns an object with keys selected by keySelector and values of TSource.
+   * @param keySelector A function to extract a key from each element.
+   * @returns An object with keys selected by keySelector and values of TSource
+   */
   toObject(keySelector: (item: TSource) => string): Record<string, TSource>;
 
+  /**
+   * Returns an object with keys selected by keySelector and values of TSource.
+   * @typeparam TValue The type of the value returned by valueSelector.
+   * @param keySelector A function to extract a key from each element.
+   * @param valueSelector A transform function to produce a result element value from each element.
+   * @returns An object with keys selected by keySelector and values of TSource
+   */
   toObject<TValue>(
     keySelector: (item: TSource) => string,
     valueSelector: (item: TSource) => TValue
   ): Record<string, TValue>;
 
+  /**
+   * Creates a Set<T> from an IEnumerable<T>.
+   * @returns A Set<T> that contains values of type TSource selected from the input sequence.
+   */
   toSet(): Set<TSource>;
 
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   union(second: Iterable<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   union(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   unionBy<TKey>(second: Iterable<TSource>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   unionBy<TKey>(
     second: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
@@ -1501,8 +1584,22 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   where(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
 
+  /**
+   * Produces a sequence of tuples with elements from the two specified sequences.
+   * @typeparam TSecond The type of the elements of the second input sequence.
+   * @param second The second sequence to merge.
+   * @returns An IEnumerable<[TSource, TSecond]> that contains merged elements of two input sequences.
+   */
   zip<TSecond>(second: Iterable<TSecond>): IEnumerable<[TSource, TSecond]>;
 
+  /**
+   * Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
+   * @typeparam TSecond The type of the elements of the second input sequence.
+   * @typeparam TResult The type of the elements of the result sequence.
+   * @param second The second sequence to merge.
+   * @param resultSelector A function that specifies how to merge the elements from the two sequences.
+   * @returns An IEnumerable<TResult> that contains merged elements of two input sequences.
+   */
   zip<TSecond, TResult>(
     second: Iterable<TSecond>,
     resultSelector: (first: TSource, second: TSecond) => TResult

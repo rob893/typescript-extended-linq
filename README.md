@@ -21,6 +21,10 @@ npm i typescript-extended-linq
 
 - Native JavaScript/TypeScript provides many useful functions that are similar to LINQ (such as map, filter, reduce, etc). This library fills in the missing gaps with many functions that are not included in the native language such as joins, multi-level ordering, grouping, etc.
 
+### Additional Collections
+
+- This library comes with [List](https://rob893.github.io/typescript-extended-linq/classes/List.html), [LinkedList](https://rob893.github.io/typescript-extended-linq/classes/LinkedList.html), [Stack](https://rob893.github.io/typescript-extended-linq/classes/Stack.html), [Queue](https://rob893.github.io/typescript-extended-linq/classes/Queue.html), and [PriorityQueue](https://rob893.github.io/typescript-extended-linq/classes/PriorityQueue.html) collections all which have all the linq functions.
+
 ### Deferred Execution
 
 - Just like LINQ, this library uses [deferred execution and lazy evaluation](https://docs.microsoft.com/en-us/dotnet/standard/linq/deferred-execution-lazy-evaluation).
@@ -259,23 +263,43 @@ Returns the maximum value in a sequence of values.
 
 ### [maxBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#maxBy)
 
+Returns the maximum value in a generic sequence according to a specified key selector function.
+
 ### [min](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#min)
+
+Returns the min value in a sequence of values.
 
 ### [minBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#minBy)
 
+Returns the min value in a generic sequence according to a specified key selector function.
+
 ### [ofType](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#ofType)
+
+Filters the elements of an IEnumerable based on a specified type.
 
 ### [orderBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderBy)
 
+Sorts the elements of a sequence in ascending order.
+
 ### [orderByDescending](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderByDescending)
+
+Sorts the elements of a sequence in descending order.
 
 ### [pipe](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#pipe)
 
+Executes the given action on each element in the source sequence and yields it.
+
 ### [prepend](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#prepend)
+
+Adds a value to the beginning of the sequence.
 
 ### [quantile](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#quantile)
 
+Computes the quantile of a sequence.
+
 ### [reverse](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#reverse)
+
+Inverts the order of the elements in a sequence.
 
 ### [rightJoinHeterogeneous](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#rightJoinHeterogeneous)
 
@@ -287,11 +311,19 @@ Performs a right outer join on two homogeneous sequences.
 
 ### [select](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#select)
 
+Projects each element of a sequence into a new form.
+
 ### [selectMany](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#selectMany)
+
+Projects each element of a sequence to an IEnumerable<T> and flattens the resulting sequences into one sequence.
 
 ### [sequenceEqual](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#sequenceEqual)
 
+Determines whether two sequences are equal by comparing the elements.
+
 ### [shuffle](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#shuffle)
+
+Returns a new IEnumerable<TSource> of the input sequence in random order.
 
 ### [single](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#single)
 
@@ -299,27 +331,55 @@ Returns the only element of a sequence that satisfies a specified condition, and
 
 ### [singleOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#singleOrDefault)
 
+Returns a single, specific element of a sequence, or null if that element is not found.
+
 ### [skip](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skip)
+
+Bypasses a specified number of elements in a sequence and then returns the remaining elements.
 
 ### [skipLast](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skipLast)
 
+Returns a new enumerable collection that contains the elements from source with the last count elements of the source collection omitted.
+
 ### [skipWhile](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#skipWhile)
+
+Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+
+### [split](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#split)
+
+Splits the source sequence by a separator.
 
 ### [startsWith](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#startsWith)
 
+Determines whether the beginning of the first sequence is equivalent to the second sequence.
+
 ### [sum](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#sum)
+
+Computes the sum of a sequence of numeric values.
 
 ### [take](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#take)
 
+Returns a specified number of contiguous elements from the start of a sequence.
+
 ### [takeEvery](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeEvery)
+
+Returns every N-th element of a sequence.
 
 ### [takeLast](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeLast)
 
+Returns a new enumerable collection that contains the last count elements from source.
+
 ### [takeWhile](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#takeWhile)
+
+Returns elements from a sequence as long as a specified condition is true, and then skips the remaining elements.
 
 ### [thenBy](https://rob893.github.io/typescript-extended-linq/interfaces/IOrderedEnumerable.html#thenBy)
 
+Performs a subsequent ordering of the elements in a sequence in ascending order.
+
 ### [thenByDescending](https://rob893.github.io/typescript-extended-linq/interfaces/IOrderedEnumerable.html#thenByDescending)
+
+Performs a subsequent ordering of the elements in a sequence in descending order.
 
 ### [to](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#to)
 
@@ -327,16 +387,32 @@ Creates a new instance of the passed in ctor with the Iterable as input.
 
 ### [toArray](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toArray)
 
+Converts the source sequence into an array.
+
 ### [toMap](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toMap)
+
+Creates a Map<TKey, TValue> from an IEnumerable<T> according to specified key selector.
 
 ### [toObject](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toObject)
 
+Returns an object with keys selected by keySelector and values of TSource.
+
 ### [toSet](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#toSet)
+
+Creates a Set<T> from an IEnumerable<T>.
 
 ### [union](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#union)
 
+Produces the set union of two sequences.
+
 ### [unionBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#unionBy)
+
+Produces the set union of two sequences according to a specified key selector function.
 
 ### [where](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#where)
 
+Filters a sequence of values based on a predicate.
+
 ### [zip](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#zip)
+
+Produces a sequence of tuples with elements from the two specified sequences.

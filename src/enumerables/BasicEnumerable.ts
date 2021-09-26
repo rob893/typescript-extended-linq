@@ -30,6 +30,7 @@ import { applySplit } from '../functions/applicators/applySplit';
 import { applyTake, applyTakeEvery, applyTakeLast, applyTakeWhile } from '../functions/applicators/applyTake';
 import { applyUnion } from '../functions/applicators/applyUnion';
 import { applyWhere } from '../functions/applicators/applyWhere';
+import { applyWindow } from '../functions/applicators/applyWindow';
 import { applyZip } from '../functions/applicators/applyZip';
 import { atLeast } from '../functions/atLeast';
 import { atMost } from '../functions/atMost';
@@ -162,8 +163,8 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @param predicate A function to test each element for a condition.
    * @returns true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
    */
-  public all(condition: (item: TSource, index: number) => boolean): boolean {
-    return all(this, condition);
+  public all(predicate: (item: TSource, index: number) => boolean): boolean {
+    return all(this, predicate);
   }
 
   /**
@@ -2016,6 +2017,16 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public where(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource> {
     return applyWhere(this.factory, this, predicate);
+  }
+
+  /**
+   * Processes a sequence into a series of subsequences representing a windowed subset of the original.
+   * If size is greater than source.length, no subsequences will be returned.
+   * @param size The size (number of elements) in each window.
+   * @returns A series of sequences representing each sliding window subsequence.
+   */
+  public window(size: number): IEnumerable<IEnumerable<TSource>> {
+    return applyWindow(this.factory, this, size);
   }
 
   /**

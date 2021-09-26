@@ -70,4 +70,5 @@ export * from './functions/toObject';
 export * from './functions/toSet';
 export * from './functions/union';
 export * from './functions/where';
+export * from './functions/window';
 export * from './functions/zip';

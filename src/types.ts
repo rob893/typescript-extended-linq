@@ -1585,6 +1585,14 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   where(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
 
   /**
+   * Processes a sequence into a series of subsequences representing a windowed subset of the original.
+   * If size is greater than source.length, no subsequences will be returned.
+   * @param size The size (number of elements) in each window.
+   * @returns A series of sequences representing each sliding window subsequence.
+   */
+  window(size: number): IEnumerable<IEnumerable<TSource>>;
+
+  /**
    * Produces a sequence of tuples with elements from the two specified sequences.
    * @typeparam TSecond The type of the elements of the second input sequence.
    * @param second The second sequence to merge.

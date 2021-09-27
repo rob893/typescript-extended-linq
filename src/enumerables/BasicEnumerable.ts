@@ -1879,6 +1879,14 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   }
 
   /**
+   * Returns a JSON string representation of the enumerable.
+   * @returns A JSON string representation of the enumerable.
+   */
+   public toJSON(): string {
+    return JSON.stringify(this.toArray());
+  }
+
+  /**
    * Converts the source sequence into list.
    * @returns A new list containing the elements of the source sequence.
    */
@@ -1953,6 +1961,14 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public toSet(): Set<TSource> {
     return toSet(this);
+  }
+
+  /**
+   * Returns a string representation of the enumerable.
+   * @returns A string representation of the enumerable.
+   */
+  public toString(): string {
+    return this.toArray().toString();
   }
 
   /**

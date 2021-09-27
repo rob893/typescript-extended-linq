@@ -1478,6 +1478,12 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   toArray(): TSource[];
 
   /**
+   * Returns a JSON string representation of the enumerable.
+   * @returns A JSON string representation of the enumerable.
+   */
+  toJSON(): string;
+
+  /**
    * Converts the source sequence into list.
    * @returns A new list containing the elements of the source sequence.
    */
@@ -1533,6 +1539,12 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @returns A Set<T> that contains values of type TSource selected from the input sequence.
    */
   toSet(): Set<TSource>;
+
+  /**
+   * Returns a string representation of the enumerable.
+   * @returns A string representation of the enumerable.
+   */
+  toString(): string;
 
   /**
    * Produces the set union of two sequences.

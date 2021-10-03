@@ -1418,6 +1418,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Computes the sum of the sequence of values that are obtained by invoking a transform function on each element of the input sequence.
+   * @example
+   * ```typescript
+   * const items = [{ age: 15 }, { age: 25 }, { age: 20 }];
+   * const result = from(items).sum(x => x.age); // 60
+   * ```
    * @param selector A transform function to apply to each element.
    * @returns The sum of the projected values.
    */
@@ -1425,12 +1430,22 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Returns a specified number of contiguous elements from the start of a sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4, 5];
+   * const result = from(items).take(2); // [1, 2]
+   * ```
    * @returns An IEnumerable<T> that contains the specified number of elements from the start of the input sequence.
    */
   take(count: number): IEnumerable<TSource>;
 
   /**
    * Returns every N-th element of a sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4, 5];
+   * const result = from(items).takeEvery(3); // [1, 4]
+   * ```
    * @param step Number of elements to bypass before returning the next element.
    * @returns A sequence with every N-th element of the input sequence.
    */
@@ -1438,6 +1453,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Returns a new enumerable collection that contains the last count elements from source.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4, 5];
+   * const lastTwo = from(items).takeLast(2); // [4, 5]
+   * ```
    * @param count The number of elements to take from the end of the collection.
    * @returns A new enumerable collection that contains the last count elements from source.
    */
@@ -1445,6 +1465,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Returns elements from a sequence as long as a specified condition is true, and then skips the remaining elements.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4, 5];
+   * const result = from(items).takeWhile(x => x < 3); // [1, 2]
+   * ```
    * @param predicate A function to test each source element for a condition; the second parameter of the function represents the index of the source element.
    * @returns An IEnumerable<T> that contains elements from the input sequence that occur before the element at which the test no longer passes.
    */
@@ -1473,6 +1498,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Converts the source sequence into an array.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const arr = from(items).toArray(); // [1, 2, 3]
+   * ```
    * @returns A new array containing the elements of the source sequence.
    */
   toArray(): TSource[];
@@ -1536,12 +1566,23 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Creates a Set<T> from an IEnumerable<T>.
+   * @example
+   * ```typescript
+   * const items = [1, 1, 2, 3, 3];
+   *
+   * const asSet = from(items).asSet(); // Set([1, 2, 3])
+   * ```
    * @returns A Set<T> that contains values of type TSource selected from the input sequence.
    */
   toSet(): Set<TSource>;
 
   /**
    * Returns a string representation of the enumerable.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3];
+   * const asStr = from(items).toString(); // '1,2,3'
+   * ```
    * @returns A string representation of the enumerable.
    */
   toString(): string;

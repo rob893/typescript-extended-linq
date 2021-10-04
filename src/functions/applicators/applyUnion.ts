@@ -2,16 +2,16 @@ import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyUnion<TSource, TKey>(
   factory: IEnumerableFactory,
-  src: Iterable<TSource>,
-  second: Iterable<TSource>,
   keySelector: (item: TSource) => TKey,
-  equalityComparer?: EqualityComparer<TKey>
+  equalityComparer: EqualityComparer<TKey> | undefined,
+  src: Iterable<TSource>,
+  ...second: Iterable<TSource>[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
     if (equalityComparer) {
       const seenKeys: TKey[] = [];
 
-      for (const source of [src, second]) {
+      for (const source of [src, ...second]) {
         for (const item of source) {
           const key = keySelector(item);
           let returnItem = true;
@@ -32,7 +32,7 @@ export function applyUnion<TSource, TKey>(
     } else {
       const seenKeys = new Set<TKey>();
 
-      for (const source of [src, second]) {
+      for (const source of [src, ...second]) {
         for (const item of source) {
           const key = keySelector(item);
 

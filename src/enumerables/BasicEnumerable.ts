@@ -1882,7 +1882,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * Returns a JSON string representation of the enumerable.
    * @returns A JSON string representation of the enumerable.
    */
-   public toJSON(): string {
+  public toJSON(): string {
     return JSON.stringify(this.toArray());
   }
 
@@ -1973,10 +1973,10 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Produces the set union of two sequences.
-   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
    * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
    */
-  public union(second: Iterable<TSource>): IEnumerable<TSource>;
+  public union(...second: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Produces the set union of two sequences.
@@ -1986,8 +1986,46 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public union(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
-  public union(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
-    return applyUnion(this.factory, this, second, x => x, equalityComparer);
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public union(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param fourth An IEnumerable<T> whose distinct elements form the fourth set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public union(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  public union(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
+    const equalityComparer =
+      typeof second[second.length - 1] === 'function'
+        ? (second[second.length - 1] as EqualityComparer<TSource>)
+        : undefined;
+    return applyUnion(
+      this.factory,
+      x => x,
+      equalityComparer,
+      this,
+      ...(equalityComparer ? (second.slice(0, -1) as Iterable<TSource>[]) : (second as Iterable<TSource>[]))
+    );
   }
 
   /**
@@ -2018,7 +2056,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     keySelector: (item: TSource) => TKey,
     equalityComparer?: EqualityComparer<TKey>
   ): IEnumerable<TSource> {
-    return applyUnion(this.factory, this, second, keySelector, equalityComparer);
+    return applyUnion<TSource, TKey>(this.factory, keySelector, equalityComparer, this, second);
   }
 
   /**

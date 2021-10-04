@@ -1588,11 +1588,12 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   toString(): string;
 
   /**
+   * Produces the set/**
    * Produces the set union of two sequences.
-   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
    * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
    */
-  union(second: Iterable<TSource>): IEnumerable<TSource>;
+  union(...second: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Produces the set union of two sequences.
@@ -1601,6 +1602,34 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
    */
   union(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  union(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param fourth An IEnumerable<T> whose distinct elements form the fourth set for the union.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  union(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
 
   /**
    * Produces the set union of two sequences according to a specified key selector function.

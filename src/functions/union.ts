@@ -8,7 +8,7 @@ export function union<TSource>(
   second: Iterable<TSource>,
   equalityComparer?: EqualityComparer<TSource>
 ): IEnumerable<TSource> {
-  return applyUnion(new EnumerableFactory(), src, second, x => x, equalityComparer);
+  return applyUnion(new EnumerableFactory(), (x: TSource) => x, equalityComparer, src, second);
 }
 
 export function unionBy<TSource, TKey>(
@@ -17,5 +17,5 @@ export function unionBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TSource> {
-  return applyUnion(new EnumerableFactory(), src, second, keySelector, equalityComparer);
+  return applyUnion<TSource, TKey>(new EnumerableFactory(), keySelector, equalityComparer, src, second);
 }

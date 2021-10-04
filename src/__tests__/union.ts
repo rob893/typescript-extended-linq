@@ -20,6 +20,14 @@ describe.each([...getEnumerables()])('union', (src, enumerable, addSrc) => {
     expect(result).toEqual([1, 2, 3, 4, 5]);
   });
 
+  it('should return the union of several collections', () => {
+    const items = src([1, 2, 3]);
+
+    const result = enumerable(items).union([2, 3, 4], [3, 4, 5], [], [6]).toArray();
+
+    expect(result).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
   it('should not have duplicates', () => {
     const items = src([1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3]);
 

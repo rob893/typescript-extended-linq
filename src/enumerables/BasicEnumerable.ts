@@ -2015,17 +2015,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   ): IEnumerable<TSource>;
 
   public union(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
-    const equalityComparer =
-      typeof second[second.length - 1] === 'function'
-        ? (second[second.length - 1] as EqualityComparer<TSource>)
-        : undefined;
-    return applyUnion(
-      this.factory,
-      x => x,
-      equalityComparer,
-      this,
-      ...(equalityComparer ? (second.slice(0, -1) as Iterable<TSource>[]) : (second as Iterable<TSource>[]))
-    );
+    return applyUnion(this.factory, x => x, this, ...second);
   }
 
   /**
@@ -2041,6 +2031,36 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * Produces the set union of two sequences according to a specified key selector function.
    * @typeparam TKey The type of key to identify elements by.
    * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public unionBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param fourth An IEnumerable<T> whose distinct elements form the fourth set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public unionBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
    * @param keySelector A function to extract the key for each element.
    * @param equalityComparer The EqualityComparer<T> to compare values.
    * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
@@ -2051,12 +2071,44 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TSource>;
 
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
   public unionBy<TKey>(
     second: Iterable<TSource>,
+    third: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
-    equalityComparer?: EqualityComparer<TKey>
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements form the second set for the union.
+   * @param third An IEnumerable<T> whose distinct elements form the third set for the union.
+   * @param fourth An IEnumerable<T> whose distinct elements form the fourth set for the union.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public unionBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  public unionBy<TKey>(
+    ...second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
   ): IEnumerable<TSource> {
-    return applyUnion<TSource, TKey>(this.factory, keySelector, equalityComparer, this, second);
+    return applyUnion<TSource, TKey>(this.factory, null, this, ...second);
   }
 
   /**

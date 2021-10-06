@@ -110,6 +110,38 @@ describe.each([...getEnumerables()])('unionBy', (src, enumerable, addSrc) => {
     ]);
   });
 
+  it('should return the union of multiple collections by id', () => {
+    const items = src([
+      { id: 1, foo: 'asdf' },
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' }
+    ]);
+
+    const otherItems = [
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' },
+      { id: 4, foo: 'asdf' }
+    ];
+
+    const evenMoreItems = [
+      { id: 3, foo: 'asdf' },
+      { id: 4, foo: 'asdf' },
+      { id: 5, foo: 'asdf' }
+    ];
+
+    const result = enumerable(items)
+      .unionBy(otherItems, evenMoreItems, x => x.id)
+      .toArray();
+
+    expect(result).toEqual([
+      { id: 1, foo: 'asdf' },
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' },
+      { id: 4, foo: 'asdf' },
+      { id: 5, foo: 'asdf' }
+    ]);
+  });
+
   it('should not have duplicates by key', () => {
     const items = src([
       { id: 1, foo: 'asdf' },

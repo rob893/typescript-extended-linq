@@ -2,16 +2,30 @@ import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyUnion<TSource, TKey>(
   factory: IEnumerableFactory,
-  keySelector: (item: TSource) => TKey,
-  equalityComparer: EqualityComparer<TKey> | undefined,
+  overrideKeySelector: ((item: TSource) => TKey) | null,
   src: Iterable<TSource>,
-  ...second: Iterable<TSource>[]
+  ...second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
+    const passedKeySelector = typeof overrideKeySelector === 'function';
+    const equalityComparer =
+      typeof second[second.length - (passedKeySelector ? 1 : 2)] === 'function'
+        ? (second.pop() as EqualityComparer<TKey>)
+        : undefined;
+    const keySelector = overrideKeySelector ?? (second.pop() as (item: TSource) => TKey);
+
+    if (
+      typeof keySelector !== 'function' ||
+      (equalityComparer !== undefined && typeof equalityComparer !== 'function') ||
+      !second.every(x => Symbol.iterator in x)
+    ) {
+      throw new Error('Invalid use of overloads.');
+    }
+
     if (equalityComparer) {
       const seenKeys: TKey[] = [];
 
-      for (const source of [src, ...second]) {
+      for (const source of [src, ...(second as Iterable<TSource>[])]) {
         for (const item of source) {
           const key = keySelector(item);
           let returnItem = true;
@@ -32,7 +46,7 @@ export function applyUnion<TSource, TKey>(
     } else {
       const seenKeys = new Set<TKey>();
 
-      for (const source of [src, ...second]) {
+      for (const source of [src, ...(second as Iterable<TSource>[])]) {
         for (const item of source) {
           const key = keySelector(item);
 

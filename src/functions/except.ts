@@ -5,10 +5,9 @@ import { applyExcept } from './applicators/applyExcept';
 
 export function except<TSource>(
   src: Iterable<TSource>,
-  second: Iterable<TSource>,
-  equalityComparer?: EqualityComparer<TSource>
+  ...second: (Iterable<TSource> | EqualityComparer<TSource>)[]
 ): IEnumerable<TSource> {
-  return applyExcept(new EnumerableFactory(), src, second, x => x, equalityComparer);
+  return applyExcept(new EnumerableFactory(), x => x, src, ...second);
 }
 
 export function exceptBy<TSource, TKey>(
@@ -17,5 +16,6 @@ export function exceptBy<TSource, TKey>(
   keySelector: (item: TSource) => TKey,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TSource> {
-  return applyExcept(new EnumerableFactory(), src, second, keySelector, equalityComparer);
+  const items = equalityComparer ? [second, equalityComparer] : [second];
+  return applyExcept(new EnumerableFactory(), keySelector, src, ...items);
 }

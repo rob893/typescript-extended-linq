@@ -545,7 +545,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
    * @returns A sequence that contains the set difference of the elements of two sequences.
    */
-  public except(second: Iterable<TSource>): IEnumerable<TSource>;
+  public except(...second: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Produces the set difference of two sequences.
@@ -560,8 +560,8 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public except(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
-  public except(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
-    return applyExcept(this.factory, this, second, x => x, equalityComparer);
+  public except(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
+    return applyExcept(this.factory, x => x, this, ...second);
   }
 
   /**
@@ -588,11 +588,9 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   ): IEnumerable<TSource>;
 
   public exceptBy<TKey>(
-    second: Iterable<TKey>,
-    keySelector: (item: TSource) => TKey,
-    equalityComparer?: EqualityComparer<TKey>
+    ...second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
   ): IEnumerable<TSource> {
-    return applyExcept(this.factory, this, second, keySelector, equalityComparer);
+    return applyExcept(this.factory, null, this, ...second);
   }
 
   /**

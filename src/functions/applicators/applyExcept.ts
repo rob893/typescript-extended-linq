@@ -2,13 +2,32 @@ import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
 export function applyExcept<TSource, TKey>(
   factory: IEnumerableFactory,
+  overrideKeySelector: ((item: TSource) => TKey) | null,
   src: Iterable<TSource>,
-  second: Iterable<TKey>,
-  keySelector: (item: TSource) => TKey,
-  equalityComparer?: EqualityComparer<TKey>
+  ...second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
-    const secondKeySet: Set<TKey> = second instanceof Set ? second : new Set(second);
+    const passedKeySelector = typeof overrideKeySelector === 'function';
+    const equalityComparer =
+      typeof second[second.length - (passedKeySelector ? 1 : 2)] === 'function'
+        ? (second.pop() as EqualityComparer<TKey>)
+        : undefined;
+    const keySelector = overrideKeySelector ?? (second.pop() as (item: TSource) => TKey);
+
+    const isIterableArray = (
+      arr: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
+    ): arr is Iterable<TKey>[] => arr.every(x => Symbol.iterator in Object(x));
+
+    if (
+      typeof keySelector !== 'function' ||
+      (equalityComparer !== undefined && typeof equalityComparer !== 'function') ||
+      second.length === 0 ||
+      !isIterableArray(second)
+    ) {
+      throw new Error('Invalid use of overloads.');
+    }
+
+    const secondKeySet: Set<TKey> = new Set(second.reduce((prev, curr) => [...prev, ...curr]));
 
     if (equalityComparer) {
       for (const item of src) {

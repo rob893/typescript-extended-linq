@@ -560,6 +560,44 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public except(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
+  /**
+   * Produces the set difference of two sequences.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4];
+   * const exceptItems = from(items).except([2, 4], [3], (a, b) => a === b); // [1]
+   * ```
+   * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public except(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4, 5, 6, 7];
+   * const exceptItems = from(items).except([2, 4], [3, 5], [7], (a, b) => a === b); // [1, 6]
+   * ```
+   * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param fourth An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public except(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
   public except(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
     return applyExcept(this.factory, x => x, this, ...second);
   }
@@ -577,12 +615,76 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * Produces the set difference of two sequences according to a specified key selector function.
    * @typeparam TKey The type of key to identify elements by.
    * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public exceptBy<TKey>(
+    second: Iterable<TKey>,
+    third: Iterable<TKey>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param fourth An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public exceptBy<TKey>(
+    second: Iterable<TKey>,
+    third: Iterable<TKey>,
+    fourth: Iterable<TKey>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
    * @param keySelector A function to extract the key for each element.
    * @param equalityComparer An EqualityComparer<T> to compare values.
    * @returns A sequence that contains the set difference of the elements of two sequences.
    */
   public exceptBy<TKey>(
     second: Iterable<TKey>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public exceptBy<TKey>(
+    second: Iterable<TKey>,
+    thrid: Iterable<TKey>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param third An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param fourth An Iterable<T> whose keys that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer An EqualityComparer<T> to compare values.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public exceptBy<TKey>(
+    second: Iterable<TKey>,
+    thrid: Iterable<TKey>,
+    fourth: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TSource>;

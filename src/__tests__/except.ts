@@ -20,6 +20,18 @@ describe.each([...getEnumerables()])('except', (src, enumerable, srcAdd) => {
     expect(result).toEqual([0, 1, 6]);
   });
 
+  it('should return the exception of multiple collections', () => {
+    const items = src([0, 1, 2, 3, 6, 7, 8, 9, 10]);
+
+    const otherItems = [2, 3, 4, 5];
+
+    const evenMoreItems = [7, 8, 9];
+
+    const result = enumerable(items).except(otherItems, evenMoreItems).toArray();
+
+    expect(result).toEqual([0, 1, 6, 10]);
+  });
+
   it('should return the exception of two collections when one is empty', () => {
     const items = src([1, 2, 3]);
 
@@ -90,6 +102,24 @@ describe.each([...getEnumerables()])('exceptBy', (src, enumerable, srcAdd) => {
 
     const result = enumerable(items)
       .exceptBy([2, 3, 4], x => x.id)
+      .toArray();
+
+    expect(result).toEqual([
+      { id: 1, foo: 'asdf' },
+      { id: 5, foo: 'asdf' }
+    ]);
+  });
+
+  it('should return the exception of multiple collections by id', () => {
+    const items = src([
+      { id: 1, foo: 'asdf' },
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' },
+      { id: 5, foo: 'asdf' }
+    ]);
+
+    const result = enumerable(items)
+      .exceptBy([2, 3], [4], x => x.id)
       .toArray();
 
     expect(result).toEqual([

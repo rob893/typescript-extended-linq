@@ -20,6 +20,14 @@ describe.each([...getEnumerables()])('intersect', (src, enumerable, srcAdd) => {
     expect(result).toEqual([2, 3]);
   });
 
+  it('should return the intersection of multiple collections', () => {
+    const items = src([1, 2, 3]);
+
+    const result = enumerable(items).intersect([2, 3, 4], [3, 4, 5]).toArray();
+
+    expect(result).toEqual([3]);
+  });
+
   it('should return the intersection of two collections when one is empty', () => {
     const items = src([1, 2, 3]);
 
@@ -71,6 +79,32 @@ describe.each([...getEnumerables()])('intersect', (src, enumerable, srcAdd) => {
       { id: 2, foo: 'asdf' },
       { id: 3, foo: 'asdf' }
     ]);
+  });
+
+  it('should return the union of multiple collections using passed comparer', () => {
+    const items = src([
+      { id: 1, foo: 'asdf' },
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' }
+    ]);
+
+    const result = enumerable(items)
+      .intersect(
+        [
+          { id: 2, foo: 'asdf' },
+          { id: 3, foo: 'asdf' },
+          { id: 4, foo: 'asdf' }
+        ],
+        [
+          { id: 1, foo: 'asdf' },
+          { id: 3, foo: 'asdf' },
+          { id: 5, foo: 'asdf' }
+        ],
+        (a, b) => a.id === b.id
+      )
+      .toArray();
+
+    expect(result).toEqual([{ id: 3, foo: 'asdf' }]);
   });
 });
 

@@ -32,6 +32,7 @@ export * from './functions/empty';
 export * from './functions/endsWith';
 export * from './functions/except';
 export * from './functions/first';
+export * from './functions/flatten';
 export * from './functions/forEach';
 export * from './functions/from';
 export * from './functions/fullJoin';

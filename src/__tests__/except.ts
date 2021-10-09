@@ -81,6 +81,30 @@ describe.each([...getEnumerables()])('except', (src, enumerable, srcAdd) => {
 
     expect(result).toEqual([{ id: 1, foo: 'asdf' }]);
   });
+
+  it('should return the exception of multiple collections using passed comparer', () => {
+    const items = src([
+      { id: 1, foo: 'asdf' },
+      { id: 2, foo: 'asdf' },
+      { id: 3, foo: 'asdf' }
+    ]);
+
+    const result = enumerable(items)
+      .except(
+        [
+          { id: 3, foo: 'asdf' },
+          { id: 4, foo: 'asdf' }
+        ],
+        [
+          { id: 2, foo: 'asdf' },
+          { id: 5, foo: 'asdf' }
+        ],
+        (a, b) => a.id === b.id
+      )
+      .toArray();
+
+    expect(result).toEqual([{ id: 1, foo: 'asdf' }]);
+  });
 });
 
 describe.each([...getEnumerables()])('exceptBy', (src, enumerable, srcAdd) => {

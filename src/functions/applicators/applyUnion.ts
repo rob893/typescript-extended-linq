@@ -4,7 +4,7 @@ export function applyUnion<TSource, TKey>(
   factory: IEnumerableFactory,
   overrideKeySelector: ((item: TSource) => TKey) | null,
   src: Iterable<TSource>,
-  ...second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
+  second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
     const passedKeySelector = typeof overrideKeySelector === 'function';

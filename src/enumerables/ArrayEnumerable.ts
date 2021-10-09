@@ -87,18 +87,26 @@ export class ArrayEnumerable<TSource> extends BasicEnumerable<TSource> {
 
   /**
    * Returns the element at a specified index in a sequence or null if the index is out of range.
+   * A negative index can be used to get element starting from the end.
    * @example
    * ```typescript
    * const items = [1, 2, 3];
-   * const indexZero = from(items).elementAt(0); // Will be 1
-   * const willBeNull = from(items).elementAt(10); // Will be null.
+   * const indexZero = from(items).elementAtOrDefault(0); // Will be 1
+   * const willBeNull = from(items).elementAtOrDefault(10); // Will be null.
+   * const last = from(items).elementAtOrDefault(-1); // 3
    * ```
    * @param index The zero-based index of the element to retrieve.
    * @returns The element at the specified position in the source sequence.
    */
   public override elementAtOrDefault(index: number): TSource | null {
     if (index < 0) {
-      throw new Error('Index must be greater than or equal to 0');
+      const target = this.srcArr.length + index;
+
+      if (target < 0) {
+        return null;
+      }
+
+      return this.srcArr[target];
     }
 
     if (index >= this.srcArr.length) {

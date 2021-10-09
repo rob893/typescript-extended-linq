@@ -6,14 +6,19 @@ describe.each([...getEnumerables()])('elementAt', (src, enumerable) => {
     [1, 2],
     [2, 3],
     [3, 4],
-    [4, 5]
+    [4, 5],
+    [-1, 5],
+    [-2, 4],
+    [-3, 3],
+    [-4, 2],
+    [-5, 1]
   ])('should return the element at the given index', (index, expected) => {
     const items = src([1, 2, 3, 4, 5]);
 
     expect(enumerable(items).elementAt(index)).toBe(expected);
   });
 
-  it.each([-1, 5, 6])('should throw', index => {
+  it.each([-10, 5, 6])('should throw', index => {
     const items = src([1, 2, 3, 4, 5]);
 
     expect(() => enumerable(items).elementAt(index)).toThrow();
@@ -26,7 +31,12 @@ describe.each([...getEnumerables()])('elementAtOrDefault', (src, enumerable) => 
     [1, 2],
     [2, 3],
     [3, 4],
-    [4, 5]
+    [4, 5],
+    [-1, 5],
+    [-2, 4],
+    [-3, 3],
+    [-4, 2],
+    [-5, 1]
   ])('should return the element at the given index', (index, expected) => {
     const items = src([1, 2, 3, 4, 5]);
 
@@ -37,11 +47,5 @@ describe.each([...getEnumerables()])('elementAtOrDefault', (src, enumerable) => 
     const items = src([1, 2, 3, 4, 5]);
 
     expect(enumerable(items).elementAtOrDefault(5)).toBeNull();
-  });
-
-  it.each([-1, -2])('should throw', index => {
-    const items = src([1, 2, 3, 4, 5]);
-
-    expect(() => enumerable(items).elementAtOrDefault(index)).toThrow();
   });
 });

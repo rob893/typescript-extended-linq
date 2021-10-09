@@ -183,11 +183,11 @@ Returns distinct elements from a sequence according to a specified key selector 
 
 ### [elementAt](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAt)
 
-Returns the element at a specified index in a sequence.
+Returns the element at a specified index in a sequence. A negative index can be used to get element starting from the end.
 
 ### [elementAtOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#elementAtOrDefault)
 
-Returns the element at a specified index in a sequence or null if the index is out of range.
+Returns the element at a specified index in a sequence or null if the index is out of range. A negative index can be used to get element starting from the end.
 
 ### [endsWith](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#endsWith)
 
@@ -208,6 +208,10 @@ Returns the first element in a sequence. Throws if sequence contains no elements
 ### [firstOrDefault](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#firstOrDefault)
 
 Returns the first element in a sequence. Returns null if sequence contains no elements
+
+### [flatten](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#flatten)
+
+Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up to the specified depth.
 
 ### [forEach](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#forEach)
 

@@ -15,6 +15,20 @@ import { applyExcept } from './applicators/applyExcept';
  * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
  * @returns A sequence that contains the set difference of the elements of two sequences.
  */
+export function except<TSource>(src: Iterable<TSource>, second: Iterable<TSource>): IEnumerable<TSource>;
+
+/**
+ * Produces the set difference of two sequences.
+ * @example
+ * ```typescript
+ * const items = [1, 2, 3, 4];
+ * const exceptItems = from(items).except([2, 4]); // [1, 3]
+ * ```
+ * @typeparam TSource The type of source elements.
+ * @param src The source iterable.
+ * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+ * @returns A sequence that contains the set difference of the elements of two sequences.
+ */
 export function except<TSource>(src: Iterable<TSource>, ...second: Iterable<TSource>[]): IEnumerable<TSource>;
 
 /**
@@ -84,7 +98,7 @@ export function except<TSource>(
   src: Iterable<TSource>,
   ...second: (Iterable<TSource> | EqualityComparer<TSource>)[]
 ): IEnumerable<TSource> {
-  return applyExcept(new EnumerableFactory(), x => x, src, ...second);
+  return applyExcept(new EnumerableFactory(), x => x, src, second);
 }
 
 /**
@@ -199,5 +213,5 @@ export function exceptBy<TSource, TKey>(
   src: Iterable<TSource>,
   ...second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
-  return applyExcept(new EnumerableFactory(), null, src, ...second);
+  return applyExcept(new EnumerableFactory(), null, src, second);
 }

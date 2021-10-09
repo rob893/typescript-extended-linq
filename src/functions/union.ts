@@ -10,6 +10,15 @@ import { applyUnion } from './applicators/applyUnion';
  * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
  * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
  */
+export function union<TSource>(src: Iterable<TSource>, second: Iterable<TSource>): IEnumerable<TSource>;
+
+/**
+ * Produces the set union of two or more sequences.
+ * @typeparam TSource The type of source elements.
+ * @param src The source Iterable<T>
+ * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
+ * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+ */
 export function union<TSource>(src: Iterable<TSource>, ...second: Iterable<TSource>[]): IEnumerable<TSource>;
 
 /**
@@ -64,7 +73,7 @@ export function union<TSource>(
   src: Iterable<TSource>,
   ...second: (Iterable<TSource> | EqualityComparer<TSource>)[]
 ): IEnumerable<TSource> {
-  return applyUnion(new EnumerableFactory(), (x: TSource) => x, src, ...second);
+  return applyUnion(new EnumerableFactory(), (x: TSource) => x, src, second);
 }
 
 /**
@@ -179,5 +188,5 @@ export function unionBy<TSource, TKey>(
   src: Iterable<TSource>,
   ...second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
-  return applyUnion<TSource, TKey>(new EnumerableFactory(), null, src, ...second);
+  return applyUnion<TSource, TKey>(new EnumerableFactory(), null, src, second);
 }

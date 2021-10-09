@@ -8,6 +8,7 @@ import { applyConcat } from '../functions/applicators/applyConcat';
 import { applyDefaultIfEmpty } from '../functions/applicators/applyDefaultIfEmpty';
 import { applyDistinct } from '../functions/applicators/applyDistinct';
 import { applyExcept } from '../functions/applicators/applyExcept';
+import { applyFlatten } from '../functions/applicators/applyFlatten';
 import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from '../functions/applicators/applyFullJoin';
 import { applyGroupBy } from '../functions/applicators/applyGroupBy';
 import { applyGroupJoin } from '../functions/applicators/applyGroupJoin';
@@ -58,7 +59,8 @@ import {
   IGrouping,
   IOrderedEnumerable,
   IEnumerableFactory,
-  IList
+  IList,
+  ItemOrIterable
 } from '../types';
 
 /**
@@ -330,11 +332,24 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * ```typescript
    * const numbers = [1, 2];
    * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * ```
+   * @param collection The sequence to concatenate to the first sequence.
+   * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
+   */
+  public concat(collection: Iterable<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Concatenates two or more sequences.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2];
    * const evenMoreNumbers = from(numbers).concat([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
    * ```
    * @param collections The sequences to concatenate to the first sequence.
-   * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
+   * @returns An IEnumerable<TSource> that contains the concatenated elements of the two or more input sequences.
    */
+  public concat(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
+
   public concat(...collections: Iterable<TSource>[]): IEnumerable<TSource> {
     return applyConcat(this.factory, this, collections);
   }
@@ -475,12 +490,14 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   }
 
   /**
-   * Returns the element at a specified index in a sequence.
+   * Returns the element at a specified index in a sequence or throws if the index is out of range.
+   * A negative index can be used to get element starting from the end.
    * @example
    * ```typescript
    * const items = [1, 2, 3];
    * const indexZero = from(items).elementAt(0); // Will be 1
-   * const willThrow = from(items).elementAt(10); // This will throw.
+   * const willBeNull = from(items).elementAt(10); // Will throw.
+   * const last = from(items).elementAt(-1); // 3
    * ```
    * @param index The zero-based index of the element to retrieve.
    * @returns The element at the specified position in the source sequence.
@@ -491,11 +508,13 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Returns the element at a specified index in a sequence or null if the index is out of range.
+   * A negative index can be used to get element starting from the end.
    * @example
    * ```typescript
    * const items = [1, 2, 3];
-   * const indexZero = from(items).elementAt(0); // Will be 1
-   * const willBeNull = from(items).elementAt(10); // Will be null.
+   * const indexZero = from(items).elementAtOrDefault(0); // Will be 1
+   * const willBeNull = from(items).elementAtOrDefault(10); // Will be null.
+   * const last = from(items).elementAtOrDefault(-1); // 3
    * ```
    * @param index The zero-based index of the element to retrieve.
    * @returns The element at the specified position in the source sequence.
@@ -541,6 +560,18 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * ```typescript
    * const items = [1, 2, 3, 4];
    * const exceptItems = from(items).except([2, 4]); // [1, 3]
+   * ```
+   * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
+   * @returns A sequence that contains the set difference of the elements of two sequences.
+   */
+  public except(second: Iterable<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Produces the set difference of two sequences.
+   * @example
+   * ```typescript
+   * const items = [1, 2, 3, 4];
+   * const exceptItems = from(items).except([2, 4], [3, 4]); // [1]
    * ```
    * @param second An Iterable<T> whose elements that also occur in the first sequence will cause those elements to be removed from the returned sequence.
    * @returns A sequence that contains the set difference of the elements of two sequences.
@@ -599,7 +630,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   ): IEnumerable<TSource>;
 
   public except(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
-    return applyExcept(this.factory, x => x, this, ...second);
+    return applyExcept(this.factory, x => x, this, second);
   }
 
   /**
@@ -692,7 +723,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   public exceptBy<TKey>(
     ...second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
   ): IEnumerable<TSource> {
-    return applyExcept(this.factory, null, this, ...second);
+    return applyExcept(this.factory, null, this, second);
   }
 
   /**
@@ -727,6 +758,33 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   public firstOrDefault(condition?: (item: TSource, index: number) => boolean): TSource | null {
     return firstOrDefault(this, condition);
+  }
+
+  /**
+   * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up.
+   * @example
+   * ```typescript
+   * const items = [1, 2, [3, 4, [5, []]]];
+   * const res = from(items).flatten(); // [1, 2, 3, 4, 5]
+   * ```
+   * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
+   */
+  public flatten(): IEnumerable<TSource>;
+
+  /**
+   * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up to the specified depth.
+   * @example
+   * ```typescript
+   * const items = [1, 2, [3, 4, [5, []]]];
+   * const res = from(items).flatten(1); // [1, 2, 3, 4, [5, []]]
+   * ```
+   * @param depth The depth to flatten to.
+   * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
+   */
+  public flatten(depth: number): IEnumerable<TSource | Iterable<TSource | Iterable<TSource>>>;
+
+  public flatten(depth?: number): IEnumerable<ItemOrIterable<TSource> | TSource> {
+    return applyFlatten(this.factory, this, depth);
   }
 
   /**
@@ -1025,13 +1083,48 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   /**
    * Produces the set intersection of two sequences.
    * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersect(...second: Iterable<TSource>[]): IEnumerable<TSource>;
+
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
    * @param equalityComparer A function to compare keys.
    * @returns A sequence that contains the elements that form the set intersection of two sequences.
    */
   public intersect(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
 
-  public intersect(second: Iterable<TSource>, equalityComparer?: EqualityComparer<TSource>): IEnumerable<TSource> {
-    return applyIntersect(this.factory, this, second, x => x, equalityComparer);
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersect(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set intersection of two sequences.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param fourth An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersect(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  public intersect(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
+    return applyIntersect<TSource, TSource>(this.factory, x => x, this, second);
   }
 
   /**
@@ -1047,6 +1140,36 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * Produces the set intersection of two sequences according to a specified key selector function.
    * @typeparam TKey The type of key to identify elements by.
    * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersectBy<TKey>(
+    second: Iterable<TKey>,
+    third: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param fourth An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersectBy<TKey>(
+    second: Iterable<TKey>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
    * @param keySelector A function to extract the key for each element.
    * @param equalityComparer A function to compare keys.
    * @returns A sequence that contains the elements that form the set intersection of two sequences.
@@ -1057,12 +1180,44 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TSource>;
 
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
   public intersectBy<TKey>(
     second: Iterable<TKey>,
+    third: Iterable<TSource>,
     keySelector: (item: TSource) => TKey,
-    equalityComparer?: EqualityComparer<TKey>
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the set intersection of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param third An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param fourth An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer A function to compare keys.
+   * @returns A sequence that contains the elements that form the set intersection of two sequences.
+   */
+  public intersectBy<TKey>(
+    second: Iterable<TKey>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  public intersectBy<TKey>(
+    ...second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
   ): IEnumerable<TSource> {
-    return applyIntersect(this.factory, this, second, keySelector, equalityComparer);
+    return applyIntersect(this.factory, null, this, second);
   }
 
   /**
@@ -2073,6 +2228,13 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Produces the set union of two sequences.
+   * @param second An Iterable<T> whose distinct elements form the second set for the union.
+   * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
+   */
+  public union(second: Iterable<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Produces the set union of two sequences.
    * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
    * @returns An IEnumerable<T> that contains the elements from both input sequences, excluding duplicates.
    */
@@ -2115,7 +2277,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   ): IEnumerable<TSource>;
 
   public union(...second: (Iterable<TSource> | EqualityComparer<TSource>)[]): IEnumerable<TSource> {
-    return applyUnion(this.factory, x => x, this, ...second);
+    return applyUnion(this.factory, x => x, this, second);
   }
 
   /**
@@ -2208,7 +2370,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   public unionBy<TKey>(
     ...second: (Iterable<TSource> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
   ): IEnumerable<TSource> {
-    return applyUnion<TSource, TKey>(this.factory, null, this, ...second);
+    return applyUnion<TSource, TKey>(this.factory, null, this, second);
   }
 
   /**

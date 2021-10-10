@@ -60,7 +60,7 @@ import {
   IOrderedEnumerable,
   IEnumerableFactory,
   IList,
-  ItemOrIterable
+  FlatIterable
 } from '../types';
 
 /**
@@ -761,29 +761,29 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   }
 
   /**
-   * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up.
+   * Returns a new IEnumerable with all sub-iterable elements concatenated into it one level deep.
    * @example
    * ```typescript
    * const items = [1, 2, [3, 4, [5, []]]];
-   * const res = from(items).flatten(); // [1, 2, 3, 4, 5]
+   * const res = from(items).flatten(); // [1, 2, 3, 4, [5, []]]
    * ```
    * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
    */
-  public flatten(): IEnumerable<TSource>;
+  public flatten(): IEnumerable<FlatIterable<Iterable<TSource>, 1>>;
 
   /**
    * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up to the specified depth.
    * @example
    * ```typescript
    * const items = [1, 2, [3, 4, [5, []]]];
-   * const res = from(items).flatten(1); // [1, 2, 3, 4, [5, []]]
+   * const res = from(items).flatten(3); // [1, 2, 3, 4, 5]
    * ```
    * @param depth The depth to flatten to.
    * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
    */
-  public flatten(depth: number): IEnumerable<TSource | Iterable<TSource | Iterable<TSource>>>;
+  public flatten<Depth extends number>(depth: Depth): IEnumerable<FlatIterable<Iterable<TSource>, Depth>>;
 
-  public flatten(depth?: number): IEnumerable<ItemOrIterable<TSource> | TSource> {
+  public flatten<Depth extends number = 1>(depth?: Depth): IEnumerable<FlatIterable<Iterable<TSource>, Depth>> {
     return applyFlatten(this.factory, this, depth);
   }
 

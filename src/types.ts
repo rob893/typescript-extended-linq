@@ -4,7 +4,12 @@ export type Comparer<T> = (a: T, b: T) => number;
 
 export type TypeOfMember = 'string' | 'number' | 'boolean' | 'bigint' | 'function' | 'object' | 'symbol' | 'undefined';
 
-export type ItemOrIterable<T> = T | Iterable<ItemOrIterable<T>>;
+export type FlatIterable<Itr, Depth extends number> = {
+  done: Itr;
+  recur: Itr extends Iterable<infer InnerItr>
+    ? FlatIterable<InnerItr, [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20][Depth]>
+    : Itr;
+}[Depth extends -1 ? 'done' : 'recur'];
 
 export interface IEnumerableFactory {
   createBasicEnumerable<TSource>(generator: () => Generator<TSource>): IEnumerable<TSource>;
@@ -621,27 +626,27 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   firstOrDefault(predicate: (item: TSource, index: number) => boolean): TSource | null;
 
   /**
-   * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up.
+   * Returns a new IEnumerable with all sub-iterable elements concatenated into it one level deep.
    * @example
    * ```typescript
    * const items = [1, 2, [3, 4, [5, []]]];
-   * const res = from(items).flatten(); // [1, 2, 3, 4, 5]
+   * const res = from(items).flatten(); // [1, 2, 3, 4, [5, []]]
    * ```
    * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
    */
-  flatten(): IEnumerable<TSource>;
+  flatten(): IEnumerable<FlatIterable<Iterable<TSource>, 1>>;
 
   /**
    * Returns a new IEnumerable with all sub-iterable elements concatenated into it recursively up to the specified depth.
    * @example
    * ```typescript
    * const items = [1, 2, [3, 4, [5, []]]];
-   * const res = from(items).flatten(1); // [1, 2, 3, 4, [5, []]]
+   * const res = from(items).flatten(3); // [1, 2, 3, 4, 5]
    * ```
    * @param depth The depth to flatten to.
    * @returns A new IEnumerable with all sub-iterable elements concatenated into it recursively up.
    */
-  flatten(depth: number): IEnumerable<TSource | Iterable<TSource | Iterable<TSource>>>;
+  flatten<Depth extends number>(depth: Depth): IEnumerable<FlatIterable<Iterable<TSource>, Depth>>;
 
   /**
    * Iterates the sequence and calls an action on each element.

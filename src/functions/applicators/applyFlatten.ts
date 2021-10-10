@@ -1,31 +1,36 @@
-import { IEnumerable, IEnumerableFactory } from '../../types';
+import { IEnumerable, IEnumerableFactory, FlatIterable } from '../../types';
 
-function* internalFlatten<TSource>(
-  src: Iterable<TSource | Iterable<TSource>>,
-  depth?: number
-): Generator<TSource | Iterable<TSource | Iterable<TSource>>> {
-  if (typeof depth === 'number' && depth < 0) {
+function* internalFlatten<TSource, Depth extends number>(
+  src: Iterable<TSource>,
+  depth: Depth
+): Generator<Iterable<TSource | Iterable<TSource>> | TSource> {
+  if (depth < 0) {
     return yield src;
   }
 
-  const isIterable = <T>(item: unknown): item is Iterable<T> => Symbol.iterator in Object(item);
+  const isIterable = (item: Iterable<TSource | Iterable<TSource>> | TSource): item is Iterable<TSource> =>
+    Symbol.iterator in Object(item);
 
   for (const currentItem of src) {
     if (isIterable(currentItem)) {
-      return yield* internalFlatten(currentItem, typeof depth === 'number' ? depth - 1 : undefined);
+      yield* internalFlatten(currentItem, depth - 1);
+    } else {
+      yield currentItem;
     }
-
-    yield currentItem;
   }
 }
 
-export function applyFlatten<TSource>(
+export function applyFlatten<TSource, Depth extends number = 1>(
   factory: IEnumerableFactory,
-  src: Iterable<TSource | Iterable<TSource>>,
-  depth?: number
-): IEnumerable<TSource | Iterable<TSource | Iterable<TSource>>> {
-  function* generator(): Generator<TSource | Iterable<TSource | Iterable<TSource>>> {
-    yield* internalFlatten(src, depth);
+  src: Iterable<TSource>,
+  depth?: Depth
+): IEnumerable<FlatIterable<Iterable<TSource>, Depth>> {
+  if (Number.isNaN(depth) || (typeof depth === 'number' && depth < 0)) {
+    throw new Error('Invalid depth.');
+  }
+
+  function* generator(): Generator<FlatIterable<Iterable<TSource>, Depth>> {
+    yield* internalFlatten(src, depth ?? 1) as Generator<FlatIterable<Iterable<TSource>, Depth>>;
   }
 
   return factory.createBasicEnumerable(generator);

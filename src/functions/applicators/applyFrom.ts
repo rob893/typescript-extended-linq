@@ -1,6 +1,6 @@
 import { IEnumerable, IEnumerableFactory } from '../../types';
 import { isEnumerable } from '../isEnumerable';
-import { getIterableGenerator } from '../shared/getIterableGenerator';
+import { getIterableGenerator } from '../../utilities/utilityFunctions';
 
 export function applyFrom<TSource>(factory: IEnumerableFactory, src: Iterable<TSource>): IEnumerable<TSource>;
 

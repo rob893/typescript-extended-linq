@@ -7,6 +7,7 @@ import { selectBenchmark } from './select';
 import { sumBenchmark } from './sum';
 import { listBenchmark } from './list';
 import { queueBenchmark } from './queue';
+import { xorBenchmark } from './xor';
 
 const args = process.argv.slice(2);
 
@@ -43,6 +44,9 @@ switch (benchmark.toLowerCase()) {
     break;
   case 'queue':
     queueBenchmark();
+    break;
+  case 'xor':
+    xorBenchmark();
     break;
   default:
     throw new Error(`${benchmark} is not a valid benchmark name.`);

@@ -1,8 +1,8 @@
 import { ICollection } from '../types';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
-import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { LinkedListNode } from './LinkedListNode';
+import { getIterableGenerator } from '../utilities/utilityFunctions';
 
 export class LinkedList<TSource> extends BasicEnumerable<TSource> implements ICollection<TSource> {
   private firstNode: LinkedListNode<TSource> | null = null;

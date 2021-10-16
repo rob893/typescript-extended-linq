@@ -1,5 +1,5 @@
 import { IEnumerableFactory } from '../../types';
-import { getIterableGenerator } from '../shared/getIterableGenerator';
+import { getIterableGenerator } from '../../utilities/utilityFunctions';
 
 export function applyMin<TSource, TKey, TResult>(
   factory: IEnumerableFactory,

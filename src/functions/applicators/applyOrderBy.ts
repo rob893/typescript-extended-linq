@@ -1,5 +1,5 @@
 import { Comparer, IEnumerableFactory, IOrderedEnumerable } from '../../types';
-import { orderByGenerator } from '../shared/orderByGenerator';
+import { orderByGenerator } from '../../utilities/utilityFunctions';
 
 export function applyOrderBy<TSource, TKey>(
   factory: IEnumerableFactory,

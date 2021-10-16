@@ -2003,6 +2003,143 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   window(size: number): IEnumerable<IEnumerable<TSource>>;
 
   /**
+   * Produces the set union of two sequences.
+   * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xor(second: Iterable<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of two or more sequences.
+   * @param second One or more Iterable<T> whose distinct elements form the second or more set for the symmetric difference.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xor(...second: Iterable<TSource>[]): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of two sequences using a provided equality comparer.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xor(second: Iterable<TSource>, equalityComparer: EqualityComparer<TSource>): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of three sequences using a provided equality comparer.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xor(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of four sequences using a provided equality comparer.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param fourth An Iterable<T> whose distinct elements form the fourth set for the symmetric difference.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xor(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    equalityComparer: EqualityComparer<TSource>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of two sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(second: Iterable<TSource>, keySelector: (item: TSource) => TKey): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of three sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of four sequences according to a specified key selector function.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param fourth An Iterable<T> whose distinct elements form the fourth set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of two sequences according to a specified key selector function using a provided equality comparer.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(
+    second: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of three sequences according to a specified key selector function using a provided equality comparer.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
+   * Produces the symmetric difference of four sequences according to a specified key selector function using a provided equality comparer.
+   * @typeparam TKey The type of key to identify elements by.
+   * @param second An Iterable<T> whose distinct elements form the second set for the symmetric difference.
+   * @param third An Iterable<T> whose distinct elements form the third set for the symmetric difference.
+   * @param fourth An Iterable<T> whose distinct elements form the fourth set for the symmetric difference.
+   * @param keySelector A function to extract the key for each element.
+   * @param equalityComparer The EqualityComparer<T> to compare values.
+   * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
+   */
+  xorBy<TKey>(
+    second: Iterable<TSource>,
+    third: Iterable<TSource>,
+    fourth: Iterable<TSource>,
+    keySelector: (item: TSource) => TKey,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TSource>;
+
+  /**
    * Produces a sequence of tuples with elements from the two specified sequences.
    * @typeparam TSecond The type of the elements of the second input sequence.
    * @param second The second sequence to merge.

@@ -1,5 +1,5 @@
 import { IEnumerable, IEnumerableFactory } from '../../types';
-import { getIterableGenerator } from '../shared/getIterableGenerator';
+import { getIterableGenerator } from '../../utilities/utilityFunctions';
 
 export function applyChunk<TSource>(
   factory: IEnumerableFactory,

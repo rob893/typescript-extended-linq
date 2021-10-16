@@ -2,7 +2,7 @@ import { LinkedList } from './LinkedList';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { ICollection } from '../types';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
-import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
+import { getIterableGenerator } from '../utilities/utilityFunctions';
 
 export class Queue<TSource> extends BasicEnumerable<TSource> implements ICollection<TSource> {
   private readonly list: LinkedList<TSource>;

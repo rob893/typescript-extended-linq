@@ -1,7 +1,7 @@
 import { ArrayEnumerable } from '../enumerables/ArrayEnumerable';
-import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
 import { Comparer, ICollection, IEnumerable } from '../types';
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
+import { getIterableGenerator } from '../utilities/utilityFunctions';
 import { List } from './List';
 
 /**

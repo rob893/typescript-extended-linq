@@ -1,9 +1,9 @@
 import { IEnumerable, IEnumerableFactory, IGrouping, IList, IOrderedEnumerable } from '../types';
 import { ArrayEnumerable } from '../enumerables/ArrayEnumerable';
-import { getIterableGenerator } from '../functions/shared/getIterableGenerator';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { Grouping } from '../enumerables/Grouping';
 import { OrderedEnumerable } from '../enumerables/OrderedEnumerable';
+import { getIterableGenerator } from '../utilities/utilityFunctions';
 
 export class List<TSource> extends ArrayEnumerable<TSource> implements IList<TSource> {
   public constructor();

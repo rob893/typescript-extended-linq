@@ -1,4 +1,5 @@
 import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
+import { getKeySelectorAndComparer } from '../../utilities/utilityFunctions';
 
 export function applyIntersect<TSource, TKey>(
   factory: IEnumerableFactory,
@@ -7,27 +8,9 @@ export function applyIntersect<TSource, TKey>(
   second: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
-    const passedKeySelector = typeof overrideKeySelector === 'function';
-    const equalityComparer =
-      typeof second[second.length - (passedKeySelector ? 1 : 2)] === 'function'
-        ? (second.pop() as EqualityComparer<TKey>)
-        : undefined;
-    const keySelector = overrideKeySelector ?? (second.pop() as (item: TSource) => TKey);
+    const [others, keySelector, equalityComparer] = getKeySelectorAndComparer(overrideKeySelector, second);
 
-    const isIterableArray = (
-      arr: (Iterable<TKey> | ((item: TSource) => TKey) | EqualityComparer<TKey>)[]
-    ): arr is Iterable<TKey>[] => arr.every(x => Symbol.iterator in Object(x));
-
-    if (
-      typeof keySelector !== 'function' ||
-      (equalityComparer !== undefined && typeof equalityComparer !== 'function') ||
-      second.length === 0 ||
-      !isIterableArray(second)
-    ) {
-      throw new Error('Invalid use of overloads.');
-    }
-
-    const secondKeySets: Set<TKey>[] = second.map(s => (s instanceof Set ? s : new Set(s)));
+    const secondKeySets: Set<TKey>[] = others.map(s => (s instanceof Set ? s : new Set(s)));
 
     if (equalityComparer) {
       for (const item of src) {

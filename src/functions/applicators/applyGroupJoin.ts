@@ -1,5 +1,5 @@
 import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
-import { getIterableGenerator } from '../shared/getIterableGenerator';
+import { getIterableGenerator } from '../../utilities/utilityFunctions';
 
 export function applyGroupJoin<TOuter, TInner, TKey, TResult>(
   factory: IEnumerableFactory,

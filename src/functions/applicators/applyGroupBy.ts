@@ -1,6 +1,5 @@
 import { EqualityComparer, IEnumerable, IEnumerableFactory, IGrouping } from '../../types';
-import { getIterableGenerator } from '../shared/getIterableGenerator';
-import { toKeyMap } from '../shared/toKeyMap';
+import { getIterableGenerator, toKeyMap } from '../../utilities/utilityFunctions';
 
 export function applyGroupBy<TSource, TKey>(
   factory: IEnumerableFactory,

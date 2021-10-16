@@ -417,6 +417,14 @@ Produces the set union of two sequences according to a specified key selector fu
 
 Filters a sequence of values based on a predicate.
 
+### [xor](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#xor)
+
+Produces the symmetric difference of two sequences.
+
+### [xorBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#xorBy)
+
+Produces the symmetric difference of two sequences according to a specified key selector function.
+
 ### [zip](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#zip)
 
 Produces a sequence of tuples with elements from the two specified sequences.

@@ -4,10 +4,10 @@ import { EqualityComparer } from '../types';
 import { applyXor } from './applicators/applyXor';
 
 /**
- * Produces the set union of two sequences.
+ * Produces the symmetric difference of two sequences.
  * @typeparam TSource The type of source elements.
  * @param src The source Iterable<T>
- * @param second One or more Iterable<T> whose distinct elements form the second set for the union.
+ * @param second The second Iterable<T> whose distinct elements form the second or more set for the symmetric difference.
  * @returns An IEnumerable<T> that contains the symmetric difference from all input sequences, excluding duplicates.
  */
 export function xor<TSource>(src: Iterable<TSource>, second: Iterable<TSource>): IEnumerable<TSource>;

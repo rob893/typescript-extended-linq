@@ -1,6 +1,6 @@
 import { IEnumerable, IEnumerableFactory } from '../../types';
 
-export function applyConcat<TSource>(
+export function applyConcatenate<TSource>(
   factory: IEnumerableFactory,
   src: Iterable<TSource>,
   collections: Iterable<TSource>[]

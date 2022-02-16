@@ -1,6 +1,6 @@
 import { EqualityComparer, IEnumerable, IEnumerableFactory } from '../../types';
 
-export function applyJoin<TOuter, TInner, TKey, TResult>(
+export function applyInnerJoin<TOuter, TInner, TKey, TResult>(
   factory: IEnumerableFactory,
   outer: Iterable<TOuter>,
   inner: Iterable<TInner>,

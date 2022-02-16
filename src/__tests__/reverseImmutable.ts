@@ -3,7 +3,7 @@ import { getEnumerables } from '../__test-utilities__/utilities';
 
 describe.each([...getEnumerables()])('reverse', (src, enumerable, addSrc) => {
   it('should return an Enumberable', () => {
-    const result = enumerable(src([1, 2, 3])).reverse();
+    const result = enumerable(src([1, 2, 3])).reverseImmutable();
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
@@ -11,7 +11,7 @@ describe.each([...getEnumerables()])('reverse', (src, enumerable, addSrc) => {
   it('should reverse the elements', () => {
     const items = src([1, 2, 3]);
 
-    const result = enumerable(items).reverse().toArray();
+    const result = enumerable(items).reverseImmutable().toArray();
 
     expect(result).toEqual([3, 2, 1]);
   });
@@ -19,7 +19,7 @@ describe.each([...getEnumerables()])('reverse', (src, enumerable, addSrc) => {
   it('should not mutate src', () => {
     const items = src([1, 2, 3]);
 
-    const _ = enumerable(items).reverse().toArray();
+    const _ = enumerable(items).reverseImmutable().toArray();
 
     expect([...items]).toEqual([1, 2, 3]);
   });
@@ -27,7 +27,7 @@ describe.each([...getEnumerables()])('reverse', (src, enumerable, addSrc) => {
   it('should have deferred execution', () => {
     const items = src([1, 2, 3]);
 
-    const result = enumerable(items).reverse();
+    const result = enumerable(items).reverseImmutable();
 
     addSrc(items, 4, 5);
 

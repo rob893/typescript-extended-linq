@@ -246,24 +246,24 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @example
    * ```typescript
    * const numbers = [1, 2];
-   * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * const moreNumbers = from(numbers).concatenate([3, 4, 5]); // [1, 2, 3, 4, 5]
    * ```
    * @param collection The sequence to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
    */
-  concat(collection: Iterable<TSource>): IEnumerable<TSource>;
+  concatenate(collection: Iterable<TSource>): IEnumerable<TSource>;
 
   /**
    * Concatenates two sequences.
    * @example
    * ```typescript
    * const numbers = [1, 2];
-   * const evenMoreNumbers = from(numbers).concat([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
+   * const evenMoreNumbers = from(numbers).concatenate([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
    * ```
    * @param collections The sequences to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two or more input sequences.
    */
-  concat(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
+  concatenate(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Determines whether a sequence contains a specified element.
@@ -1020,7 +1020,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * const people = from([magnus, terry, adam, john]);
    * const pets = from([barley, boots, whiskers, daisy, scratchy]);
    *
-   * const result = people.join(
+   * const result = people.innerJoin(
    *     pets,
    *     person => person,
    *     pet => pet.owner,
@@ -1044,7 +1044,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @param resultSelector A function to create a result element from two matching elements.
    * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
    */
-  join<TInner, TKey, TResult>(
+  innerJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
@@ -1069,7 +1069,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * const people = from([magnus, terry, adam, john]);
    * const pets = from([barley, boots, whiskers, daisy, scratchy]);
    *
-   * const result = people.join(
+   * const result = people.innerJoin(
    *     pets,
    *     person => person,
    *     pet => pet.owner,
@@ -1095,7 +1095,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * @param equalityComparer A function to compare keys.
    * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
    */
-  join<TInner, TKey, TResult>(
+  innerJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
@@ -1309,7 +1309,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    * Inverts the order of the elements in a sequence.
    * @returns A sequence whose elements correspond to those of the input sequence in reverse order.
    */
-  reverse(): IEnumerable<TSource>;
+  reverseImmutable(): IEnumerable<TSource>;
 
   /**
    * Performs a right outer join on two heterogeneous sequences.

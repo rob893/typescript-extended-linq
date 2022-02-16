@@ -4,7 +4,7 @@ import { any } from '../functions/any';
 import { applyAppend } from '../functions/applicators/applyAppend';
 import { applyAsEnumerable } from '../functions/applicators/applyAsEnumerable';
 import { applyChunk } from '../functions/applicators/applyChunk';
-import { applyConcat } from '../functions/applicators/applyConcat';
+import { applyConcatenate } from '../functions/applicators/applyConcatenate';
 import { applyDefaultIfEmpty } from '../functions/applicators/applyDefaultIfEmpty';
 import { applyDistinct } from '../functions/applicators/applyDistinct';
 import { applyExcept } from '../functions/applicators/applyExcept';
@@ -13,7 +13,7 @@ import { applyFullJoinHeterogeneous, applyFullJoinHomogeneous } from '../functio
 import { applyGroupBy } from '../functions/applicators/applyGroupBy';
 import { applyGroupJoin } from '../functions/applicators/applyGroupJoin';
 import { applyIntersect } from '../functions/applicators/applyIntersect';
-import { applyJoin } from '../functions/applicators/applyJoin';
+import { applyInnerJoin } from '../functions/applicators/applyInnerJoin';
 import { applyLeftJoinHeterogeneous, applyLeftJoinHomogeneous } from '../functions/applicators/applyLeftJoin';
 import { applyMax } from '../functions/applicators/applyMax';
 import { applyMin } from '../functions/applicators/applyMin';
@@ -22,7 +22,7 @@ import { applyOrderBy } from '../functions/applicators/applyOrderBy';
 import { applyPipe } from '../functions/applicators/applyPipe';
 import { applyPrepend } from '../functions/applicators/applyPrepend';
 import { applyQuantile } from '../functions/applicators/applyQuantile';
-import { applyReverse } from '../functions/applicators/applyReverse';
+import { applyReverseImmutable } from '../functions/applicators/applyReverseImmutable';
 import { applyRightJoinHeterogeneous, applyRightJoinHomogeneous } from '../functions/applicators/applyRightJoin';
 import { applySelect, applySelectMany } from '../functions/applicators/applySelect';
 import { applyShuffle } from '../functions/applicators/applyShuffle';
@@ -332,27 +332,27 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @example
    * ```typescript
    * const numbers = [1, 2];
-   * const moreNumbers = from(numbers).concat([3, 4, 5]); // [1, 2, 3, 4, 5]
+   * const moreNumbers = from(numbers).concatenate([3, 4, 5]); // [1, 2, 3, 4, 5]
    * ```
    * @param collection The sequence to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two input sequences.
    */
-  public concat(collection: Iterable<TSource>): IEnumerable<TSource>;
+  public concatenate(collection: Iterable<TSource>): IEnumerable<TSource>;
 
   /**
    * Concatenates two or more sequences.
    * @example
    * ```typescript
    * const numbers = [1, 2];
-   * const evenMoreNumbers = from(numbers).concat([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
+   * const evenMoreNumbers = from(numbers).concatenate([3, 4], [5, 6]); // [1, 2, 3, 4, 5, 6]
    * ```
    * @param collections The sequences to concatenate to the first sequence.
    * @returns An IEnumerable<TSource> that contains the concatenated elements of the two or more input sequences.
    */
-  public concat(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
+  public concatenate(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
 
-  public concat(...collections: Iterable<TSource>[]): IEnumerable<TSource> {
-    return applyConcat(this.factory, this, collections);
+  public concatenate(...collections: Iterable<TSource>[]): IEnumerable<TSource> {
+    return applyConcatenate(this.factory, this, collections);
   }
 
   /**
@@ -1239,7 +1239,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * const people = from([magnus, terry, adam, john]);
    * const pets = from([barley, boots, whiskers, daisy, scratchy]);
    *
-   * const result = people.join(
+   * const result = people.innerJoin(
    *     pets,
    *     person => person,
    *     pet => pet.owner,
@@ -1263,7 +1263,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @param resultSelector A function to create a result element from two matching elements.
    * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
    */
-  public join<TInner, TKey, TResult>(
+  public innerJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
@@ -1288,7 +1288,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * const people = from([magnus, terry, adam, john]);
    * const pets = from([barley, boots, whiskers, daisy, scratchy]);
    *
-   * const result = people.join(
+   * const result = people.innerJoin(
    *     pets,
    *     person => person,
    *     pet => pet.owner,
@@ -1314,7 +1314,7 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * @param equalityComparer A function to compare keys.
    * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
    */
-  public join<TInner, TKey, TResult>(
+  public innerJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
@@ -1322,14 +1322,22 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
     equalityComparer: EqualityComparer<TKey>
   ): IEnumerable<TResult>;
 
-  public join<TInner, TKey, TResult>(
+  public innerJoin<TInner, TKey, TResult>(
     inner: Iterable<TInner>,
     outerKeySelector: (item: TSource) => TKey,
     innerKeySelector: (item: TInner) => TKey,
     resultSelector: (item: TSource, inner: TInner) => TResult,
     equalityComparer?: EqualityComparer<TKey>
   ): IEnumerable<TResult> {
-    return applyJoin(this.factory, this, inner, outerKeySelector, innerKeySelector, resultSelector, equalityComparer);
+    return applyInnerJoin(
+      this.factory,
+      this,
+      inner,
+      outerKeySelector,
+      innerKeySelector,
+      resultSelector,
+      equalityComparer
+    );
   }
 
   /**
@@ -1618,8 +1626,8 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    * Inverts the order of the elements in a sequence.
    * @returns A sequence whose elements correspond to those of the input sequence in reverse order.
    */
-  public reverse(): IEnumerable<TSource> {
-    return applyReverse(this.factory, this);
+  public reverseImmutable(): IEnumerable<TSource> {
+    return applyReverseImmutable(this.factory, this);
   }
 
   /**

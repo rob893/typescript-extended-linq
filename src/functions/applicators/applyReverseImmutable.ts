@@ -1,6 +1,9 @@
 import { IEnumerable, IEnumerableFactory } from '../../types';
 
-export function applyReverse<TSource>(factory: IEnumerableFactory, src: Iterable<TSource>): IEnumerable<TSource> {
+export function applyReverseImmutable<TSource>(
+  factory: IEnumerableFactory,
+  src: Iterable<TSource>
+): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
     const items = [...src];
 

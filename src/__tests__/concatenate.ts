@@ -3,7 +3,7 @@ import { getEnumerables } from '../__test-utilities__/utilities';
 
 describe.each([...getEnumerables()])('concat', (src, enumerable) => {
   it('should return an Enumerable', () => {
-    const result = enumerable(src([1, 2, 3])).concat([4, 5, 6]);
+    const result = enumerable(src([1, 2, 3])).concatenate([4, 5, 6]);
 
     expect(result).toBeInstanceOf(BasicEnumerable);
   });
@@ -20,7 +20,7 @@ describe.each([...getEnumerables()])('concat', (src, enumerable) => {
     [[], [1, 1], [1, 1]],
     [[1, 1], [], [1, 1]]
   ])('should add elements to end of sequence', (first, second, expected) => {
-    const result = enumerable(src<unknown>(first)).concat(src<unknown>(second)).toArray();
+    const result = enumerable(src<unknown>(first)).concatenate(src<unknown>(second)).toArray();
 
     expect(result).toEqual(expected);
   });
@@ -28,7 +28,7 @@ describe.each([...getEnumerables()])('concat', (src, enumerable) => {
   it('should concat several collections', () => {
     const items = [1, 2, 3];
 
-    const result = from(items).concat([4, 5], [], [6], [7, 8, 9]).toArray();
+    const result = from(items).concatenate([4, 5], [], [6], [7, 8, 9]).toArray();
 
     expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });

@@ -1,10 +1,10 @@
-import { join } from '../functions/join';
+import { innerJoin } from '../functions/innerJoin';
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { getEnumerables } from '../__test-utilities__/utilities';
 
 describe.each([...getEnumerables()])('join', (src, enumerable) => {
   it.each([[1, 2, 3], new Set([1, 2, 3]), '123', new Map()])('should return an Enumerable', collection => {
-    const result = join<unknown, unknown, unknown, unknown>(
+    const result = innerJoin<unknown, unknown, unknown, unknown>(
       collection,
       [],
       x => x,
@@ -34,7 +34,7 @@ describe.each([...getEnumerables()])('join', (src, enumerable) => {
     const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
-      .join(
+      .innerJoin(
         pets,
         person => person,
         pet => pet.owner,
@@ -69,7 +69,7 @@ describe.each([...getEnumerables()])('join', (src, enumerable) => {
     const pets = enumerable(src([barley, boots, whiskers, daisy, scratchy]));
 
     const result = people
-      .join(
+      .innerJoin(
         pets,
         person => person,
         pet => pet.owner,
@@ -86,3 +86,5 @@ describe.each([...getEnumerables()])('join', (src, enumerable) => {
     ]);
   });
 });
+
+new Map().forEach;

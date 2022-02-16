@@ -1,7 +1,7 @@
 import { EnumerableFactory } from '../utilities/EnumerableFactory';
 import { IEnumerable } from '../types';
 import { EqualityComparer } from '../types';
-import { applyJoin } from './applicators/applyJoin';
+import { applyInnerJoin } from './applicators/applyInnerJoin';
 
 /**
  * Performs an inner join by correlating the elements of two sequences based on matching keys.
@@ -49,7 +49,7 @@ import { applyJoin } from './applicators/applyJoin';
  * @param equalityComparer A function to compare keys.
  * @returns An Enumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
  */
-export function join<TOuter, TInner, TKey, TResult>(
+export function innerJoin<TOuter, TInner, TKey, TResult>(
   outer: Iterable<TOuter>,
   inner: Iterable<TInner>,
   outerKeySelector: (item: TOuter) => TKey,
@@ -57,7 +57,7 @@ export function join<TOuter, TInner, TKey, TResult>(
   resultSelector: (item: TOuter, inner: TInner) => TResult,
   equalityComparer?: EqualityComparer<TKey>
 ): IEnumerable<TResult> {
-  return applyJoin(
+  return applyInnerJoin(
     new EnumerableFactory(),
     outer,
     inner,

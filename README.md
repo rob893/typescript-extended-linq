@@ -15,10 +15,10 @@ This is a library that is a direct translation of [System.Linq](https://docs.mic
 npm i typescript-extended-linq
 ```
 
-To optionally bind the Linq functions to native types (arrays, maps, sets, strings, etc).
+You can optionally bind the Linq functions to native types (arrays, maps, sets, strings, etc).
 Binding to native types adds the functions to the type's prototype. Always be mindful when modifying a native type's prototype. While these functions will not affect native functionality, it cannot be guaranteed that it will not affect other frameworks if they also modify prototypes.
 
-Do the following at the start of your program to bind to native types (the eslint disable is only needed if you use that eslint rule):
+Add the following at the start of your program to bind to native types (the eslint disable is only needed if you use that eslint rule):
 
 ```typescript
 /* eslint-disable @typescript-eslint/no-empty-interface */

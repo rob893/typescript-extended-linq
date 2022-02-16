@@ -93,6 +93,14 @@ console.log(foo());
 
 Because the 'where' is not used until the foo function is invoked which is after the bind function is called.
 
+If you only want to bind to certain types, you can pass in an optional array to do so (be sure to update the global type declarations):
+
+```typescript
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+
+bindLinqToNativeTypes([Array]); // Now only array will have new functions. Sets, Strings, Maps, etc will not.
+```
+
 ## Why use this library?
 
 ### Additional Functionality

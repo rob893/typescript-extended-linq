@@ -1,30 +1,32 @@
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { from } from './from';
 
-export function bindLinqToNativeTypes(): void {
+export function bindLinqToNativeTypes(
+  types: (new () => Iterable<unknown>)[] = [
+    Array,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+    Uint8ClampedArray,
+    Uint16Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
+    Set,
+    Map,
+    String
+  ]
+): void {
   const enumProps = BasicEnumerable.prototype;
-  const protos = [
-    Array.prototype,
-    Int8Array.prototype,
-    Int16Array.prototype,
-    Int32Array.prototype,
-    Uint8ClampedArray.prototype,
-    Uint16Array.prototype,
-    Uint32Array.prototype,
-    Float32Array.prototype,
-    Float64Array.prototype,
-    Set.prototype,
-    Map.prototype,
-    String.prototype
-  ];
+  const protos = types.map(t => t.prototype);
 
   const enumPropNames = Object.getOwnPropertyNames(enumProps);
 
   for (const proto of protos) {
     for (const prop of enumPropNames) {
-      if ((proto as any)[prop] === undefined) {
-        (proto as any)[prop as any] = function (...params: any[]) {
-          return (from(this) as any)[prop as any](...params);
+      if (proto[prop] === undefined) {
+        proto[prop] = function (...params: any[]) {
+          return (from(this) as any)[prop](...params);
         };
       }
     }

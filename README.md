@@ -15,25 +15,29 @@ This is a library that is a direct translation of [System.Linq](https://docs.mic
 npm i typescript-extended-linq
 ```
 
-To optionally bind the Linq functions to native types (arrays, maps, sets, strings, etc), do the following at the start of your program (the eslint disable is only needed if you use that eslint rule):
+To optionally bind the Linq functions to native types (arrays, maps, sets, strings, etc).
+Binding to native types adds the functions to the type's prototype. Always be mindful when modifying a native type's prototype. While these functions will not affect native functionality, it cannot be guaranteed that it will not affect other frameworks if they also modify prototypes.
+
+Do the following at the start of your program to bind to native types (the eslint disable is only needed if you use that eslint rule):
 
 ```typescript
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { bindLinqToNativeTypes } from 'typescript-extended-linq';
 
 declare global {
-  interface Array<T> extends Omit<IEnumerable<T>, 'forEach' | 'toString' | symbol> {}
-  interface Int8Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Int16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Int32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Uint8ClampedArray extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Uint16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Uint32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Float32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Float64Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
-  interface Map<K, V> extends Omit<IEnumerable<[K, V]>, 'forEach' | symbol> {}
-  interface Set<T> extends Omit<IEnumerable<T>, 'forEach' | symbol> {}
-  interface String extends Omit<IEnumerable<string>, 'endsWith' | 'startsWith' | 'split' | 'toString' | symbol> {}
+  interface Array<T> extends Omit<IEnumerable<T>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Int8Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Int16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Int32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Uint8ClampedArray extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Uint16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Uint32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Float32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Float64Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Map<K, V> extends Omit<IEnumerable<[K, V]>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface Set<T> extends Omit<IEnumerable<T>, 'forEach' | 'toString' | 'toJSON' | symbol> {}
+  interface String
+    extends Omit<IEnumerable<string>, 'endsWith' | 'startsWith' | 'split' | 'toString' | 'toJSON' | symbol> {}
 }
 
 bindLinqToNativeTypes();
@@ -93,12 +97,20 @@ console.log(foo());
 
 Because the 'where' is not used until the foo function is invoked which is after the bind function is called.
 
-If you only want to bind to certain types, you can pass in an optional array to do so (be sure to update the global type declarations):
+If you only want to bind to certain types, you can pass in an optional object to do so (be sure to update the global type declarations):
 
 ```typescript
 import { bindLinqToNativeTypes } from 'typescript-extended-linq';
 
-bindLinqToNativeTypes([Array]); // Now only array will have new functions. Sets, Strings, Maps, etc will not.
+bindLinqToNativeTypes({ types: [Array] }); // Now only array will have new functions. Sets, Strings, Maps, etc will not.
+```
+
+You can also pass in optional functions to not bind to native types (once again, be sure to update the global type declarations):
+
+```typescript
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+
+bindLinqToNativeTypes({ types: [Array], functionsToIgnore: ['aggregate'] }); // Only arrays will have new functions but it will not have aggregate.
 ```
 
 ## Why use this library?

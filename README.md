@@ -48,6 +48,7 @@ You will then be able to see Linq methods on native types without needing to use
   .toArray();
 ```
 
+Any function that already existed on the native type (`toString()`, `forEach()` for example) will not be overridden and will continue to use the native function.
 Note that the call to `bindLinqToNativeTypes` must be done prior to using the functions on native types. This, for example, will not work:
 
 foo.ts

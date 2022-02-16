@@ -42,6 +42,9 @@ Note that the call to <code>bindLinqToNativeTypes</code> must be done prior to u
 <pre><code class="language-typescript"><span class="hl-9">import</span><span class="hl-1"> { </span><span class="hl-5">bindLinqToNativeTypes</span><span class="hl-1"> } </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-7">&#39;typescript-extended-linq&#39;</span><span class="hl-1">;</span><br/><span class="hl-9">import</span><span class="hl-1"> { </span><span class="hl-5">foo</span><span class="hl-1"> } </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-7">&#39;./foo&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">bindLinqToNativeTypes</span><span class="hl-1">();</span><br/><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-4">foo</span><span class="hl-1">());</span>
 </code></pre>
 <p>Because the &#39;where&#39; is not used until the foo function is invoked which is after the bind function is called.</p>
+<p>If you only want to bind to certain types, you can pass in an optional array to do so (be sure to update the global type declarations):</p>
+<pre><code class="language-typescript"><span class="hl-9">import</span><span class="hl-1"> { </span><span class="hl-5">bindLinqToNativeTypes</span><span class="hl-1"> } </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-7">&#39;typescript-extended-linq&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">bindLinqToNativeTypes</span><span class="hl-1">([</span><span class="hl-8">Array</span><span class="hl-1">]); </span><span class="hl-6">// Now only array will have new functions. Sets, Strings, Maps, etc will not.</span>
+</code></pre>
 
 <a href="#why-use-this-library" id="why-use-this-library" style="color: inherit; text-decoration: none;">
   <h2>Why use this library?</h2>

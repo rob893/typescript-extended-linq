@@ -1,7 +1,7 @@
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { from } from './from';
 
-export function bindLinqToNativeTypes(options: {
+export function bindLinqToNativeTypes(options?: {
   types?: (new () => Iterable<unknown>)[];
   functionsToIgnore?: (keyof BasicEnumerable<unknown>)[];
 }): void {
@@ -21,7 +21,7 @@ export function bindLinqToNativeTypes(options: {
       String
     ] as (new () => Iterable<unknown>)[],
     functionsToIgnore = []
-  } = options;
+  } = options ?? {};
   for (const type of types) {
     const test = new type();
 

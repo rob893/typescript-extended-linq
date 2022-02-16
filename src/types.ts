@@ -1,3 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+declare global {
+  interface Array<T> extends Omit<IEnumerable<T>, 'forEach' | 'toString' | symbol> {}
+  interface Map<K, V> extends Omit<IEnumerable<[K, V]>, 'forEach' | symbol> {}
+  interface Set<T> extends Omit<IEnumerable<T>, 'forEach' | symbol> {}
+  interface String extends Omit<IEnumerable<string>, 'endsWith' | 'startsWith' | 'split' | 'toString' | symbol> {}
+}
+
 export type EqualityComparer<T> = (a: T, b: T) => boolean;
 
 export type Comparer<T> = (a: T, b: T) => number;

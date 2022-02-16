@@ -15,15 +15,31 @@ This is a library that is a direct translation of [System.Linq](https://docs.mic
 npm i typescript-extended-linq
 ```
 
-To bind the Linq functions to native types (arrays, maps, sets, and strings), do the following at the start of your program:
+To optionally bind the Linq functions to native types (arrays, maps, sets, strings, etc), do the following at the start of your program (the eslint disable is only needed if you use that eslint rule):
 
 ```typescript
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+
+declare global {
+  interface Array<T> extends Omit<IEnumerable<T>, 'forEach' | 'toString' | symbol> {}
+  interface Int8Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Int16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Int32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Uint8ClampedArray extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Uint16Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Uint32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Float32Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Float64Array extends Omit<IEnumerable<number>, 'forEach' | 'toString' | symbol> {}
+  interface Map<K, V> extends Omit<IEnumerable<[K, V]>, 'forEach' | symbol> {}
+  interface Set<T> extends Omit<IEnumerable<T>, 'forEach' | symbol> {}
+  interface String extends Omit<IEnumerable<string>, 'endsWith' | 'startsWith' | 'split' | 'toString' | symbol> {}
+}
 
 bindLinqToNativeTypes();
 ```
 
-You will then be able to see Linq methods on native types:
+You will then be able to see Linq methods on native types without needing to use the `from()` wrapper:
 
 ```typescript
 [1, 2, 3]
@@ -31,6 +47,50 @@ You will then be able to see Linq methods on native types:
   .take(1)
   .toArray();
 ```
+
+Note that the call to `bindLinqToNativeTypes` must be done prior to using the functions on native types. This, for example, will not work:
+
+foo.ts
+
+```typescript
+export const foo = [1, 2, 3].where(x => x > 1).toArray();
+```
+
+index.ts
+
+```typescript
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+import { foo } from './foo';
+
+bindLinqToNativeTypes();
+
+console.log(foo);
+```
+
+This will not work because the import line is before the bind function is ran and when that file is imported, it tries to use the 'where' function.
+
+This, however, will work fine:
+
+foo.ts
+
+```typescript
+export function foo(): number[] {
+  return [1, 2, 3].where(x => x > 1).toArray();
+}
+```
+
+index.ts
+
+```typescript
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+import { foo } from './foo';
+
+bindLinqToNativeTypes();
+
+console.log(foo());
+```
+
+Because the 'where' is not used until the foo function is invoked which is after the bind function is called.
 
 ## Why use this library?
 

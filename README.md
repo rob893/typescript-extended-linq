@@ -15,6 +15,23 @@ This is a library that is a direct translation of [System.Linq](https://docs.mic
 npm i typescript-extended-linq
 ```
 
+To bind the Linq functions to native types (arrays, maps, sets, and strings), do the following at the start of your program:
+
+```typescript
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+
+bindLinqToNativeTypes();
+```
+
+You will then be able to see Linq methods on native types:
+
+```typescript
+[1, 2, 3]
+  .where(x => x > 1)
+  .take(1)
+  .toArray();
+```
+
 ## Why use this library?
 
 ### Additional Functionality
@@ -157,7 +174,7 @@ Computes the average of a sequence of numeric values.
 
 Split the elements of a sequence into chunks of size at most chunkSize.
 
-### [concat](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#concat)
+### [concatenate](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#concatenate)
 
 Concatenates two sequences.
 
@@ -241,7 +258,7 @@ Produces the set intersection of two sequences.
 
 Produces the set intersection of two sequences according to a specified key selector function.
 
-### [join](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#join)
+### [innerJoin](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#innerJoin)
 
 Performs an inner join by correlating the elements of two sequences based on matching keys.
 
@@ -301,7 +318,7 @@ Adds a value to the beginning of the sequence.
 
 Computes the quantile of a sequence.
 
-### [reverse](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#reverse)
+### [reverseImmutable](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#reverseImmutable)
 
 Inverts the order of the elements in a sequence.
 

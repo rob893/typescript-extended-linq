@@ -21,6 +21,7 @@ export * from './functions/asEnumerable';
 export * from './functions/atLeast';
 export * from './functions/atMost';
 export * from './functions/average';
+export * from './functions/bindLinqToNativeType';
 export * from './functions/chunk';
 export * from './functions/concatenate';
 export * from './functions/contains';

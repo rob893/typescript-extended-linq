@@ -22,11 +22,16 @@ export function bindLinqToNativeTypes(options?: {
     ] as (new () => Iterable<unknown>)[],
     functionsToIgnore = []
   } = options ?? {};
-  for (const type of types) {
-    const test = new type();
 
-    if (!(Symbol.iterator in test)) {
-      throw new TypeError(`Unsuppoted type: ${type.name}. Types must have Symbol.iterator.`);
+  for (const type of types) {
+    try {
+      const test = new type();
+
+      if (!(Symbol.iterator in test)) {
+        throw new TypeError(`Unsuppoted type: ${type.name}. Types must have Symbol.iterator.`);
+      }
+    } catch {
+      throw new TypeError('Unsuppoted type: All types must support the new keyword.');
     }
   }
 

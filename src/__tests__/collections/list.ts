@@ -137,7 +137,7 @@ describe('List', () => {
       list.insert(2, 5);
 
       expect(list.length).toBe(5);
-      expect(list).toEqual(new List([1, 2, 5, 3, 4]));
+      expect(list.toArray()).toEqual([1, 2, 5, 3, 4]);
     });
   });
 
@@ -148,7 +148,7 @@ describe('List', () => {
       list.insertRange(2, [5, 6, 7]);
 
       expect(list.length).toBe(7);
-      expect(list).toEqual(new List([1, 2, 5, 6, 7, 3, 4]));
+      expect(list.toArray()).toEqual([1, 2, 5, 6, 7, 3, 4]);
     });
   });
 
@@ -170,7 +170,7 @@ describe('List', () => {
       const result = list.remove(3);
 
       expect(result).toBe(true);
-      expect(list).toEqual(new List([1, 2, 4, 5]));
+      expect(list.toArray()).toEqual([1, 2, 4, 5]);
     });
 
     it('should return false if no item found', () => {
@@ -179,7 +179,7 @@ describe('List', () => {
       const result = list.remove(8);
 
       expect(result).toBe(false);
-      expect(list).toEqual(new List([1, 2, 3, 4, 5]));
+      expect(list.toArray()).toEqual([1, 2, 3, 4, 5]);
     });
   });
 
@@ -190,7 +190,7 @@ describe('List', () => {
       const result = list.removeAll(x => x > 3);
 
       expect(result).toBe(2);
-      expect(list).toEqual(new List([1, 2, 3]));
+      expect(list.toArray()).toEqual([1, 2, 3]);
     });
   });
 
@@ -200,7 +200,7 @@ describe('List', () => {
 
       list.removeAt(1);
 
-      expect(list).toEqual(new List([1, 3, 4, 5]));
+      expect(list.toArray()).toEqual([1, 3, 4, 5]);
     });
 
     it.each([-1, 5, 6])('should throw for index out of bounds', index => {
@@ -216,7 +216,7 @@ describe('List', () => {
 
       list.removeRange(1, 2);
 
-      expect(list).toEqual(new List([1, 4, 5]));
+      expect(list.toArray()).toEqual([1, 4, 5]);
     });
 
     it.each([-1, 5, 6])('should throw for index out of bounds', index => {
@@ -234,7 +234,7 @@ describe('List', () => {
     ])('should reverse the list in place', (list, expected) => {
       list.reverseInPlace();
 
-      expect(list).toEqual(expected);
+      expect(list.toArray()).toEqual(expected.toArray());
     });
   });
 });

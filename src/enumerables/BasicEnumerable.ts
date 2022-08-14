@@ -1620,27 +1620,96 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).order().toArray(); // Will be [1, 2, 3]
+   * ```
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  public order(): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).order().toArray(); // Will be [1, 2, 3]
+   * ```
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  public order(comparer: Comparer<TSource>): IOrderedEnumerable<TSource>;
+
+  public order(comparer?: Comparer<TSource>): IOrderedEnumerable<TSource> {
+    return applyOrderBy(this.factory, this, true, x => x, comparer);
+  }
+
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).orderDescending().toArray(); // Will be [3, 2, 1]
+   * ```
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  public orderDescending(): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).orderDescending().toArray(); // Will be [3, 2, 1]
+   * ```
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  public orderDescending(comparer: Comparer<TSource>): IOrderedEnumerable<TSource>;
+
+  public orderDescending(comparer?: Comparer<TSource>): IOrderedEnumerable<TSource> {
+    return applyOrderBy(this.factory, this, false, x => x, comparer);
+  }
+
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderBy(x => x.id).toArray(); // Will be [{ id: 1 }, { id: 2 }, { id: 3 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
    */
-  public orderBy<TKey>(selector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
+  public orderBy<TKey>(keySelector: (item: TSource) => TKey): IOrderedEnumerable<TSource>;
 
   /**
    * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderBy(x => x.id).toArray(); // Will be [{ id: 1 }, { id: 2 }, { id: 3 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @param comparer An Comparer<T> to compare keys.
    * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
    */
-  public orderBy<TKey>(selector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
+  public orderBy<TKey>(keySelector: (item: TSource) => TKey, comparer: Comparer<TKey>): IOrderedEnumerable<TSource>;
 
-  public orderBy<TKey>(selector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
-    return applyOrderBy(this.factory, this, true, selector, comparer);
+  public orderBy<TKey>(keySelector: (item: TSource) => TKey, comparer?: Comparer<TKey>): IOrderedEnumerable<TSource> {
+    return applyOrderBy(this.factory, this, true, keySelector, comparer);
   }
 
   /**
    * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderByDescending(x => x.id).toArray(); // Will be [{ id: 3 }, { id: 2 }, { id: 1 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
@@ -1649,6 +1718,11 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
 
   /**
    * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderByDescending(x => x.id).toArray(); // Will be [{ id: 3 }, { id: 2 }, { id: 1 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @param comparer An Comparer<T> to compare keys.

@@ -1314,6 +1314,57 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).order().toArray(); // Will be [1, 2, 3]
+   * ```
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  order(): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).order().toArray(); // Will be [1, 2, 3]
+   * ```
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  order(comparer: Comparer<TSource>): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).orderDescending().toArray(); // Will be [3, 2, 1]
+   * ```
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  orderDescending(): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [1, 3, 2];
+   * const ordered = from(items).orderDescending().toArray(); // Will be [3, 2, 1]
+   * ```
+   * @param comparer An Comparer<T> to compare keys.
+   * @returns An IOrderedEnumerable<TSource> whose elements are sorted.
+   */
+  orderDescending(comparer: Comparer<TSource>): IOrderedEnumerable<TSource>;
+
+  /**
+   * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderBy(x => x.id).toArray(); // Will be [{ id: 1 }, { id: 2 }, { id: 3 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
@@ -1322,6 +1373,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Sorts the elements of a sequence in ascending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderBy(x => x.id).toArray(); // Will be [{ id: 1 }, { id: 2 }, { id: 3 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @param comparer An Comparer<T> to compare keys.
@@ -1331,6 +1387,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderByDescending(x => x.id).toArray(); // Will be [{ id: 3 }, { id: 2 }, { id: 1 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @returns An IOrderedEnumerable<TSource> whose elements are sorted according to a key.
@@ -1339,6 +1400,11 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
 
   /**
    * Sorts the elements of a sequence in descending order.
+   * @example
+   * ```typescript
+   * const items = [{ id: 1 }, { id: 3 }, { id: 2 }];
+   * const ordered = from(items).orderByDescending(x => x.id).toArray(); // Will be [{ id: 3 }, { id: 2 }, { id: 1 }]
+   * ```
    * @typeparam TKey The type of the key returned by keySelector.
    * @param keySelector A function to extract the key for each element.
    * @param comparer An Comparer<T> to compare keys.

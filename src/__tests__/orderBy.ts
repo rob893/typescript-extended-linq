@@ -1,6 +1,42 @@
 import { OrderedEnumerable } from '../enumerables/OrderedEnumerable';
 import { getEnumerables } from '../__test-utilities__/utilities';
 
+describe.each([...getEnumerables()])('order', (src, enumerable) => {
+  it('should return an Enumerable', () => {
+    const objects = src([1, 3, 2, 4]);
+
+    const result = enumerable(objects).order();
+
+    expect(result).toBeInstanceOf(OrderedEnumerable);
+  });
+
+  it('should return an Enumerable ordered by id', () => {
+    const objects = src([1, 3, 2, 4]);
+
+    const result = enumerable(objects).order();
+
+    expect(result.toArray()).toEqual([1, 2, 3, 4]);
+  });
+});
+
+describe.each([...getEnumerables()])('order', (src, enumerable) => {
+  it('should return an Enumerable', () => {
+    const objects = src([1, 3, 2, 4]);
+
+    const result = enumerable(objects).orderDescending();
+
+    expect(result).toBeInstanceOf(OrderedEnumerable);
+  });
+
+  it('should return an Enumerable ordered by id', () => {
+    const objects = src([1, 3, 2, 4]);
+
+    const result = enumerable(objects).orderDescending();
+
+    expect(result.toArray()).toEqual([4, 3, 2, 1]);
+  });
+});
+
 describe.each([...getEnumerables()])('orderBy', (src, enumerable) => {
   it('should return an Enumerable', () => {
     const objects = src([

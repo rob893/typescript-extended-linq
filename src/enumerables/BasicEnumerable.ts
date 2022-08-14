@@ -3,6 +3,7 @@ import { all } from '../functions/all';
 import { any } from '../functions/any';
 import { applyAppend } from '../functions/applicators/applyAppend';
 import { applyAsEnumerable } from '../functions/applicators/applyAsEnumerable';
+import { applyAssert } from '../functions/applicators/applyAssert';
 import { applyChunk } from '../functions/applicators/applyChunk';
 import { applyConcatenate } from '../functions/applicators/applyConcatenate';
 import { applyDefaultIfEmpty } from '../functions/applicators/applyDefaultIfEmpty';
@@ -222,6 +223,77 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
    */
   public asEnumerable(): IEnumerable<TSource> {
     return applyAsEnumerable(this.factory, this);
+  }
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number').sum(); // throws due to '3'
+   * ```
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @returns A sequence with source elements in their original order.
+   */
+  public assert(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', 'Should be number').sum(); // throws due to '3'
+   * ```
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param message The message to use for thrown errors.
+   * @returns A sequence with source elements in their original order.
+   */
+  public assert(predicate: (item: TSource, index: number) => boolean, message: string): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * class MyError extends Error {}
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', MyError).sum(); // throws instance of MyError due to '3'
+   * ```
+   * @typeparam TError The type of error to be thrown.
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param errorType Type of error to throw.
+   * @returns A sequence with source elements in their original order.
+   */
+  public assert<TError extends Error>(
+    predicate: (item: TSource, index: number) => boolean,
+    errorType: new (message?: string) => TError
+  ): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * class MyError extends Error {}
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', 'Must be number', MyError).sum(); // throws instance of MyError with message due to '3'
+   * ```
+   * @typeparam TError The type of error to be thrown.
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param message The message to use for thrown errors.
+   * @param errorType Type of error to throw.
+   * @returns A sequence with source elements in their original order.
+   */
+  public assert<TError extends Error>(
+    predicate: (item: TSource, index: number) => boolean,
+    message: string,
+    errorType: new (message?: string) => TError
+  ): IEnumerable<TSource>;
+
+  public assert<TError extends Error>(
+    predicate: (item: TSource, index: number) => boolean,
+    messageOrErrorType?: string | (new (message?: string) => TError),
+    errorType?: new (message?: string) => TError
+  ): IEnumerable<TSource> {
+    return applyAssert(this.factory, this, predicate, messageOrErrorType, errorType);
   }
 
   /**

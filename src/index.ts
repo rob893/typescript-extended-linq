@@ -18,6 +18,7 @@ export * from './functions/all';
 export * from './functions/any';
 export * from './functions/append';
 export * from './functions/asEnumerable';
+export * from './functions/assert';
 export * from './functions/atLeast';
 export * from './functions/atMost';
 export * from './functions/average';

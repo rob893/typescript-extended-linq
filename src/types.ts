@@ -153,6 +153,69 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   asEnumerable(): IEnumerable<TSource>;
 
   /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number').sum(); // throws due to '3'
+   * ```
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @returns A sequence with source elements in their original order.
+   */
+  assert(predicate: (item: TSource, index: number) => boolean): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', 'Should be number').sum(); // throws due to '3'
+   * ```
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param message The message to use for thrown errors.
+   * @returns A sequence with source elements in their original order.
+   */
+  assert(predicate: (item: TSource, index: number) => boolean, message: string): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * class MyError extends Error {}
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', MyError).sum(); // throws instance of MyError due to '3'
+   * ```
+   * @typeparam TError The type of error to be thrown.
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param errorType Type of error to throw.
+   * @returns A sequence with source elements in their original order.
+   */
+  assert<TError extends Error>(
+    predicate: (item: TSource, index: number) => boolean,
+    errorType: new (message?: string) => TError
+  ): IEnumerable<TSource>;
+
+  /**
+   * Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+   * @example
+   * ```typescript
+   * class MyError extends Error {}
+   * const items = [1, 2, '3'];
+   * const sum = from(items).assert(x => typeof x === 'number', 'Must be number', MyError).sum(); // throws instance of MyError with message due to '3'
+   * ```
+   * @typeparam TError The type of error to be thrown.
+   * @param predicate A function to test each element for a condition. If false, an error will be thrown.
+   * @param message The message to use for thrown errors.
+   * @param errorType Type of error to throw.
+   * @returns A sequence with source elements in their original order.
+   */
+  assert<TError extends Error>(
+    predicate: (item: TSource, index: number) => boolean,
+    message: string,
+    errorType: new (message?: string) => TError
+  ): IEnumerable<TSource>;
+
+  /**
    * Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.
    * @example
    * ```typescript
@@ -593,7 +656,7 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
    */
   exceptBy<TKey>(
     second: Iterable<TKey>,
-    thrid: Iterable<TKey>,
+    third: Iterable<TKey>,
     fourth: Iterable<TKey>,
     keySelector: (item: TSource) => TKey,
     equalityComparer: EqualityComparer<TKey>

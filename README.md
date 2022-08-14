@@ -239,6 +239,10 @@ Appends a value to the end of the sequence.
 
 Returns the input as an IEnumerable.
 
+### [assert](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#assert)
+
+Tests a sequence with a given predicate. An error will be thrown if any element fails the sequence.
+
 ### [atLeast](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#atLeast)
 
 Determines whether or not the number of elements in the sequence is greater than or equal to the given integer.

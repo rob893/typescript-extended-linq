@@ -1427,7 +1427,25 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   prepend(item: TSource): IEnumerable<TSource>;
 
   /**
+   * Computes the quantile of a sequence of numbers.
+   * Note this will throw an exception if sequence has something other than numbers.
+   * @exmaple
+   * ```typescript
+   * const items = [1, 2, 2, 3, 4];
+   * const q = from(items).quantile(50); // Will be 2
+   * ```
+   * @param q The percentile to compute (25, 50, etc.)
+   * @returns The percentile of the sequence.
+   */
+  quantile(q: number): number;
+
+  /**
    * Computes the quantile of a sequence.
+   *  @exmaple
+   * ```typescript
+   * const items = [{ age: 1 }, { age: 2 }, { age: 2 }, { age: 3 }, { age: 4 }];
+   * const q = from(items).quantile(x => x.age, 50); // Will be 2
+   * ```
    * @param selector A function to extract a value from each element.
    * @param q The percentile to compute (25, 50, etc.)
    * @returns The percentile of the sequence.

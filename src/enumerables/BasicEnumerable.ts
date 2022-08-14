@@ -1759,13 +1759,33 @@ export class BasicEnumerable<TSource> implements IEnumerable<TSource> {
   }
 
   /**
+   * Computes the quantile of a sequence of numbers.
+   * Note this will throw an exception if sequence has something other than numbers.
+   * @exmaple
+   * ```typescript
+   * const items = [1, 2, 2, 3, 4];
+   * const q = from(items).quantile(50); // Will be 2
+   * ```
+   * @param q The percentile to compute (25, 50, etc.)
+   * @returns The percentile of the sequence.
+   */
+  public quantile(q: number): number;
+
+  /**
    * Computes the quantile of a sequence.
+   *  @exmaple
+   * ```typescript
+   * const items = [{ age: 1 }, { age: 2 }, { age: 2 }, { age: 3 }, { age: 4 }];
+   * const q = from(items).quantile(x => x.age, 50); // Will be 2
+   * ```
    * @param selector A function to extract a value from each element.
    * @param q The percentile to compute (25, 50, etc.)
    * @returns The percentile of the sequence.
    */
-  public quantile(selector: (item: TSource) => number, q: number): number {
-    return applyQuantile(this.factory, this, selector, q);
+  public quantile(selector: (item: TSource) => number, q: number): number;
+
+  public quantile(selectorOrQ: ((item: TSource) => number) | number, q?: number): number {
+    return applyQuantile(this.factory, this, selectorOrQ, q);
   }
 
   /**

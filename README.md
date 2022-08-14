@@ -383,6 +383,14 @@ Returns the min value in a generic sequence according to a specified key selecto
 
 Filters the elements of an IEnumerable based on a specified type.
 
+### [order](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#order)
+
+Sorts the elements of a sequence in ascending order.
+
+### [orderDescending](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderDescending)
+
+Sorts the elements of a sequence in descending order.
+
 ### [orderBy](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#orderBy)
 
 Sorts the elements of a sequence in ascending order.

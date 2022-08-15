@@ -6,24 +6,19 @@ export function applyInterweave<TSource>(
   collections: Iterable<TSource>[]
 ): IEnumerable<TSource> {
   function* generator(): Generator<TSource> {
-    const srcAsArr = Array.isArray(src) || typeof src === 'string' ? src : [...src];
-    const collectionsAsArrs: TSource[][] = [srcAsArr];
+    const collectionGenerators = [src, ...collections].map(arr => arr[Symbol.iterator]());
 
-    for (let i = 0; i < collections.length; i++) {
-      const collection = collections[i];
-      collectionsAsArrs.push(
-        Array.isArray(collection) || typeof collection === 'string' ? collection : [...collection]
-      );
-    }
+    let hasMore = true;
 
-    const maxSize = Math.max(...collectionsAsArrs.map(c => c.length));
+    while (hasMore) {
+      hasMore = false;
 
-    for (let i = 0; i < maxSize; i++) {
-      for (let j = 0; j < collectionsAsArrs.length; j++) {
-        const collection = collectionsAsArrs[j];
+      for (const collection of collectionGenerators) {
+        const { value, done } = collection.next();
 
-        if (collection.length > i) {
-          yield collection[i];
+        if (!done) {
+          hasMore = true;
+          yield value;
         }
       }
     }

@@ -929,6 +929,107 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   ): IEnumerable<TResult>;
 
   /**
+   * Performs an inner join by correlating the elements of two sequences based on matching keys.
+   * @example
+   * ```typescript
+   * const magnus = { name: 'Magnus' };
+   * const terry = { name: 'Terry' };
+   * const adam = { name: 'Adam' };
+   * const john = { name: 'John' };
+   *
+   * const barley = { name: 'Barley', owner: terry };
+   * const boots = { name: 'Boots', owner: terry };
+   * const whiskers = { name: 'Whiskers', owner: adam };
+   * const daisy = { name: 'Daisy', owner: magnus };
+   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
+   *
+   * const people = from([magnus, terry, adam, john]);
+   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
+   *
+   * const result = people.innerJoin(
+   *     pets,
+   *     person => person,
+   *     pet => pet.owner,
+   *     (person, pet) => ({ ownerName: person.name, pet: pet.name })
+   *   )
+   *   .toArray();
+   *
+   * expect(result).toEqual([
+   *   { ownerName: 'Magnus', pet: 'Daisy' },
+   *   { ownerName: 'Terry', pet: 'Barley' },
+   *   { ownerName: 'Terry', pet: 'Boots' },
+   *   { ownerName: 'Adam', pet: 'Whiskers' }
+   * ]);
+   * ```
+   * @typeparam TInner The type of the elements of the second sequence.
+   * @typeparam TKey The type of the keys returned by the key selector functions.
+   * @typeparam TResult The type of the result elements.
+   * @param inner The second sequence to join to the first.
+   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+   * @param resultSelector A function to create a result element from two matching elements.
+   * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
+   */
+  innerJoin<TInner, TKey, TResult>(
+    inner: Iterable<TInner>,
+    outerKeySelector: (item: TSource) => TKey,
+    innerKeySelector: (item: TInner) => TKey,
+    resultSelector: (item: TSource, inner: TInner) => TResult
+  ): IEnumerable<TResult>;
+
+  /**
+   * Performs an inner join by correlating the elements of two sequences based on matching keys.
+   * @example
+   * ```typescript
+   * const magnus = { name: 'Magnus' };
+   * const terry = { name: 'Terry' };
+   * const adam = { name: 'Adam' };
+   * const john = { name: 'John' };
+   *
+   * const barley = { name: 'Barley', owner: terry };
+   * const boots = { name: 'Boots', owner: terry };
+   * const whiskers = { name: 'Whiskers', owner: adam };
+   * const daisy = { name: 'Daisy', owner: magnus };
+   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
+   *
+   * const people = from([magnus, terry, adam, john]);
+   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
+   *
+   * const result = people.innerJoin(
+   *     pets,
+   *     person => person,
+   *     pet => pet.owner,
+   *     (person, pet) => ({ ownerName: person.name, pet: pet.name }),
+   *     (person, pet) => person.name === pet.owner.name
+   *   )
+   *   .toArray();
+   *
+   * expect(result).toEqual([
+   *   { ownerName: 'Magnus', pet: 'Daisy' },
+   *   { ownerName: 'Terry', pet: 'Barley' },
+   *   { ownerName: 'Terry', pet: 'Boots' },
+   *   { ownerName: 'Adam', pet: 'Whiskers' }
+   * ]);
+   * ```
+   * @typeparam TInner The type of the elements of the second sequence.
+   * @typeparam TKey The type of the keys returned by the key selector functions.
+   * @typeparam TResult The type of the result elements.
+   * @param inner The second sequence to join to the first.
+   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+   * @param resultSelector A function to create a result element from two matching elements.
+   * @param equalityComparer A function to compare keys.
+   * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
+   */
+  innerJoin<TInner, TKey, TResult>(
+    inner: Iterable<TInner>,
+    outerKeySelector: (item: TSource) => TKey,
+    innerKeySelector: (item: TInner) => TKey,
+    resultSelector: (item: TSource, inner: TInner) => TResult,
+    equalityComparer: EqualityComparer<TKey>
+  ): IEnumerable<TResult>;
+
+  /**
    * Produces the set intersection of two sequences.
    * @param second An IEnumerable<T> whose distinct elements that also appear in the first sequence will be returned.
    * @returns A sequence that contains the elements that form the set intersection of two sequences.
@@ -1066,105 +1167,28 @@ export interface IEnumerable<TSource> extends Iterable<TSource> {
   ): IEnumerable<TSource>;
 
   /**
-   * Performs an inner join by correlating the elements of two sequences based on matching keys.
+   * Interweaves two sequences.
    * @example
    * ```typescript
-   * const magnus = { name: 'Magnus' };
-   * const terry = { name: 'Terry' };
-   * const adam = { name: 'Adam' };
-   * const john = { name: 'John' };
-   *
-   * const barley = { name: 'Barley', owner: terry };
-   * const boots = { name: 'Boots', owner: terry };
-   * const whiskers = { name: 'Whiskers', owner: adam };
-   * const daisy = { name: 'Daisy', owner: magnus };
-   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
-   *
-   * const people = from([magnus, terry, adam, john]);
-   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
-   *
-   * const result = people.innerJoin(
-   *     pets,
-   *     person => person,
-   *     pet => pet.owner,
-   *     (person, pet) => ({ ownerName: person.name, pet: pet.name })
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { ownerName: 'Magnus', pet: 'Daisy' },
-   *   { ownerName: 'Terry', pet: 'Barley' },
-   *   { ownerName: 'Terry', pet: 'Boots' },
-   *   { ownerName: 'Adam', pet: 'Whiskers' }
-   * ]);
+   * const numbers = [1, 2];
+   * const moreNumbers = from(numbers).interweave([3, 4, 5]); // [1, 3, 2, 4, 5]
    * ```
-   * @typeparam TInner The type of the elements of the second sequence.
-   * @typeparam TKey The type of the keys returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param inner The second sequence to join to the first.
-   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
-   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
-   * @param resultSelector A function to create a result element from two matching elements.
-   * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
+   * @param collection The sequence to interweave to the first sequence.
+   * @returns An IEnumerable<TSource> that contains the interweaved elements of the two input sequences.
    */
-  innerJoin<TInner, TKey, TResult>(
-    inner: Iterable<TInner>,
-    outerKeySelector: (item: TSource) => TKey,
-    innerKeySelector: (item: TInner) => TKey,
-    resultSelector: (item: TSource, inner: TInner) => TResult
-  ): IEnumerable<TResult>;
+  interweave(collection: Iterable<TSource>): IEnumerable<TSource>;
 
   /**
-   * Performs an inner join by correlating the elements of two sequences based on matching keys.
+   * Interweaves multiple sequences.
    * @example
    * ```typescript
-   * const magnus = { name: 'Magnus' };
-   * const terry = { name: 'Terry' };
-   * const adam = { name: 'Adam' };
-   * const john = { name: 'John' };
-   *
-   * const barley = { name: 'Barley', owner: terry };
-   * const boots = { name: 'Boots', owner: terry };
-   * const whiskers = { name: 'Whiskers', owner: adam };
-   * const daisy = { name: 'Daisy', owner: magnus };
-   * const scratchy = { name: 'Scratchy', owner: { name: 'Bob' } };
-   *
-   * const people = from([magnus, terry, adam, john]);
-   * const pets = from([barley, boots, whiskers, daisy, scratchy]);
-   *
-   * const result = people.innerJoin(
-   *     pets,
-   *     person => person,
-   *     pet => pet.owner,
-   *     (person, pet) => ({ ownerName: person.name, pet: pet.name }),
-   *     (person, pet) => person.name === pet.owner.name
-   *   )
-   *   .toArray();
-   *
-   * expect(result).toEqual([
-   *   { ownerName: 'Magnus', pet: 'Daisy' },
-   *   { ownerName: 'Terry', pet: 'Barley' },
-   *   { ownerName: 'Terry', pet: 'Boots' },
-   *   { ownerName: 'Adam', pet: 'Whiskers' }
-   * ]);
+   * const numbers = [1, 2];
+   * const evenMoreNumbers = from(numbers).interweave([3, 4], [5, 6]); // [1, 3, 5, 2, 4, 6]
    * ```
-   * @typeparam TInner The type of the elements of the second sequence.
-   * @typeparam TKey The type of the keys returned by the key selector functions.
-   * @typeparam TResult The type of the result elements.
-   * @param inner The second sequence to join to the first.
-   * @param outerKeySelector A function to extract the join key from each element of the first sequence.
-   * @param innerKeySelector A function to extract the join key from each element of the second sequence.
-   * @param resultSelector A function to create a result element from two matching elements.
-   * @param equalityComparer A function to compare keys.
-   * @returns An IEnumerable<TResult> that has elements of type TResult that are obtained by performing an inner join on two sequences.
+   * @param collections The sequences to interweave to the first sequence.
+   * @returns An IEnumerable<TSource> that contains the interweaved elements of the two or more input sequences.
    */
-  innerJoin<TInner, TKey, TResult>(
-    inner: Iterable<TInner>,
-    outerKeySelector: (item: TSource) => TKey,
-    innerKeySelector: (item: TInner) => TKey,
-    resultSelector: (item: TSource, inner: TInner) => TResult,
-    equalityComparer: EqualityComparer<TKey>
-  ): IEnumerable<TResult>;
+  interweave(...collections: Iterable<TSource>[]): IEnumerable<TSource>;
 
   /**
    * Returns the last element of a sequence. Throws if sequence is empty.

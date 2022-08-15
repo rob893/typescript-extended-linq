@@ -335,6 +335,10 @@ Groups the elements of a sequence according to a specified key selector function
 
 Correlates the elements of two sequences based on key equality, and groups the results.
 
+### [innerJoin](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#innerJoin)
+
+Performs an inner join by correlating the elements of two sequences based on matching keys.
+
 ### [intersect](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#intersect)
 
 Produces the set intersection of two sequences.
@@ -343,9 +347,9 @@ Produces the set intersection of two sequences.
 
 Produces the set intersection of two sequences according to a specified key selector function.
 
-### [innerJoin](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#innerJoin)
+### [interweave](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#interweave)
 
-Performs an inner join by correlating the elements of two sequences based on matching keys.
+Interweaves multiple sequences.
 
 ### [last](https://rob893.github.io/typescript-extended-linq/interfaces/IEnumerable.html#last)
 

@@ -1,4 +1,5 @@
 import { BasicEnumerable } from '../enumerables/BasicEnumerable';
+import { ArrayExtensions } from '../extensions/ArrayExtensions';
 import { from } from './from';
 
 export function bindLinqToNativeTypes(options?: {
@@ -47,10 +48,20 @@ export function bindLinqToNativeTypes(options?: {
   for (const proto of protos) {
     for (const prop of enumPropNames) {
       if (proto[prop] === undefined) {
-        proto[prop] = function (...params: any[]) {
+        proto[prop] = function (...params: unknown[]) {
           return (from(this) as any)[prop](...params);
         };
       }
+    }
+  }
+
+  const arrayExtensionPropNames = Object.getOwnPropertyNames(ArrayExtensions);
+
+  for (const prop of arrayExtensionPropNames) {
+    if ((Array as any)[prop] === undefined && (Array.prototype as any)[prop] === undefined) {
+      (Array.prototype as any)[prop] = function (...params: unknown[]) {
+        return (ArrayExtensions as any)[prop](this, ...params);
+      };
     }
   }
 }

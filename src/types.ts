@@ -23,6 +23,68 @@ export interface IEnumerableFactory {
   createList<TSource>(generator: () => Generator<TSource>): IList<TSource>;
 }
 
+export interface IArrayExtensions<TSource> {
+  /**
+   * Removes all items from the array. Original array is mutated.
+   * @example
+   * ```typescript
+   * const arr = [1, 2, 3];
+   * arr.clear(); // arr is now []
+   * ```
+   */
+  clear(): void;
+
+  /**
+   * Inserts an item at the given index into the array. Existing items at and after the index will be pushed back.
+   * No items will be deleted. Original array is mutated.
+   * @example
+   * ```typescript
+   * const arr = [1, 2, 3];
+   * arr.insert(1, 5); // arr is now [1, 5, 2, 3]
+   * ```
+   * @param index The index of which to insert the item.
+   * @param item The item to insert.
+   */
+  insert(index: number, item: TSource): void;
+
+  /**
+   * Inserts an item at the given index into the array. Existing items at and after the index will be pushed back.
+   * No items will be deleted. Original array is mutated.
+   * * @example
+   * ```typescript
+   * const arr = [1, 2, 3];
+   * arr.insertRange(1, [5, 6]); // arr is now [1, 5, 6, 2, 3]
+   * ```
+   * @param index The index of which to start the insertion.
+   * @param collection The items to insert.
+   */
+  insertRange(index: number, collection: Iterable<TSource>): void;
+
+  /**
+   * Removes an item from the array. Original array is mutated.
+   * @example
+   * ```typescript
+   * const numbers = [1, 2, 3];
+   * const res = numbers.remove(2); // numbers is modified in place. res is true because element was in the array.
+   * ```
+   * @param item Item to remove from array.
+   * @returns true if item was found and removed from array. False if item was not found in the array.
+   */
+  remove(item: TSource): boolean;
+
+  /**
+   * Removes all items from the array that pass the predicate. Original array is mutated.
+   * @example
+   * ```typescript
+   * const arr = [1, 2, 3, 4];
+   * arr.removeAll(x => x > 2); // arr is now [1, 2]
+   * ```
+   * @param predicate The predicate to test for a condition.
+   * @returns The number of removed items.
+   */
+  removeAll(predicate: (item: TSource, index: number) => boolean): number;
+}
+
 /**
  * Interface that exposes an iterator, which supports a simple iteration and various methods.
  * @typeparam TSource The type of elements in the IEnumerable.

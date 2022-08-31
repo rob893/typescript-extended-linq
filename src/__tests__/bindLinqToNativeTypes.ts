@@ -85,4 +85,27 @@ describe('bindLinqToNativeTypes', () => {
       expect(() => bindLinqToNativeTypes({ types: collection })).toThrow();
     }
   );
+
+  it.each(['remove', 'clear', 'removeAll', 'insert', 'insertRange'])(
+    'should bind all array extensions to array prototype',
+    name => {
+      bindLinqToNativeTypes();
+
+      const arr: any = [1, 2, 3];
+
+      expect(typeof arr[name]).toBe('function');
+    }
+  );
+
+  it('should bind remove array extension to array prototype', () => {
+    bindLinqToNativeTypes();
+
+    const arr: any = [1, 2, 3];
+
+    const res = arr.remove(2);
+
+    expect(typeof arr['remove']).toBe('function');
+    expect(res).toBe(true);
+    expect(arr).toEqual([1, 3]);
+  });
 });

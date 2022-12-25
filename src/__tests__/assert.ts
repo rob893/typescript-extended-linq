@@ -13,7 +13,7 @@ describe.each([...getEnumerables()])('assert', (src, enumerable, addSrc) => {
 
     const query = items.assert(x => x <= 2);
 
-    expect(() => query.toArray()).toThrowError(Error);
+    expect(() => query.toArray()).toThrow(Error);
   });
 
   it('should throw error with custom error message if predicate fails', () => {
@@ -22,8 +22,8 @@ describe.each([...getEnumerables()])('assert', (src, enumerable, addSrc) => {
 
     const query = items.assert(x => x <= 2, customMessage);
 
-    expect(() => query.toArray()).toThrowError(Error);
-    expect(() => query.toArray()).toThrowError(customMessage);
+    expect(() => query.toArray()).toThrow(Error);
+    expect(() => query.toArray()).toThrow(customMessage);
   });
 
   it('should throw error with custom error type if predicate fails', () => {
@@ -32,7 +32,7 @@ describe.each([...getEnumerables()])('assert', (src, enumerable, addSrc) => {
 
     const query = items.assert(x => x <= 2, CustomError);
 
-    expect(() => query.toArray()).toThrowError(CustomError);
+    expect(() => query.toArray()).toThrow(CustomError);
   });
 
   it('should throw error with custom error message and custom type if predicate fails', () => {
@@ -42,8 +42,8 @@ describe.each([...getEnumerables()])('assert', (src, enumerable, addSrc) => {
 
     const query = items.assert(x => x <= 2, customMessage, CustomError);
 
-    expect(() => query.toArray()).toThrowError(CustomError);
-    expect(() => query.toArray()).toThrowError(customMessage);
+    expect(() => query.toArray()).toThrow(CustomError);
+    expect(() => query.toArray()).toThrow(customMessage);
   });
 
   it('should call predicate for each item', () => {

@@ -27,12 +27,12 @@ describe('complex', () => {
       .thenBy(item => item.foo)
       .thenBy(item => item.bar);
 
-    expect(mock).toBeCalledTimes(0);
+    expect(mock).toHaveBeenCalledTimes(0);
     expect(iterationCounter).toBe(0);
 
     const asArray = query.toArray();
 
-    expect(mock).toBeCalledTimes(1);
+    expect(mock).toHaveBeenCalledTimes(1);
     expect(iterationCounter).toBe(6);
     expect(asArray).toEqual([
       { id: 2, foo: 'a', bar: new Date('2021-08-01T00:00:00.000Z') },

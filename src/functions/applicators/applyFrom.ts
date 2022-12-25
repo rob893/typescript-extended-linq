@@ -27,7 +27,7 @@ export function applyFrom<TSource>(
 
   if (typeof src === 'object') {
     const generator = function* (): Generator<[keyof TSource, TSource[keyof TSource]]> {
-      for (const entry of Object.entries(src)) {
+      for (const entry of Object.entries(src as object)) {
         yield entry as [keyof TSource, TSource[keyof TSource]];
       }
     };

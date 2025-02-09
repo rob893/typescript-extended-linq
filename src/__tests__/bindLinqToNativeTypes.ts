@@ -40,7 +40,7 @@ beforeEach(() => resetPrototypesToOriginal());
 
 describe('bindLinqToNativeTypes', () => {
   it.each([...defaultNativeTypes])('should bind linq functions to type', ctor => {
-    bindLinqToNativeTypes();
+    bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
 
     const test: any = new ctor();
 
@@ -49,7 +49,7 @@ describe('bindLinqToNativeTypes', () => {
   });
 
   it('should invoke where', () => {
-    bindLinqToNativeTypes();
+    bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
 
     const res = ([1, 2, 3, 4, 5] as unknown as IEnumerable<number>).where(x => x % 2 === 0).toArray();
 
@@ -57,7 +57,10 @@ describe('bindLinqToNativeTypes', () => {
   });
 
   it('should only bind to Array and Map', () => {
-    bindLinqToNativeTypes({ types: [Array, Map] });
+    bindLinqToNativeTypes({
+      types: [Array, Map],
+      bindingOptions: { writable: true, configurable: true, enumerable: true }
+    });
 
     const arr: any = [];
     const map: any = new Map();
@@ -71,7 +74,10 @@ describe('bindLinqToNativeTypes', () => {
   });
 
   it.each([...defaultNativeTypes])('should not bind select', ctor => {
-    bindLinqToNativeTypes({ functionsToIgnore: ['select'] });
+    bindLinqToNativeTypes({
+      functionsToIgnore: ['select'],
+      bindingOptions: { writable: true, configurable: true, enumerable: true }
+    });
 
     const test: any = new ctor();
 
@@ -82,14 +88,19 @@ describe('bindLinqToNativeTypes', () => {
   it.each([[Array, Number, String, Set], [[], 'asdf', new Map()], [Array, 'asdf', Map], 70, 'asdf'])(
     'should throw due to invalid type arguments',
     (collection: any) => {
-      expect(() => bindLinqToNativeTypes({ types: collection })).toThrow();
+      expect(() =>
+        bindLinqToNativeTypes({
+          types: collection,
+          bindingOptions: { writable: true, configurable: true, enumerable: true }
+        })
+      ).toThrow();
     }
   );
 
   it.each(['remove', 'clear', 'removeAll', 'insert', 'insertRange'])(
     'should bind all array extensions to array prototype',
     name => {
-      bindLinqToNativeTypes();
+      bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
 
       const arr: any = [1, 2, 3];
 
@@ -98,7 +109,7 @@ describe('bindLinqToNativeTypes', () => {
   );
 
   it('should bind remove array extension to array prototype', () => {
-    bindLinqToNativeTypes();
+    bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
 
     const arr: any = [1, 2, 3];
 

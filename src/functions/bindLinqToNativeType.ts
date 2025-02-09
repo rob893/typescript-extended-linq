@@ -5,6 +5,7 @@ import { from } from './from';
 export function bindLinqToNativeTypes(options?: {
   types?: (new () => Iterable<unknown>)[];
   functionsToIgnore?: (keyof BasicEnumerable<unknown>)[];
+  bindingOptions?: { writable?: boolean; configurable?: boolean; enumerable?: boolean };
 }): void {
   const {
     types = [
@@ -21,18 +22,31 @@ export function bindLinqToNativeTypes(options?: {
       Map,
       String
     ] as (new () => Iterable<unknown>)[],
-    functionsToIgnore = []
+    functionsToIgnore = [],
+    bindingOptions = {
+      writable: false,
+      configurable: false,
+      enumerable: false
+    }
   } = options ?? {};
 
-  for (const type of types) {
-    try {
-      const test = new type();
+  const descriptor = {
+    writable: bindingOptions.writable ?? false,
+    configurable: bindingOptions.configurable ?? false,
+    enumerable: bindingOptions.enumerable ?? false
+  };
 
-      if (!(Symbol.iterator in test)) {
-        throw new TypeError(`Unsuppoted type: ${type.name}. Types must have Symbol.iterator.`);
-      }
+  for (const type of types) {
+    let test: Iterable<unknown>;
+
+    try {
+      test = new type();
     } catch {
-      throw new TypeError('Unsuppoted type: All types must support the new keyword.');
+      throw new TypeError(`Unsupported type: ${type.name}. All types must support the 'new' keyword.`);
+    }
+
+    if (!(Symbol.iterator in test)) {
+      throw new TypeError(`Unsuppoted type: ${type.name}. Types must have Symbol.iterator.`);
     }
   }
 
@@ -47,10 +61,13 @@ export function bindLinqToNativeTypes(options?: {
 
   for (const proto of protos) {
     for (const prop of enumPropNames) {
-      if (proto[prop] === undefined) {
-        proto[prop] = function (...params: unknown[]) {
-          return (from(this) as any)[prop](...params);
-        };
+      if (!Object.prototype.hasOwnProperty.call(proto, prop)) {
+        Object.defineProperty(proto, prop, {
+          value: function (...params: unknown[]) {
+            return (from(this) as any)[prop](...params);
+          },
+          ...descriptor
+        });
       }
     }
   }
@@ -58,10 +75,16 @@ export function bindLinqToNativeTypes(options?: {
   const arrayExtensionPropNames = Object.getOwnPropertyNames(ArrayExtensions);
 
   for (const prop of arrayExtensionPropNames) {
-    if ((Array as any)[prop] === undefined && (Array.prototype as any)[prop] === undefined) {
-      (Array.prototype as any)[prop] = function (...params: unknown[]) {
-        return (ArrayExtensions as any)[prop](this, ...params);
-      };
+    if (
+      !Object.hasOwnProperty.call(Array.prototype, prop) &&
+      !Object.prototype.hasOwnProperty.call(Array.prototype, prop)
+    ) {
+      Object.defineProperty(Array.prototype, prop, {
+        value: function (...params: unknown[]) {
+          return (ArrayExtensions as any)[prop](this, ...params);
+        },
+        ...descriptor
+      });
     }
   }
 }

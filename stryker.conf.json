@@ -15,5 +15,9 @@
     "configFile": "jest.config.js"
   },
   "checkers": ["typescript"],
-  "tsconfigFile": "tsconfig.mutate.json"
+  "tsconfigFile": "tsconfig.mutate.json",
+  "disableTypeChecks": "{test,src,lib}/**/*.{js,ts,jsx,tsx,html,vue,cts,mts}",
+  "warnings": {
+    "slow": false
+  }
 }

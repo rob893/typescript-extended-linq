@@ -86,5 +86,3 @@ describe.each([...getEnumerables()])('join', (src, enumerable) => {
     ]);
   });
 });
-
-new Map().forEach;

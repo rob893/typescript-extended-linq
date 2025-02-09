@@ -32,7 +32,7 @@ export class PriorityQueue<TSource, TPriority = number>
     this.srcComparer =
       typeof collectionOrComparer === 'function'
         ? collectionOrComparer
-        : comparer ??
+        : (comparer ??
           ((a, b) => {
             if (a > b) {
               return 1;
@@ -41,7 +41,7 @@ export class PriorityQueue<TSource, TPriority = number>
             } else {
               return 0;
             }
-          });
+          }));
 
     if (typeof collectionOrComparer !== 'function' && collectionOrComparer) {
       for (const [item, priority] of collectionOrComparer) {

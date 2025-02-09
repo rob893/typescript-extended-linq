@@ -38,7 +38,7 @@ export function elementAt<TSource>(src: Iterable<TSource>, index: number): TSour
  */
 export function elementAtOrDefault<TSource>(src: Iterable<TSource>, index: number): TSource | null {
   if (index < 0) {
-    const asArr = Array.isArray(src) ? src : [...src];
+    const asArr = Array.isArray(src) ? (src as TSource[]) : [...src];
     const target = asArr.length + index;
 
     if (target < 0) {

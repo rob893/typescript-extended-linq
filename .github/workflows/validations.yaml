@@ -11,9 +11,9 @@ jobs:
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
@@ -25,6 +25,6 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Circular dependency check
-        uses: gerrit0/circular-dependency-check@v1
+        uses: gerrit0/circular-dependency-check@v2
         with:
           entry: dist/index.js

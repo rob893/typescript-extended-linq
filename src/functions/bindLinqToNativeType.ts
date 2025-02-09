@@ -23,7 +23,7 @@ export function bindLinqToNativeTypes(options?: {
       String
     ] as (new () => Iterable<unknown>)[],
     functionsToIgnore = [],
-    bindingOptions = {
+    bindingOptions: { writable = false, configurable = false, enumerable = false } = {
       writable: false,
       configurable: false,
       enumerable: false
@@ -31,9 +31,9 @@ export function bindLinqToNativeTypes(options?: {
   } = options ?? {};
 
   const descriptor = {
-    writable: bindingOptions.writable ?? false,
-    configurable: bindingOptions.configurable ?? false,
-    enumerable: bindingOptions.enumerable ?? false
+    writable,
+    configurable,
+    enumerable
   };
 
   for (const type of types) {

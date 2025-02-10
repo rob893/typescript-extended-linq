@@ -1,3 +1,4 @@
+import { BasicEnumerable } from '../enumerables/BasicEnumerable';
 import { bindLinqToNativeTypes } from '../functions/bindLinqToNativeType';
 import { IEnumerable } from '../types';
 
@@ -54,6 +55,30 @@ describe('bindLinqToNativeTypes', () => {
     const res = ([1, 2, 3, 4, 5] as unknown as IEnumerable<number>).where(x => x % 2 === 0).toArray();
 
     expect(res).toEqual([2, 4]);
+  });
+
+  it.each([...defaultNativeTypes])('should not bind non-functions', ctor => {
+    (BasicEnumerable.prototype as any)['x'] = 'foo';
+    bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
+
+    const hasX = Object.prototype.hasOwnProperty.call(ctor.prototype, 'x');
+    delete (BasicEnumerable.prototype as any)['x'];
+
+    expect(hasX).toBeFalsy();
+  });
+
+  it.each([...defaultNativeTypes])('should not bind static functions', ctor => {
+    (BasicEnumerable as any)['x'] = () => {
+      return false;
+    };
+    bindLinqToNativeTypes({ bindingOptions: { writable: true, configurable: true, enumerable: true } });
+
+    const hasXInstance = Object.prototype.hasOwnProperty.call(ctor.prototype, 'x');
+    const hasXStatic = Object.prototype.hasOwnProperty.call(ctor, 'x');
+    delete (BasicEnumerable as any)['x'];
+
+    expect(hasXInstance).toBeFalsy();
+    expect(hasXStatic).toBeFalsy();
   });
 
   it('should only bind to Array and Map', () => {

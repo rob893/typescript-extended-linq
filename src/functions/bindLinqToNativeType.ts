@@ -46,7 +46,7 @@ export function bindLinqToNativeTypes(options?: {
     }
 
     if (!(Symbol.iterator in test)) {
-      throw new TypeError(`Unsuppoted type: ${type.name}. Types must have Symbol.iterator.`);
+      throw new TypeError(`Unsupported type: ${type.name}. Types must have Symbol.iterator.`);
     }
   }
 
@@ -56,7 +56,9 @@ export function bindLinqToNativeTypes(options?: {
   const protos = types.map(t => t.prototype);
 
   const enumPropNames = Object.getOwnPropertyNames(enumProps).filter(
-    name => !ignore.has(name as keyof BasicEnumerable<unknown>)
+    name =>
+      typeof enumProps[name as keyof BasicEnumerable<unknown>] === 'function' &&
+      !ignore.has(name as keyof BasicEnumerable<unknown>)
   );
 
   for (const proto of protos) {
@@ -76,7 +78,8 @@ export function bindLinqToNativeTypes(options?: {
 
   for (const prop of arrayExtensionPropNames) {
     if (
-      !Object.hasOwnProperty.call(Array.prototype, prop) &&
+      typeof ArrayExtensions[prop as keyof ArrayExtensions] === 'function' &&
+      !Object.prototype.hasOwnProperty.call(Array, prop) &&
       !Object.prototype.hasOwnProperty.call(Array.prototype, prop)
     ) {
       Object.defineProperty(Array.prototype, prop, {

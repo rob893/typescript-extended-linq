@@ -53,7 +53,7 @@ export function bindLinqToNativeTypes(options?: {
   const alwaysIgnore: (keyof BasicEnumerable<unknown>)[] = ['toJSON', 'toString'];
   const ignore = new Set<keyof BasicEnumerable<unknown>>([...alwaysIgnore, ...functionsToIgnore]);
   const enumProps = BasicEnumerable.prototype;
-  const protos = types.map(t => t.prototype);
+  const protos = types.map(t => t.prototype as Record<string, unknown>);
 
   const enumPropNames = Object.getOwnPropertyNames(enumProps).filter(
     name =>
@@ -66,7 +66,7 @@ export function bindLinqToNativeTypes(options?: {
       if (!Object.prototype.hasOwnProperty.call(proto, prop)) {
         Object.defineProperty(proto, prop, {
           value: function (...params: unknown[]) {
-            return (from(this) as any)[prop](...params);
+            return (from(this) as any)[prop](...params) as unknown;
           },
           ...descriptor
         });
@@ -84,7 +84,7 @@ export function bindLinqToNativeTypes(options?: {
     ) {
       Object.defineProperty(Array.prototype, prop, {
         value: function (...params: unknown[]) {
-          return (ArrayExtensions as any)[prop](this, ...params);
+          return (ArrayExtensions as any)[prop](this, ...params) as unknown;
         },
         ...descriptor
       });

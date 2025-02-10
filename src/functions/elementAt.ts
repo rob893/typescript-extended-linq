@@ -49,7 +49,7 @@ export function elementAtOrDefault<TSource>(src: Iterable<TSource>, index: numbe
   }
 
   if (Array.isArray(src)) {
-    return index < src.length ? src[index] : null;
+    return index < src.length ? (src[index] as TSource) : null;
   }
 
   let i = 0;
